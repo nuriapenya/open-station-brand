@@ -287,10 +287,14 @@
 
   /* ---------- Logo App ---------- */
   .app-lockup { gap: 32px; flex-wrap: wrap; }
+  /* App template: background #000, inset 3px 3px 4px rgba(255,255,255,.25),
+     backdrop blur 13.4px, radius 113px at the 512 grid (21px at this size) */
   .app-icon {
     width: 96px; height: 96px;
-    border-radius: 21px;                /* 113/512 of the app template */
-    background: #000;
+    border-radius: 21px;
+    background: #000000;
+    -webkit-backdrop-filter: blur(13.4px);
+    backdrop-filter: blur(13.4px);
     position: relative;
   }
   .app-icon::after {
@@ -298,7 +302,7 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    box-shadow: inset 3px 3px 4px rgba(255, 255, 255, .25);   /* template inner shadow */
+    box-shadow: inset 3px 3px 4px rgba(255, 255, 255, 0.25);
   }
   .app-icon .mark {
     position: absolute;
@@ -308,10 +312,12 @@
     mask: url('assets/logomark.svg') center / contain no-repeat;
   }
   .app-icon .m1 { background: url('assets/pulsarmesh.jpg') 15% 25% / 240% auto; }
-  .app-icon .m2 { background: url('assets/holomesh.jpg') 50% 10% / 300% auto; }
-  .app-icon .m3 { background: url('assets/pulsarmesh.jpg') 60% 70% / 320% auto; }
   .app-icon .m4 { background: url('assets/mesh-soft.jpg') 30% 30% / 260% auto; }
   .app-icon .m5 { background: url('assets/holomesh.jpg') 80% 70% / 280% auto; }
+  /* Inverted variants: mesh fills the tile, the mark goes black */
+  .app-icon.bg-holo { background: url('assets/holomesh.jpg') 60% 30% / cover; }
+  .app-icon.bg-pulsar { background: url('assets/pulsarmesh.jpg') center / cover; }
+  .app-icon.inverted .mark { background: #000000; }
 
   /* ---------- Use this brand ---------- */
   .use-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 72px); }
@@ -738,12 +744,12 @@
     <p class="label lockup-note">Logomark + wordmark combined</p>
     <div class="primary-lockup app-lockup">
       <div class="app-icon"><i class="mark m1"></i></div>
-      <div class="app-icon"><i class="mark m2"></i></div>
-      <div class="app-icon"><i class="mark m3"></i></div>
+      <div class="app-icon inverted bg-holo"><i class="mark"></i></div>
       <div class="app-icon"><i class="mark m4"></i></div>
+      <div class="app-icon inverted bg-pulsar"><i class="mark"></i></div>
       <div class="app-icon"><i class="mark m5"></i></div>
     </div>
-    <p class="label lockup-note">Logo App · the mark over the meshes, on the app template</p>
+    <p class="label lockup-note">Logo App · Mark over the meshes</p>
   </section>
 
   <!-- ============ COLOR ============ -->
