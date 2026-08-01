@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open Station · Brand Guidelines</title>
+<style>
+  /* ---------- Fonts (self-hosted, SIL OFL 1.1, see fonts/OFL.txt) ---------- */
+  @font-face {
+    font-family: 'Geist';
+    src: url('fonts/Geist-Variable.woff2') format('woff2-variations');
+    font-weight: 100 900;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Geist Mono';
+    src: url('fonts/GeistMono-Variable.woff2') format('woff2-variations');
+    font-weight: 100 900;
+    font-display: swap;
+  }
+
+  /* ---------- Tokens ---------- */
+  :root {
+    --void: #0c0b0f;        /* Void · darkest brand color, doubles as page background */
+    --surface: #100f14;     /* poster surface · one step above Void */
+    --raised: #17161b;      /* cards, tiles */
+    --line: rgba(255,255,255,.10);
+    --line-soft: rgba(255,255,255,.06);
+    --paper: #ededed;       /* primary text */
+    --muted: #8f8f8f;       /* secondary text */
+    --dim: #5c5c5c;         /* tertiary text */
+
+    /* Brand palette · from the Figma palette frame (node 2219:15033) */
+    --pulsar: #f252fc;      /* Pulsar */
+    --nebula: #ec9bff;      /* Nebula */
+    --starlight: #fffbff;   /* Starlight */
+    --astro: #19161e;       /* Astro */
+    /* Void (#08060d) is defined above; meshes: Holomesh (soft holographic), Pulsarmesh (assets/pulsarmesh.jpg) */
+
+    --pad: clamp(24px, 4vw, 64px);
+    --mono: 'Geist Mono', ui-monospace, monospace;
+    --sans: 'Geist', system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { background: var(--void); }
+  body {
+    font-family: var(--sans);
+    color: var(--paper);
+    -webkit-font-smoothing: antialiased;
+    padding: clamp(16px, 4vw, 56px) clamp(12px, 3vw, 40px);
+  }
+
+  /* Subtle starfield across the whole viewport (visible around the poster) */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      radial-gradient(circle at 22px 34px, rgba(255,251,255,.4) 0 1px, transparent 1.8px),
+      radial-gradient(circle at 178px 152px, rgba(255,251,255,.25) 0 1px, transparent 1.7px),
+      radial-gradient(circle at 96px 210px, rgba(236,155,255,.3) 0 1px, transparent 1.8px),
+      radial-gradient(circle at 310px 80px, rgba(255,251,255,.35) 0 1.3px, transparent 2.2px);
+    background-repeat: repeat, repeat, repeat, repeat;
+    background-size: 260px 240px, 340px 300px, 420px 380px, 620px 540px;
+  }
+
+  /* Liquid-glass poster: translucent sheet over the starfield, specular top rim */
+  .poster {
+    max-width: 1300px;
+    margin: 0 auto;
+    background: rgba(16, 15, 20, .58);
+    -webkit-backdrop-filter: blur(28px) saturate(160%);
+    backdrop-filter: blur(28px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, .09);
+    border-radius: 13px;
+    padding: var(--pad);
+    position: relative;
+    z-index: 0;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, .08),
+      inset 0 0 60px rgba(236, 155, 255, .03),
+      0 40px 90px rgba(0, 0, 0, .55);
+  }
+  /* The cosmos inside the poster: faint stars, two orbit lines, a whisper of nebula */
+  .poster::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      radial-gradient(52% 28% at 85% 0%, rgba(242,82,252,.05), transparent 70%),
+      radial-gradient(45% 22% at 8% 0%, rgba(236,155,255,.045), transparent 70%),
+      radial-gradient(circle at 44px 58px, rgba(255,251,255,.22) 0 1px, transparent 1.7px),
+      radial-gradient(circle at 205px 170px, rgba(255,251,255,.14) 0 1px, transparent 1.6px),
+      radial-gradient(circle at 120px 260px, rgba(236,155,255,.16) 0 1px, transparent 1.7px),
+      radial-gradient(circle at 330px 96px, rgba(255,251,255,.2) 0 1.2px, transparent 2px);
+    background-repeat: no-repeat, no-repeat, repeat, repeat, repeat, repeat;
+    background-size: 100% 100%, 100% 100%, 300px 270px, 380px 340px, 460px 420px, 680px 600px;
+    border-radius: inherit;
+  }
+
+  /* ---------- Shared bits ---------- */
+  .label {
+    font: 500 13px/1.4 var(--mono);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .label b { color: var(--paper); font-weight: 500; }
+
+  section { padding: 0 0 240px; }
+  section > .label { display: block; margin-bottom: 40px; }
+
+  .tbd {
+    position: relative;
+    border: 1px dashed rgba(255,255,255,.22);
+    border-radius: 8px;
+    color: var(--dim);
+    font: 400 11px/1.6 var(--mono);
+    padding: 18px;
+  }
+  .tbd::before {
+    content: 'PLACEHOLDER';
+    position: absolute;
+    top: -7px; left: 12px;
+    background: var(--surface);
+    padding: 0 6px;
+    font: 600 8px/1.4 var(--mono);
+    letter-spacing: .14em;
+    color: var(--muted);
+  }
+
+  /* ---------- Header ---------- */
+  .brand-row {
+    padding-bottom: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .lockup-head { display: inline-flex; align-items: center; gap: 12px; }
+  .lockup-head img { width: 24px; height: 24px; }
+  .lockup-head span { font-size: 19px; font-weight: 520; letter-spacing: -.02em; }
+
+  /* ---------- Masthead ---------- */
+  .masthead {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: end;
+    padding: 0 0 110px;
+    position: relative;
+  }
+
+  /* Mio hero cameo: born from a star, then drifts around the masthead */
+  .mio-wrap {
+    position: absolute;
+    top: 84px;
+    right: 21%;
+    animation: mio-appear 1.8s cubic-bezier(.22, 1, .36, 1) .9s both;
+  }
+  .mio-wrap svg {
+    display: block;
+    width: 92px;
+    height: 92px;
+    filter:
+      drop-shadow(0 0 6px rgba(242, 82, 252, .7))
+      drop-shadow(0 0 22px rgba(242, 82, 252, .35));
+    animation: mio-float 11s ease-in-out 2.7s infinite;
+  }
+  .mio-eyes { animation: mio-blink 5.5s 3s infinite; transform-origin: 60px 61px; }
+  @keyframes mio-appear {
+    0% { transform: scale(0); opacity: 0; }
+    35% { opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes mio-float {
+    0%   { transform: translate(0, 0) rotate(0deg); }
+    25%  { transform: translate(-64px, 36px) rotate(-6deg); }
+    50%  { transform: translate(-148px, -4px) rotate(4deg); }
+    75%  { transform: translate(-52px, -42px) rotate(-3deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+  }
+  @keyframes mio-blink {
+    0%, 90%, 100% { transform: scaleY(1); }
+    93% { transform: scaleY(.15); }
+    96% { transform: scaleY(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mio-wrap, .mio-wrap svg, .mio-eyes { animation: none; }
+  }
+  h1 {
+    font-size: clamp(56px, 9vw, 118px);
+    line-height: .94;
+    letter-spacing: -.045em;
+    font-weight: 550;
+    background:
+      url('assets/holomesh.jpg') center 30% / cover no-repeat,
+      linear-gradient(96deg, #b1a6e9 0%, #f4f2fb 20%, #9fe8f5 38%, #eec0f2 58%, #a9c8f3 78%, #c0b4ee 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .masthead .subtitle {
+    margin-top: 22px;
+    font-size: clamp(17px, 2.4vw, 26px);
+    font-weight: 400;
+    letter-spacing: .015em;
+    color: var(--paper);
+  }
+  .contact { text-align: right; }
+  .contact .label { display: block; margin-bottom: 12px; }
+  .contact p, .contact a {
+    font: 400 13px/1.8 var(--mono);
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .contact a:hover { color: var(--paper); }
+
+  /* ---------- Elements of branding ---------- */
+  .lockups {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  .lockups > div { display: flex; flex-direction: column; }
+  .lockups .lockup { flex: 1; }
+  .lockups .lockup + .lockup { margin-top: 28px; }
+  .lockup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    min-height: 210px;
+    padding: 30px;
+    position: relative;
+    border: 1px solid var(--line-soft);
+    border-radius: 10px;
+    background: rgba(23, 22, 27, .92);   /* logomark areas stay near-opaque */
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05);
+  }
+  .lockup img { width: 72px; height: 72px; }
+  .lockup.grid-bg {
+    background:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-color: rgba(23, 22, 27, .92);
+    border: 1px solid var(--line-soft);
+    overflow: hidden;
+  }
+  .lockup.grid-bg::before, .lockup.grid-bg::after {
+    content: '';
+    position: absolute;
+    background: rgba(255,255,255,.16);
+  }
+  .lockup.grid-bg::before { left: 0; right: 0; top: 50%; height: 1px; }
+  .lockup.grid-bg::after { top: 0; bottom: 0; left: 50%; width: 1px; }
+  .lockup.construction { min-height: 320px; background-size: 56px 56px; }
+  .construction-svg { width: 280px; height: 280px; flex: none; position: relative; z-index: 1; }
+  .lockup-note { margin-top: 14px; }
+
+  .primary-lockup {
+    margin-top: 56px;
+    border: 1px solid var(--line-soft);
+    border-radius: 10px;
+    background: rgba(23, 22, 27, .92);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    padding: 64px 30px;
+  }
+  .primary-lockup img { width: 64px; height: 64px; }
+  .primary-lockup .wordmark {
+    font-size: clamp(28px, 4.4vw, 46px);
+    font-weight: 520;
+    letter-spacing: -.03em;
+    white-space: nowrap;
+  }
+
+  /* ---------- Logo App ---------- */
+  .app-lockup { gap: 32px; flex-wrap: wrap; }
+  .app-icon {
+    width: 96px; height: 96px;
+    border-radius: 21px;                /* 113/512 of the app template */
+    background: #000;
+    position: relative;
+  }
+  .app-icon::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 3px 3px 4px rgba(255, 255, 255, .25);   /* template inner shadow */
+  }
+  .app-icon .mark {
+    position: absolute;
+    inset: 18%;                         /* 91/512 clear space, per the template */
+    display: block;
+    -webkit-mask: url('assets/logomark.svg') center / contain no-repeat;
+    mask: url('assets/logomark.svg') center / contain no-repeat;
+  }
+  .app-icon .m1 { background: url('assets/pulsarmesh.jpg') 15% 25% / 240% auto; }
+  .app-icon .m2 { background: url('assets/holomesh.jpg') 50% 10% / 300% auto; }
+  .app-icon .m3 { background: url('assets/pulsarmesh.jpg') 60% 70% / 320% auto; }
+  .app-icon .m4 { background: url('assets/mesh-soft.jpg') 30% 30% / 260% auto; }
+  .app-icon .m5 { background: url('assets/holomesh.jpg') 80% 70% / 280% auto; }
+
+  /* ---------- Use this brand ---------- */
+  .use-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 72px); }
+  .use-head { font-size: 15px; font-weight: 500; color: var(--paper); margin-bottom: 18px; }
+  .use-copy { font-size: 13px; line-height: 1.6; color: var(--muted); margin-bottom: 16px; max-width: 52ch; }
+  .dl-list { list-style: none; margin-bottom: 18px; }
+  .dl-list li { border-bottom: 1px solid var(--line-soft); }
+  .dl-list a {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 11px 2px;
+    font: 400 13px/1.4 var(--mono);
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .dl-list a:hover { color: var(--paper); }
+  .dl-list a span { color: var(--dim); }
+
+  /* ---------- Mio ---------- */
+  .mio-intro {
+    max-width: 60ch;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--muted);
+    margin-bottom: 40px;
+  }
+  .mio-intro b { color: var(--paper); font-weight: 500; }
+  .mio-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .merch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .mio-grid figure, .merch-grid figure { margin: 0; background: var(--raised); border: 1px solid var(--line-soft); border-radius: 10px; overflow: hidden; }
+  .mio-grid img, .merch-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+  .mio-grid figcaption, .merch-grid figcaption {
+    padding: 10px 12px;
+    font: 500 10px/1.4 var(--mono);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---------- Typography ---------- */
+  .band {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: clamp(28px, 5vw, 72px);
+  }
+  .band > div { min-width: 0; }
+
+  .specimen-aa {
+    font-size: 120px;
+    line-height: 1;
+    font-weight: 550;
+    letter-spacing: -.04em;
+  }
+  .specimen-aa sup {
+    font-size: 26px;
+    font-weight: 400;
+    vertical-align: 80%;
+    letter-spacing: 0;
+    margin-right: 4px;
+    color: var(--muted);
+  }
+  .alphabet {
+    margin-top: 22px;
+    font-size: 13px;
+    line-height: 1.5;
+    letter-spacing: .01em;
+    color: var(--paper);
+    word-break: break-all;
+  }
+  .numbers {
+    margin-top: 10px;
+    font: 400 12px/1.5 var(--mono);
+    color: var(--muted);
+  }
+  .weights { margin-top: 40px; }
+  .weights span { display: block; font-size: 42px; line-height: 1.18; letter-spacing: -.025em; }
+  .weights .w700 { font-weight: 700; }
+  .weights .w500 { font-weight: 500; }
+  .weights .w400 { font-weight: 400; }
+  .weights .w300 { font-weight: 300; color: var(--muted); }
+
+  .mono-sample {
+    margin-top: 36px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    gap: 20px;
+    font: 500 13px/1.6 var(--mono);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+  .mono-sample b { color: var(--paper); }
+  .mono-sample span { color: var(--muted); }
+
+  .type-style h3 {
+    font-size: clamp(30px, 3.6vw, 44px);
+    font-weight: 550;
+    letter-spacing: -.035em;
+    line-height: 1.04;
+    margin-bottom: 24px;
+  }
+  .type-style p {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--muted);
+    margin-bottom: 16px;
+    max-width: 46ch;
+  }
+  .type-style p b { color: var(--paper); font-weight: 500; }
+  .type-rules { margin-top: 30px; display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .type-rules div {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 12px;
+    padding: 10px 12px;
+    background: var(--raised);
+    font: 500 13px/1.5 var(--mono);
+    color: var(--muted);
+  }
+  .type-rules b { color: var(--paper); font-weight: 600; }
+
+  /* ---------- Color ---------- */
+  .mosaic {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 230px;
+    margin: 0 calc(-1 * var(--pad));
+  }
+  .ctile { padding: 20px 22px; }
+  .ctile b {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -.01em;
+    margin-bottom: 9px;
+  }
+  .ctile span {
+    display: block;
+    font: 400 9px/1.75 var(--mono);
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    opacity: .72;
+  }
+  .t-astro      { grid-column: 1; grid-row: 1; background: var(--astro); color: var(--paper); }
+  .t-pulsarmesh { grid-column: 2 / span 2; grid-row: 1; background: url('assets/pulsarmesh.jpg') center / cover; color: #fff; }
+  .t-starlight  { grid-column: 4; grid-row: 1 / span 2; background: var(--starlight); color: #221a2e; }
+  .t-nebula     { grid-column: 1; grid-row: 2; background: var(--nebula); color: #45184f; }
+  .t-holomesh   { grid-column: 2 / span 2; grid-row: 2; color: #3a2a63;
+                  background: url('assets/holomesh.jpg') center / cover; }
+  .t-void       { grid-column: 1 / span 2; grid-row: 3; background: var(--void); color: var(--paper); }
+  .t-pulsar     { grid-column: 3 / span 2; grid-row: 3; background: var(--pulsar); color: #4d094e; }
+
+  .usage-row { display: flex; gap: 18px; align-items: flex-start; margin-top: 56px; max-width: 560px; }
+  .donut {
+    flex: none;
+    width: 62px; height: 62px;
+    border-radius: 50%;
+    background: conic-gradient(var(--pulsar), var(--nebula), var(--starlight), var(--astro), var(--pulsar));
+    -webkit-mask: radial-gradient(circle, transparent 42%, #000 43%);
+    mask: radial-gradient(circle, transparent 42%, #000 43%);
+  }
+  .usage-row .tbd { flex: 1; }
+
+  /* ---------- Iconography ---------- */
+  .icon-band { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 72px); align-items: start; }
+  .icon-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .icon-dot {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, .03);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+  }
+  .icon-dot svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+
+  /* ---------- Imagery ---------- */
+  .imagery { display: grid; grid-template-columns: 1fr 2fr; gap: 28px; align-items: stretch; }
+  .imagery .tbd { height: 100%; }
+  .img-ph {
+    position: relative;
+    min-height: 240px;
+    border: 1px dashed rgba(255,255,255,.22);
+    border-radius: 10px;
+    background:
+      radial-gradient(60% 80% at 70% 20%, rgba(242,82,252,.20), transparent 60%),
+      radial-gradient(50% 70% at 20% 80%, rgba(236,155,255,.16), transparent 60%),
+      radial-gradient(40% 50% at 85% 75%, rgba(25,22,30,.85), transparent 60%);
+  }
+  .img-ph span {
+    position: absolute;
+    left: 14px; bottom: 12px;
+    font: 500 9px/1.4 var(--mono);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---------- Legal ---------- */
+  .legal { columns: 2; column-gap: 48px; }
+  .legal p {
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--muted);
+    margin-bottom: 14px;
+    break-inside: avoid;
+  }
+  .legal p b { color: var(--paper); font-weight: 500; }
+
+  /* ---------- Usage examples ---------- */
+  .examples { display: grid; grid-template-columns: 1fr 1.6fr; gap: clamp(24px, 4vw, 56px); }
+  .print-shapes { display: flex; gap: 16px; align-items: flex-end; flex-wrap: wrap; }
+  .shape {
+    border: 1px solid rgba(255,255,255,.28);
+    position: relative;
+    color: var(--muted);
+  }
+  .shape em {
+    position: absolute;
+    right: 8px; bottom: 6px;
+    font: 600 11px/1 var(--mono);
+    font-style: normal;
+  }
+  .shape .chip {
+    position: absolute;
+    top: 8px; left: 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font: 500 7px/1 var(--mono);
+    color: var(--paper);
+  }
+  .shape .chip img { width: 10px; height: 10px; }
+  .sh-a4 { width: 132px; height: 186px; }
+  .sh-disc { width: 96px; height: 96px; border-radius: 50%; }
+  .sh-disc::after { content: ''; position: absolute; inset: 38%; border: 1px solid rgba(255,255,255,.28); border-radius: 50%; }
+  .sh-a5 { width: 130px; height: 92px; }
+  .sh-tag { width: 74px; height: 40px; }
+
+  .product-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .tile {
+    background: var(--raised);
+    border: 1px solid var(--line-soft);
+    border-radius: 10px;
+    min-height: 200px;
+    position: relative;
+    overflow: hidden;
+  }
+  .tile.shell {
+    background:
+      radial-gradient(70% 80% at 70% 15%, rgba(242,82,252,.14), transparent 60%),
+      radial-gradient(50% 70% at 15% 85%, rgba(236,155,255,.10), transparent 60%),
+      var(--astro);
+  }
+  .tile .tile-label {
+    position: absolute;
+    left: 12px; top: 10px;
+    font: 500 8px/1.4 var(--mono);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--dim);
+    z-index: 2;
+  }
+  .tile.wallpaper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(70% 90% at 75% 15%, rgba(242,82,252,.20), transparent 60%),
+      radial-gradient(60% 80% at 15% 85%, rgba(236,155,255,.14), transparent 60%),
+      var(--astro);
+  }
+  .tile.wallpaper .lockup-mini { display: flex; align-items: center; gap: 10px; }
+  .tile.wallpaper .lockup-mini img { width: 26px; height: 26px; }
+  .tile.wallpaper .lockup-mini span { font-size: 17px; font-weight: 520; letter-spacing: -.02em; }
+
+  .mini-window {
+    position: absolute;
+    left: 12%; right: 12%; top: 26%;
+    background: rgba(255, 255, 255, .09);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    backdrop-filter: blur(14px) saturate(160%);
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 8px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 18px 40px rgba(0,0,0,.5);
+  }
+  .mini-window .bar {
+    display: flex; gap: 5px;
+    padding: 7px 9px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .mini-window .bar i { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.18); }
+  .mini-window .body { padding: 10px; }
+  .mini-window .body i {
+    display: block; height: 5px; border-radius: 3px;
+    background: rgba(255,255,255,.08); margin-bottom: 6px;
+  }
+  .mini-window .body i:nth-child(2) { width: 72%; }
+  .mini-window .body i:nth-child(3) { width: 48%; margin-bottom: 0; }
+  .mini-dock {
+    position: absolute;
+    left: 50%; bottom: 10px;
+    transform: translateX(-50%);
+    display: flex; gap: 6px;
+    padding: 6px 8px;
+    background: rgba(255,255,255,.07);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    backdrop-filter: blur(14px) saturate(160%);
+    border: 1px solid rgba(255,255,255,.16);
+    border-radius: 11px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.2);
+  }
+  .mini-dock i { width: 14px; height: 14px; border-radius: 4px; background: rgba(255,255,255,.14); }
+  .mini-dock i:first-child { background: rgba(242,82,252,.55); }
+
+  footer {
+    padding-top: 18px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    font: 500 9px/1.6 var(--mono);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 920px) {
+    section { padding: 0 0 120px; }
+    .mio-wrap { display: none; }
+    .use-grid { grid-template-columns: 1fr; }
+    .masthead { grid-template-columns: 1fr; align-items: start; padding-bottom: 72px; }
+    .contact { text-align: left; }
+    .band, .icon-band { grid-template-columns: 1fr; }
+    .lockups, .imagery, .examples, .product-tiles { grid-template-columns: 1fr; }
+    .legal { columns: 1; }
+    .specimen-aa { font-size: 88px; }
+    .mosaic { grid-template-columns: 1fr 1fr; grid-auto-rows: 170px; }
+    .mio-grid { grid-template-columns: 1fr 1fr; }
+    .merch-grid { grid-template-columns: 1fr; }
+    .mosaic > div { grid-column: auto / span 1; grid-row: auto; }
+    .t-pulsarmesh, .t-holomesh, .t-void, .t-pulsar { grid-column: auto / span 2; }
+  }
+</style>
+</head>
+<body>
+<div class="poster">
+
+  <!-- ============ HEADER ============ -->
+  <header class="brand-row">
+    <div class="lockup-head">
+      <img src="assets/logomark.svg" alt="Open Station logomark">
+      <span>Open Station</span>
+    </div>
+    <span class="label" style="font-size:11px;">Last updated · Aug 1, 2026</span>
+  </header>
+
+  <!-- ============ MASTHEAD ============ -->
+  <div class="masthead">
+    <div class="mio-wrap" aria-hidden="true">
+      <svg viewBox="0 0 120 120">
+        <defs>
+          <linearGradient id="mioGrad" x1="0%" y1="10%" x2="90%" y2="100%">
+            <stop offset="0%" stop-color="#f252fc"/>
+            <stop offset="55%" stop-color="#ec9bff"/>
+            <stop offset="100%" stop-color="#8f9bff"/>
+          </linearGradient>
+        </defs>
+        <path d="M60 22C78 20 95 34 97 55C99 74 90 92 72 98C63 101 54 101 46 98C29 93 22 80 23 62C24 42 42 24 60 22Z" fill="none" stroke="url(#mioGrad)" stroke-width="5" stroke-linecap="round"/>
+        <g class="mio-eyes">
+          <rect x="46" y="52" width="8" height="18" rx="4" fill="#fffbff"/>
+          <rect x="66" y="52" width="8" height="18" rx="4" fill="#fffbff"/>
+        </g>
+      </svg>
+    </div>
+    <div>
+      <h1>Brand<br>Guidelines</h1>
+      <p class="subtitle">Open Station · Visual Identity Reference</p>
+    </div>
+    <div class="contact">
+      <span class="label">Links</span>
+      <p>
+        <a href="https://wordpress.org/plugins/desktop-mode/">wordpress.org/plugins/desktop-mode</a><br>
+        <a href="https://github.com/WordPress/desktop-mode">github.com/WordPress/desktop-mode</a><br>
+        <a href="https://next-admin.blog">next-admin.blog</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ ELEMENTS OF BRANDING ============ -->
+  <section>
+    <span class="label">Elements of branding</span>
+    <div class="lockups">
+      <div>
+        <div class="lockup">
+          <img src="assets/logomark.svg" alt="Open Station logomark">
+        </div>
+        <div class="lockup">
+          <img src="assets/logomark-app.svg" alt="Open Station app icon">
+        </div>
+        <p class="label lockup-note">Logomark</p>
+      </div>
+      <div>
+        <div class="lockup grid-bg construction">
+          <svg class="construction-svg" viewBox="0 0 480 480" role="img" aria-label="Logomark construction: the mark outlined inside its container square">
+            <rect x="70" y="70" width="340" height="340" rx="104" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/>
+            <circle cx="240" cy="240" r="96" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1" stroke-dasharray="2 7"/>
+            <g transform="translate(127.5,127.5) scale(0.75)">
+              <path d="M145.471 0.0697654C228.318 -2.43338 297.492 62.7318 299.934 145.581C302.373 228.344 237.291 297.432 154.53 299.931C71.7697 302.433 2.6357 237.401 0.0732452 154.642C-2.49165 71.7959 62.6239 2.57333 145.471 0.0697654ZM145.124 35.0629C134.336 29.5466 122.817 30.8515 111.912 34.7553C47.4055 55.1269 12.5653 127.103 35.3897 190.52C41.3286 207.017 50.8057 223.125 63.5439 235.448C81.0555 253.263 103.653 265.222 128.231 269.681C138.791 271.576 153.744 274.029 162.075 265.471C174.021 253.199 165.4 241.65 161.643 228.161C157.98 214.784 156.027 201 155.828 187.134C155.739 175.4 158.219 159.26 160.561 147.57C166.085 119.99 175.816 92.6857 167.044 64.6303C163.143 52.6645 156.747 41.0065 145.124 35.0629Z" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
+            </g>
+          </svg>
+        </div>
+        <p class="label lockup-note">Construction · rules provisional</p>
+      </div>
+    </div>
+    <div class="primary-lockup">
+      <img src="assets/logomark.svg" alt="">
+      <span class="wordmark">Open Station</span>
+    </div>
+    <p class="label lockup-note">Logomark + wordmark combined</p>
+    <div class="primary-lockup app-lockup">
+      <div class="app-icon"><i class="mark m1"></i></div>
+      <div class="app-icon"><i class="mark m2"></i></div>
+      <div class="app-icon"><i class="mark m3"></i></div>
+      <div class="app-icon"><i class="mark m4"></i></div>
+      <div class="app-icon"><i class="mark m5"></i></div>
+    </div>
+    <p class="label lockup-note">Logo App · the mark over the meshes, on the app template</p>
+  </section>
+
+  <!-- ============ COLOR ============ -->
+  <section>
+    <span class="label">Color</span>
+    <div class="mosaic">
+      <div class="ctile t-astro">
+        <b>Astro</b>
+        <span>HEX #19161E</span>
+        <span>RGB 25, 22, 30</span>
+        <span>HSL 263, 15, 10</span>
+      </div>
+      <div class="ctile t-pulsarmesh">
+        <b>Pulsarmesh</b>
+      </div>
+      <div class="ctile t-starlight">
+        <b>Starlight</b>
+        <span>HEX #FFFBFF</span>
+        <span>RGB 255, 251, 255</span>
+        <span>HSL 300, 100, 99</span>
+      </div>
+      <div class="ctile t-nebula">
+        <b>Nebula</b>
+        <span>HEX #EC9BFF</span>
+        <span>RGB 236, 155, 255</span>
+        <span>HSL 289, 100, 80</span>
+      </div>
+      <div class="ctile t-holomesh">
+        <b>Holomesh</b>
+      </div>
+      <div class="ctile t-void">
+        <b>Void</b>
+        <span>HEX #0C0B0F</span>
+        <span>RGB 12, 11, 15</span>
+        <span>HSL 255, 15, 5</span>
+      </div>
+      <div class="ctile t-pulsar">
+        <b>Pulsar</b>
+        <span>HEX #F252FC</span>
+        <span>RGB 242, 82, 252</span>
+        <span>HSL 296, 97, 65</span>
+      </div>
+    </div>
+    <div class="usage-row">
+      <div class="donut"></div>
+      <div class="tbd">Ratios and rules land here: Void as the base, Astro for surfaces, Pulsar and Nebula for identity moments, Starlight for contrast, meshes reserved for hero surfaces.</div>
+    </div>
+  </section>
+
+  <!-- ============ TYPOGRAPHY ============ -->
+  <section>
+    <span class="label">The fonts &amp; typefaces</span>
+    <div class="band">
+
+      <div>
+        <div class="specimen-aa"><sup>Aa</sup>Aa</div>
+        <p class="alphabet">AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz</p>
+        <p class="numbers">1234567890 +/@&amp;!?()</p>
+        <div class="weights">
+          <span class="w700">Bold</span>
+          <span class="w500">Medium</span>
+          <span class="w400">Regular</span>
+          <span class="w300">Light</span>
+        </div>
+        <div class="mono-sample">
+          <b>Geist Mono</b>
+          <span>DOCKING_COMPLETE<br>SPACE_03 ACTIVE</span>
+        </div>
+      </div>
+
+      <div class="type-style">
+        <h3>Geist speaks.<br>Geist Mono is the instrument voice.</h3>
+        <p><b>Geist</b> carries everything human: headlines, UI copy, body text. Set it tight at display sizes and regular for reading.</p>
+        <p><b>Geist Mono</b> carries everything the station says about itself: labels, metadata, statuses, coordinates. Small, uppercase, letterspaced.</p>
+        <p>Both families are licensed under the SIL Open Font License 1.1 and ship self-hosted with this guide.</p>
+        <div class="type-rules">
+          <div><b>Display</b><span>Geist 520-550 · tracking -0.04em · line height 0.95</span></div>
+          <div><b>UI / Body</b><span>Geist 400-500 · normal tracking · line height 1.5</span></div>
+          <div><b>Labels</b><span>Geist Mono 500 · uppercase · tracking +0.12em</span></div>
+          <div><b>Data / Code</b><span>Geist Mono 400 · sentence case</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ MIO ============ -->
+  <section>
+    <span class="label">Mio</span>
+    <p class="mio-intro"><b>Meet Mio.</b> A small ghost blob that lives aboard the station: it glows in Pulsar, drifts between windows, and shows up where the interface has something to say. Eight explorations so far.</p>
+    <div class="mio-grid">
+      <figure><img src="assets/mio/01-rounded-blob.jpg" alt="Mio exploration: Luna, a rounded blob"><figcaption>Luna</figcaption></figure>
+      <figure><img src="assets/mio/02-comet.jpg" alt="Mio exploration: Cometa, a comet"><figcaption>Cometa</figcaption></figure>
+      <figure><img src="assets/mio/03-blob-orbit-ring.jpg" alt="Mio exploration: Órbita, a blob with an orbit ring"><figcaption>Órbita</figcaption></figure>
+      <figure><img src="assets/mio/07-rounded-o-blob-squashed.jpg" alt="Mio exploration: Eclipse, a squashed rounded O"><figcaption>Eclipse</figcaption></figure>
+      <figure><img src="assets/mio/13-ghost-blob-rounded-bell.jpg" alt="Mio exploration: Alba, a rounded bell"><figcaption>Alba</figcaption></figure>
+      <figure><img src="assets/mio/14-ghost-blob-soft-scallop.jpg" alt="Mio exploration: Nube, a soft scallop"><figcaption>Nube</figcaption></figure>
+      <figure><img src="assets/mio/15-ghost-blob-pebble.jpg" alt="Mio exploration: Asteroide, a pebble"><figcaption>Asteroide</figcaption></figure>
+      <figure><img src="assets/mio/17-ghost-blob-compact-droplet.jpg" alt="Mio exploration: Gotita, a compact droplet"><figcaption>Gotita</figcaption></figure>
+    </div>
+    <div class="tbd" style="margin-top:40px;">Final form, expressions, poses and usage rules to be defined.</div>
+  </section>
+
+  <!-- ============ MERCH ============ -->
+  <section>
+    <span class="label">Merch</span>
+    <div class="merch-grid">
+      <figure><img src="assets/merch/stickers-logomark.jpg" alt="Holographic logomark stickers in rounded square and circle die cuts"><figcaption>Holographic stickers · logomark</figcaption></figure>
+      <figure><img src="assets/merch/pins-logomark.jpg" alt="Enamel pins with the holographic logomark on black"><figcaption>Enamel pins · logomark</figcaption></figure>
+      <figure><img src="assets/merch/stickers-pins-mio.jpg" alt="Mio stickers and enamel pins with neon holographic rims"><figcaption>Stickers + pins · Mio</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- ============ ICONOGRAPHY ============ -->
+  <section>
+    <span class="label">Iconography</span>
+    <div class="icon-band">
+      <div class="icon-row">
+        <div class="icon-dot"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1.5"/><line x1="2" y1="6" x2="14" y2="6"/></svg></div>
+        <div class="icon-dot"><svg viewBox="0 0 16 16"><circle cx="4" cy="12" r="1.4"/><circle cx="8" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><line x1="2" y1="8.5" x2="14" y2="8.5"/></svg></div>
+        <div class="icon-dot"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5"/><ellipse cx="8" cy="8" rx="5.5" ry="2.2"/></svg></div>
+        <div class="icon-dot"><svg viewBox="0 0 16 16"><path d="M8 2 L9.5 6.5 L14 8 L9.5 9.5 L8 14 L6.5 9.5 L2 8 L6.5 6.5 Z"/></svg></div>
+        <div class="icon-dot"><svg viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="4.5" height="4.5" rx="1"/><rect x="9" y="2.5" width="4.5" height="4.5" rx="1"/><rect x="2.5" y="9" width="4.5" height="4.5" rx="1"/><rect x="9" y="9" width="4.5" height="4.5" rx="1"/></svg></div>
+        <div class="icon-dot"><svg viewBox="0 0 16 16"><path d="M3 13 L8 3 L13 13"/><line x1="5" y1="9.5" x2="11" y2="9.5"/></svg></div>
+      </div>
+      <div class="tbd">Icon grid, stroke weight and corner language to be defined with the product icon set.</div>
+    </div>
+  </section>
+
+  <!-- ============ IMAGERY ============ -->
+  <section>
+    <span class="label">Imagery</span>
+    <div class="imagery">
+      <div class="tbd">Art direction for illustrations, wallpapers and press imagery. Working hypothesis: deep space, engineered calm, gradients over photography.</div>
+      <div class="img-ph"><span>Imagery slot · wallpaper / illustration</span></div>
+    </div>
+  </section>
+
+  <!-- ============ VOICE ============ -->
+  <section>
+    <span class="label">Voice &amp; copy</span>
+    <div class="tbd">Tone of voice, naming rules for features (Spaces, Dock, Palette), and do / don't copy pairs land here.</div>
+  </section>
+
+  <!-- ============ LEGAL ============ -->
+  <section>
+    <span class="label">Licensing &amp; open source</span>
+    <div class="legal">
+      <p><b>Everything here is meant to be reused.</b> Open Station is an open-source WordPress plugin (GPL). Every asset that ships with the brand, including logo, wallpapers, illustrations and fonts, must be freely licensable and GPL-compatible.</p>
+      <p><b>Typefaces.</b> Geist and Geist Mono by Vercel are licensed under the SIL Open Font License 1.1. The license text is bundled in this repository next to the font files.</p>
+      <p><b>Extenders.</b> Third parties build on the public APIs and component kit. Treat the visual system as something others will reuse outside our control: tokens over one-offs, rules over exceptions.</p>
+      <p><b>No internal content.</b> This guide is public. Only public links, public-safe imagery and freely licensed assets belong in it.</p>
+    </div>
+  </section>
+
+  <!-- ============ USAGE EXAMPLES ============ -->
+  <section>
+    <div class="examples">
+      <div>
+        <span class="label" style="display:block; margin-bottom:40px;">Usage examples</span>
+        <div class="print-shapes">
+          <div class="shape sh-a4"><span class="chip"><img src="assets/logomark.svg" alt="">Open Station</span><em>A4</em></div>
+          <div class="shape sh-disc"></div>
+          <div class="shape sh-a5"><span class="chip"><img src="assets/logomark.svg" alt="">Open Station</span><em>A5</em></div>
+          <div class="shape sh-tag"><span class="chip"><img src="assets/logomark.svg" alt=""></span></div>
+        </div>
+      </div>
+      <div>
+        <span class="label" style="display:block; margin-bottom:40px;">In the product</span>
+        <div class="product-tiles">
+          <div class="tile wallpaper">
+            <span class="tile-label">Wallpaper</span>
+            <div class="lockup-mini"><img src="assets/logomark.svg" alt=""><span>Open Station</span></div>
+          </div>
+          <div class="tile shell">
+            <span class="tile-label">Shell</span>
+            <div class="mini-window">
+              <div class="bar"><i></i><i></i><i></i></div>
+              <div class="body"><i></i><i></i><i></i></div>
+            </div>
+            <div class="mini-dock"><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ USE THIS BRAND ============ -->
+  <section id="use-this-brand">
+    <span class="label">Use this brand</span>
+    <div class="use-grid">
+      <div>
+        <p class="use-head">Download</p>
+        <ul class="dl-list">
+          <li><a href="assets/logomark.svg" download>logomark.svg <span>vector</span></a></li>
+          <li><a href="assets/logomark-app.svg" download>logomark-app.svg <span>app icon</span></a></li>
+          <li><a href="assets/pulsarmesh.jpg" download>pulsarmesh.jpg <span>mesh</span></a></li>
+          <li><a href="assets/holomesh.jpg" download>holomesh.jpg <span>mesh</span></a></li>
+          <li><a href="assets/mesh-soft.jpg" download>mesh-soft.jpg <span>mesh</span></a></li>
+          <li><a href="fonts/Geist-Variable.woff2" download>Geist-Variable.woff2 <span>OFL 1.1</span></a></li>
+          <li><a href="fonts/GeistMono-Variable.woff2" download>GeistMono-Variable.woff2 <span>OFL 1.1</span></a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="use-head">For agents &amp; tooling</p>
+        <p class="use-copy">Machine-readable brand data lives next to this page. Point an AI agent or a build tool at either file and it has the whole system: colors, type, radii, assets, rules.</p>
+        <ul class="dl-list">
+          <li><a href="llms.txt">llms.txt <span>brand summary for AI agents</span></a></li>
+          <li><a href="brand.json" download>brand.json <span>design tokens</span></a></li>
+        </ul>
+        <p class="use-copy">And a small human shortcut: every solid tile in the Color section copies its HEX on click.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Open Station · Brand Guidelines</span>
+    <span>V0.1 · August 2026</span>
+    <span>Made in the open</span>
+  </footer>
+
+</div>
+<script>
+  document.querySelectorAll('.ctile').forEach(function (tile) {
+    var hexLine = tile.querySelector('span');
+    if (!hexLine || hexLine.textContent.indexOf('HEX #') !== 0) return;
+    var hex = hexLine.textContent.replace('HEX ', '');
+    tile.style.cursor = 'copy';
+    tile.title = 'Click to copy ' + hex;
+    tile.addEventListener('click', function () {
+      navigator.clipboard.writeText(hex).then(function () {
+        var name = tile.querySelector('b');
+        var original = name.textContent;
+        name.textContent = 'Copied ' + hex;
+        setTimeout(function () { name.textContent = original; }, 1200);
+      });
+    });
+  });
+</script>
+</body>
+</html>

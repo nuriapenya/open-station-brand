@@ -1,0 +1,45 @@
+# Open Station Brand
+
+> Brand guidelines for Open Station, the open-source WordPress plugin that turns wp-admin into a desktop OS: windows, a dock, spaces and a command palette on top of WordPress. This file is the machine-readable summary; the visual reference lives at index.html and the structured tokens at brand.json.
+
+The name works on three levels: the space and cosmos territory, the initials hinting at OS, and "Open" saying open source out loud. The visual world is a calm, engineered station in deep space: dark surfaces, neon pulsar accents, holographic meshes, and a small ghost mascot.
+
+## Colors (all named after spatial concepts)
+
+- Pulsar #F252FC (RGB 242, 82, 252): neon identity accent
+- Nebula #EC9BFF (RGB 236, 155, 255): soft identity accent
+- Starlight #FFFBFF (RGB 255, 251, 255): light contrast
+- Astro #19161E (RGB 25, 22, 30): surface dark
+- Void #0C0B0F (RGB 12, 11, 15): darkest color, base background
+
+Two named gradient meshes, reserved for hero surfaces:
+
+- Holomesh (soft holographic): assets/holomesh.jpg
+- Pulsarmesh (neon magenta): assets/pulsarmesh.jpg
+
+## Typography
+
+- Geist (variable): headlines, UI, body. Display is tight (tracking -0.04em, line height 0.95).
+- Geist Mono (variable): labels, metadata, statuses. Small, uppercase, tracking +0.12em.
+- Both under SIL OFL 1.1, self-hosted: fonts/Geist-Variable.woff2, fonts/GeistMono-Variable.woff2, license at fonts/OFL.txt.
+
+## Logo
+
+- Logomark: assets/logomark.svg (a circle with a fluid blob cut, single color)
+- App icon: assets/logomark-app.svg (dark rounded square, radius 113/512, inner shadow 3px 3px 4px rgba(255,255,255,0.25), mark inset 18%, optionally filled with a mesh)
+- Rule: the logomark and the wordmark ("Open Station", Geist 520, tracking -0.03em) always travel together.
+- Construction and clear-space ratios are provisional.
+
+## Mascot
+
+Mio, a small ghost blob that glows in Pulsar and drifts between windows. Named explorations: Luna, Cometa, Órbita, Eclipse, Alba, Nube, Asteroide, Gotita (assets/mio/). Final form and usage rules are still open.
+
+## Files
+
+- [brand.json](brand.json): design tokens (colors, meshes, type, radii, logo rules)
+- [assets/](assets/): logomark, app icon, meshes, Mio explorations, merch renders
+- [fonts/](fonts/): Geist and Geist Mono variable files plus the OFL license
+
+## Licensing
+
+Open Station is an open-source WordPress plugin (GPL): https://wordpress.org/plugins/desktop-mode/ and https://github.com/WordPress/desktop-mode. Brand assets are meant to be reused; keep attribution sensible and do not present modified marks as official.

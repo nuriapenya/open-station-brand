@@ -1,0 +1,101 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "name": "Open Station",
+  "description": "Brand tokens for Open Station, the open-source WordPress plugin that turns wp-admin into a desktop OS.",
+  "version": "0.1.0",
+  "updated": "2026-08-01",
+  "guidelines": "https://nuriapenya.github.io/open-station-brand/",
+  "color": {
+    "pulsar": {
+      "$type": "color",
+      "$value": "#f252fc",
+      "$description": "Pulsar. Neon identity accent. RGB 242, 82, 252. HSL 296, 97, 65."
+    },
+    "nebula": {
+      "$type": "color",
+      "$value": "#ec9bff",
+      "$description": "Nebula. Soft identity accent. RGB 236, 155, 255. HSL 289, 100, 80."
+    },
+    "starlight": {
+      "$type": "color",
+      "$value": "#fffbff",
+      "$description": "Starlight. Light contrast color. RGB 255, 251, 255. HSL 300, 100, 99."
+    },
+    "astro": {
+      "$type": "color",
+      "$value": "#19161e",
+      "$description": "Astro. Surface dark. RGB 25, 22, 30. HSL 263, 15, 10."
+    },
+    "void": {
+      "$type": "color",
+      "$value": "#0c0b0f",
+      "$description": "Void. Darkest brand color, base background. RGB 12, 11, 15. HSL 255, 15, 5."
+    }
+  },
+  "mesh": {
+    "holomesh": {
+      "$type": "asset",
+      "$value": "assets/holomesh.jpg",
+      "$description": "Holomesh. Soft holographic gradient mesh for hero surfaces."
+    },
+    "pulsarmesh": {
+      "$type": "asset",
+      "$value": "assets/pulsarmesh.jpg",
+      "$description": "Pulsarmesh. Neon magenta gradient mesh for hero surfaces."
+    },
+    "mesh-soft": {
+      "$type": "asset",
+      "$value": "assets/mesh-soft.jpg",
+      "$description": "Soft pastel companion mesh."
+    }
+  },
+  "typography": {
+    "sans": {
+      "$type": "fontFamily",
+      "$value": ["Geist", "system-ui", "sans-serif"],
+      "$description": "Everything human: headlines, UI copy, body text.",
+      "file": "fonts/Geist-Variable.woff2",
+      "license": "SIL OFL 1.1 (fonts/OFL.txt)"
+    },
+    "mono": {
+      "$type": "fontFamily",
+      "$value": ["Geist Mono", "ui-monospace", "monospace"],
+      "$description": "The instrument voice: labels, metadata, statuses, coordinates. Small, uppercase, letterspaced.",
+      "file": "fonts/GeistMono-Variable.woff2",
+      "license": "SIL OFL 1.1 (fonts/OFL.txt)"
+    },
+    "rules": {
+      "display": "Geist 520-550, tracking -0.04em, line height 0.95",
+      "body": "Geist 400-500, normal tracking, line height 1.5",
+      "labels": "Geist Mono 500, uppercase, tracking +0.12em",
+      "data": "Geist Mono 400, sentence case"
+    }
+  },
+  "radius": {
+    "poster": { "$type": "dimension", "$value": "13px" },
+    "card": { "$type": "dimension", "$value": "10px" },
+    "inner": { "$type": "dimension", "$value": "8px" },
+    "appIcon": { "$type": "dimension", "$value": "113/512 of icon size" }
+  },
+  "logo": {
+    "logomark": "assets/logomark.svg",
+    "appIcon": "assets/logomark-app.svg",
+    "rules": [
+      "The logomark and the wordmark always travel together.",
+      "Wordmark is set in Geist at weight 520 with tracking -0.03em.",
+      "App icon: dark rounded square (radius 113/512) with inner shadow 3px 3px 4px rgba(255,255,255,0.25); the mark sits inside an 18% margin and may be filled with a mesh.",
+      "Construction and clear-space ratios are provisional."
+    ]
+  },
+  "mascot": {
+    "name": "Mio",
+    "description": "A small ghost blob that lives aboard the station: it glows in Pulsar, drifts between windows, and shows up where the interface has something to say.",
+    "explorations": "assets/mio/",
+    "status": "Final form, expressions, poses and usage rules to be defined."
+  },
+  "license": {
+    "summary": "Open Station is an open-source WordPress plugin (GPL). Brand assets are meant to be reused; fonts are SIL OFL 1.1.",
+    "product": "https://wordpress.org/plugins/desktop-mode/",
+    "repository": "https://github.com/WordPress/desktop-mode"
+  }
+}

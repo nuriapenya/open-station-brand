@@ -1,0 +1,24 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<foreignObject x="-26.8" y="-26.8" width="565.6" height="565.6"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(13.4px);clip-path:url(#bgblur_0_2219_14992_clip_path);height:100%;width:100%"></div></foreignObject><g filter="url(#filter0_i_2219_14992)" data-figma-bg-blur-radius="26.8">
+<rect width="512" height="512" rx="113" fill="black"/>
+</g>
+<mask id="mask0_2219_14992" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="91" y="91" width="330" height="330">
+<path d="M303.487 413.973C216.286 440.187 124.339 390.785 98.0618 303.604C71.757 216.332 121.223 124.267 208.514 98.027C295.806 71.7873 387.834 121.319 414.009 208.631C440.157 295.85 390.687 387.762 303.487 413.973ZM232.059 387.673C243.672 389.757 260.115 392.454 269.278 383.043C282.415 369.547 272.933 356.847 268.801 342.011C264.774 327.301 262.626 312.143 262.408 296.895C262.31 283.991 265.037 266.241 267.612 253.385C273.687 223.056 284.388 193.028 274.742 162.175C270.451 149.017 263.418 136.197 250.636 129.661C238.772 123.594 226.105 125.029 214.112 129.322C143.172 151.725 104.858 230.877 129.958 300.618C136.489 318.76 146.912 336.474 160.92 350.026C180.178 369.617 205.03 382.769 232.059 387.673Z" fill="#FCFCFB"/>
+</mask>
+<g mask="url(#mask0_2219_14992)">
+<rect x="91" y="-49" width="330" height="587" fill="white"/>
+</g>
+<defs>
+<filter id="filter0_i_2219_14992" x="-26.8" y="-26.8" width="565.6" height="565.6" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="3" dy="3"/>
+<feGaussianBlur stdDeviation="2"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="shape" result="effect1_innerShadow_2219_14992"/>
+</filter>
+<clipPath id="bgblur_0_2219_14992_clip_path" transform="translate(26.8 26.8)"><rect width="512" height="512" rx="113"/>
+</clipPath></defs>
+</svg>
