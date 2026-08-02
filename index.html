@@ -291,53 +291,27 @@
 
   /* ---------- Logo App ---------- */
   .app-lockup { gap: 32px; flex-wrap: wrap; }
-  /* App template: background Void #0C0B0F, inset 3px 3px 4px rgba(255,255,255,.25)
-     at the 512 grid, radius 113px at the 512 grid (21px at this size) */
-  .app-icon {
-    width: 96px; height: 96px;
-    border-radius: 21px;
-    background: var(--void);
-    position: relative;
-  }
-  .app-icon::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    box-shadow: inset 3px 3px 4px rgba(255, 255, 255, 0.25);
-  }
-  .app-icon .mark {
-    position: absolute;
-    inset: 16.66%;                      /* the mark fills the central 2/3 of the tile */
-    display: block;
-    -webkit-mask: url('assets/logomark.svg') center / contain no-repeat;
-    mask: url('assets/logomark.svg') center / contain no-repeat;
-  }
-  .app-icon .m-star { background: var(--starlight); }
-  .app-icon .m-holo { background: url('assets/holomesh.jpg') 60% 30% / 280% auto; }
-  .app-icon .m-void { background: var(--void); }
-  /* Inverted variants: Starlight or Holomesh fills the tile, the mark goes Void */
-  .app-icon.light { background: var(--starlight); }
-  .app-icon.bg-holo { background: url('assets/holomesh.jpg') 60% 30% / cover; }
+  /* App template (self-contained SVGs from Figma): Void tile, rounded square
+     (radius 25/120 of the icon size) or circle, soft white inner shadow, mark
+     at the central 2/3. The tile is always Void: Holomesh never fills the
+     tile, so there is no negative app icon. */
+  .app-icon { width: 96px; height: 96px; display: block; }
 
-  /* Lockup banners: negative on Void, positive on Holomesh (padding 12, 40px mark, 24px type) */
+  /* Lockup banner: Holomesh mark, Starlight type, Void surface
+     (padding 12, 40px mark, 24px type). Holo backgrounds are for surfaces and
+     CTAs, never behind the logo, so there is no positive banner. */
   .lockup-banner {
     display: inline-flex;
     align-items: center;
     gap: 12px;
     padding: 12px 22px 12px 12px;
     border-radius: 8px;
+    background: var(--void);
+    color: var(--starlight);
+    border: 1px solid var(--line-soft);
   }
-  .lockup-banner .bmark {
-    width: 40px; height: 40px;
-    -webkit-mask: url('assets/logomark.svg') center / contain no-repeat;
-    mask: url('assets/logomark.svg') center / contain no-repeat;
-  }
+  .lockup-banner .bmark { width: 40px; height: 40px; }
   .lockup-banner span { font-size: 24px; font-weight: 600; letter-spacing: 0; white-space: nowrap; }
-  .lockup-banner.negative { background: var(--void); color: var(--starlight); border: 1px solid var(--line-soft); }
-  .lockup-banner.negative .bmark { background: url('assets/holomesh.jpg') 60% 30% / 280% auto; }
-  .lockup-banner.positive { background: url('assets/holomesh.jpg') center / cover; color: var(--void); }
-  .lockup-banner.positive .bmark { background: var(--void); }
 
   /* ---------- Use this brand ---------- */
   .use-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 72px); }
@@ -773,17 +747,17 @@
     <div class="lockups">
       <div>
         <div class="lockup">
-          <img src="assets/logomark.svg" alt="OpenStation logomark">
+          <img src="assets/logomark.svg" alt="OpenStation logomark in Starlight">
         </div>
         <div class="lockup">
-          <img src="assets/logomark-app.svg" alt="OpenStation app icon">
+          <img src="assets/logomark-holo.svg" alt="OpenStation logomark with Holomesh fill">
         </div>
-        <p class="label lockup-note">Logomark</p>
+        <p class="label lockup-note">Logomark · Starlight · Holomesh fill</p>
       </div>
       <div>
         <div class="lockup grid-bg construction">
           <svg class="construction-svg" viewBox="0 0 480 480" role="img" aria-label="Logomark construction: the mark outlined inside its container square">
-            <rect x="70" y="70" width="340" height="340" rx="75" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/>
+            <rect x="70" y="70" width="340" height="340" rx="70.8" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/>
             <circle cx="240" cy="240" r="113.3" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1" stroke-dasharray="2 7"/>
             <g transform="translate(126.67,126.67) scale(2.8333)">
               <path d="M38.792 0.0186131C60.8846 -0.649069 79.3313 16.7291 79.9824 38.8223C80.6326 60.8921 63.2773 79.3149 41.208 79.9815C19.1385 80.6488 0.702853 63.3074 0.0195305 41.2383C-0.66441 19.1462 16.6995 0.686396 38.792 0.0186131ZM38.71 9.36236C35.8339 7.89166 32.7628 8.23954 29.8555 9.28033C12.6582 14.7114 3.37017 33.8997 9.45508 50.8067C11.0384 55.2047 13.565 59.4989 16.9609 62.7842C21.6294 67.5336 27.6536 70.7223 34.2061 71.9112C37.0214 72.4165 41.0083 73.0707 43.2295 70.7891C46.4143 67.5174 44.115 64.4383 43.1133 60.8419C42.137 57.2757 41.6165 53.6009 41.5635 49.9044C41.5398 46.776 42.201 42.473 42.8252 39.3565C44.2979 32.0039 46.892 24.7246 44.5537 17.2452C43.5137 14.0551 41.8086 10.9469 38.71 9.36236Z" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
@@ -799,17 +773,16 @@
     </div>
     <p class="label lockup-note">Logoword · Geist SemiBold · mark height 5/3 of the type size · gap half the type size</p>
     <div class="primary-lockup app-lockup">
-      <div class="app-icon"><i class="mark m-star"></i></div>
-      <div class="app-icon"><i class="mark m-holo"></i></div>
-      <div class="app-icon light"><i class="mark m-void"></i></div>
-      <div class="app-icon bg-holo"><i class="mark m-void"></i></div>
+      <img class="app-icon" src="assets/logomark-app.svg" alt="App icon: Starlight mark on a Void rounded square">
+      <img class="app-icon" src="assets/logomark-app-holo.svg" alt="App icon: Holomesh mark on a Void rounded square">
+      <img class="app-icon" src="assets/logomark-app-circle.svg" alt="App icon: Starlight mark on a Void circle">
+      <img class="app-icon" src="assets/logomark-app-circle-holo.svg" alt="App icon: Holomesh mark on a Void circle">
     </div>
-    <p class="label lockup-note">Logo App · Starlight and Holomesh marks on Void · Void mark on Starlight and Holomesh</p>
+    <p class="label lockup-note">Logo App · Starlight and Holomesh marks · rounded square and circle · the tile is always Void</p>
     <div class="primary-lockup app-lockup">
-      <div class="lockup-banner negative"><i class="bmark"></i><span>OpenStation</span></div>
-      <div class="lockup-banner positive"><i class="bmark"></i><span>OpenStation</span></div>
+      <div class="lockup-banner"><img class="bmark" src="assets/logomark-holo.svg" alt=""><span>OpenStation</span></div>
     </div>
-    <p class="label lockup-note">Lockup banners · Negative on Void · Positive on Holomesh</p>
+    <p class="label lockup-note">Lockup banner · Holomesh mark, Starlight type, always on Void · holo is for backgrounds and CTAs, never behind the logo</p>
   </section>
 
   <!-- ============ COLOR ============ -->
@@ -857,6 +830,7 @@
         <span>Type Mesh gradient</span>
         <span>Colors Lavender, Pink, Cyan, Mint</span>
         <span>Style Holographic</span>
+        <span>Use Backgrounds and CTAs, never behind the logo</span>
       </div>
       <div class="ctile t-pulsemesh">
         <b>Pulsemesh</b>
@@ -1046,8 +1020,13 @@
         <p class="use-head">Download</p>
         <ul class="dl-list">
           <li><a href="assets/logomark.svg" download>logomark.svg <span>vector</span></a></li>
+          <li><a href="assets/logomark-holo.svg" download>logomark-holo.svg <span>vector · holo fill</span></a></li>
           <li><a href="assets/logoword.svg" download>logoword.svg <span>lockup · text outlined</span></a></li>
-          <li><a href="assets/logomark-app.svg" download>logomark-app.svg <span>app icon</span></a></li>
+          <li><a href="assets/logoword-holo.svg" download>logoword-holo.svg <span>lockup · holo mark</span></a></li>
+          <li><a href="assets/logomark-app.svg" download>logomark-app.svg <span>app icon · square</span></a></li>
+          <li><a href="assets/logomark-app-holo.svg" download>logomark-app-holo.svg <span>app icon · square · holo</span></a></li>
+          <li><a href="assets/logomark-app-circle.svg" download>logomark-app-circle.svg <span>app icon · circle</span></a></li>
+          <li><a href="assets/logomark-app-circle-holo.svg" download>logomark-app-circle-holo.svg <span>app icon · circle · holo</span></a></li>
           <li><a href="assets/pulsemesh.jpg" download>pulsemesh.jpg <span>mesh</span></a></li>
           <li><a href="assets/holomesh.jpg" download>holomesh.jpg <span>mesh</span></a></li>
           <li><a href="fonts/Geist-Variable.woff2" download>Geist-Variable.woff2 <span>OFL 1.1</span></a></li>

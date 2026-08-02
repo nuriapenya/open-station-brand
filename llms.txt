@@ -21,7 +21,7 @@ Shade palette (secondary, a ten-step grays ramp from dark to light; Void, Obsidi
 
 Two named gradient meshes, reserved for hero surfaces:
 
-- Holomesh (holographic: lavender, pink, cyan, mint): assets/holomesh.jpg
+- Holomesh (holographic: lavender, pink, cyan, mint): assets/holomesh.jpg. For backgrounds, CTAs and surfaces; never a background behind the logo.
 - Pulsemesh (pulsar style: magenta, pink, cyan, white): assets/pulsemesh.jpg (formerly named Pulsarmesh)
 
 ## Typography
@@ -33,10 +33,11 @@ Two named gradient meshes, reserved for hero surfaces:
 
 ## Logo
 
-- Logomark: assets/logomark.svg (a circle with a fluid blob cut, single color; refined upright version, August 2026)
-- Logoword: assets/logoword.svg (the full lockup with the name outlined; the live text version is "OpenStation" in Geist SemiBold 600, sentence case, no added tracking)
-- App icon: assets/logomark-app.svg (Void #0C0B0F rounded square, radius 113/512, inner shadow 3px 3px 4px rgba(255,255,255,0.25), mark fills the central 2/3 of the tile). Variants: Starlight or Holomesh-filled mark on Void, Void mark on Starlight, Void mark on Holomesh.
-- Lockup banners: negative is the Holomesh-filled mark with Starlight text on Void; positive is the Void mark with Void text on Holomesh.
+- Logomark: assets/logomark.svg (a circle with a fluid blob cut; refined upright version, August 2026). Two fills: Starlight, or the Holomesh holographic gradient baked in as a vector gradient stack (assets/logomark-holo.svg).
+- Logoword: assets/logoword.svg (the full lockup with the name outlined; the live text version is "OpenStation" in Geist SemiBold 600, sentence case, no added tracking). Holo-mark version: assets/logoword-holo.svg.
+- App icon: Void #0C0B0F tile, rounded square (radius 25/120 of the icon size, assets/logomark-app.svg and assets/logomark-app-holo.svg) or circle (assets/logomark-app-circle.svg and assets/logomark-app-circle-holo.svg), soft white inner shadow, mark fills the central 2/3 of the tile. The mark is Starlight or Holomesh-filled, always on Void. There is no inverted or holo-background app icon.
+- Lockup banner: the Holomesh-filled mark with Starlight text on Void (padding 12px at the 40px-mark size, radius 8px). There is no positive banner on Holomesh.
+- Rule: Holomesh may fill the mark, and may be used on backgrounds and CTAs elsewhere, but never sits behind the logo; the knocked-out (negative) logo on Holomesh is not part of the system.
 - Rule: the logomark and the logoword always travel together.
 - Lockup proportions: the mark's height is 5/3 of the logoword's font size (40px mark with 24px type), the gap is half the font size, both centered on the same axis.
 - Clear-space ratios are provisional.

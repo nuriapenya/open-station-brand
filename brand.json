@@ -2,7 +2,7 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "name": "OpenStation",
   "description": "Brand tokens for OpenStation, the open-source WordPress plugin that turns wp-admin into a desktop OS.",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "updated": "2026-08-02",
   "guidelines": "https://nuriapenya.github.io/open-station-brand/",
   "color": {
@@ -91,7 +91,7 @@
     "holomesh": {
       "$type": "asset",
       "$value": "assets/holomesh.jpg",
-      "$description": "Holomesh. Holographic mesh gradient (lavender, pink, cyan, mint) for hero surfaces."
+      "$description": "Holomesh. Holographic mesh gradient (lavender, pink, cyan, mint) for hero surfaces, backgrounds and CTAs. Never used as a background behind the logo: the mark can carry a holo fill, but there is no knocked-out logo on Holomesh."
     },
     "pulsemesh": {
       "$type": "asset",
@@ -162,20 +162,27 @@
     },
     "appIcon": {
       "$type": "dimension",
-      "$value": "113/512 of icon size"
+      "$value": "25/120 of icon size (rounded square), or a full circle"
     }
   },
   "logo": {
     "logomark": "assets/logomark.svg",
+    "logomarkHolo": "assets/logomark-holo.svg",
     "logoword": "assets/logoword.svg",
+    "logowordHolo": "assets/logoword-holo.svg",
     "appIcon": "assets/logomark-app.svg",
+    "appIconHolo": "assets/logomark-app-holo.svg",
+    "appIconCircle": "assets/logomark-app-circle.svg",
+    "appIconCircleHolo": "assets/logomark-app-circle-holo.svg",
     "rules": [
       "The name is OpenStation, one word, capital O and capital S.",
       "The logoword is the name set in Geist SemiBold (600), sentence case, no added tracking.",
       "Lockup proportions: the logomark's height is 5/3 of the logoword's font size (a 40px mark next to 24px type), the gap between them is half the font size, and both center on the same axis.",
       "The logomark and the logoword always travel together.",
-      "App icon: Void (#0C0B0F) rounded square (radius 113/512) with inner shadow 3px 3px 4px rgba(255,255,255,0.25); the mark fills the central 2/3 of the tile (1/6 margin on each side). Variants: Starlight or Holomesh-filled mark on Void, Void mark on Starlight, Void mark on Holomesh.",
-      "Lockup banners: negative is the Holomesh-filled mark with Starlight text on Void; positive is the Void mark with Void text on Holomesh. Padding 12px at the 40px-mark size, radius 8px.",
+      "The mark has two fills: Starlight, or the Holomesh holographic gradient (a vector gradient stack baked into the holo SVGs).",
+      "Holomesh is for backgrounds, CTAs and surfaces, never a background behind the logo: the knocked-out (negative) logo on Holomesh is not part of the system.",
+      "App icon: Void (#0C0B0F) tile, rounded square (radius 25/120 of the icon size) or circle, with a soft white inner shadow; the mark fills the central 2/3 of the tile (1/6 margin on each side). Variants: Starlight or Holomesh-filled mark, always on Void. There is no inverted or holo-background app icon.",
+      "Lockup banner: the Holomesh-filled mark with Starlight text on Void. Padding 12px at the 40px-mark size, radius 8px. There is no positive banner on Holomesh.",
       "Clear-space ratios are provisional."
     ]
   },
