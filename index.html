@@ -329,6 +329,21 @@
     backdrop-filter: blur(6px);
   }
   .ctile .dl-btn:hover { background: rgba(12, 11, 15, .62); }
+  /* Card and tile buttons stay hidden until the card is hovered
+     (or the button itself is focused); always shown on touch. */
+  .lockup .dl-btn, .ctile .dl-btn {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s ease, background .3s ease, border-color .3s ease, transform .3s ease;
+  }
+  .lockup:hover .dl-btn, .ctile:hover .dl-btn,
+  .lockup .dl-btn:focus-visible, .ctile .dl-btn:focus-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  @media (hover: none) {
+    .lockup .dl-btn, .ctile .dl-btn { opacity: 1; pointer-events: auto; }
+  }
   .dl-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
   @media (prefers-reduced-motion: reduce) {
     .dl-btn { transition: none; }
