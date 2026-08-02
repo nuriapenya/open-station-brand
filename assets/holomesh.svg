@@ -1,0 +1,22 @@
+<svg width="1440" height="960" viewBox="0 0 1440 960" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="holo_base" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1440" y2="960"><stop offset="0" stop-color="#AFA2E8"/><stop offset="0.55" stop-color="#B7ABEA"/><stop offset="1" stop-color="#C3B8EF"/></linearGradient>
+<radialGradient id="holo_r0" cx="0" cy="0" r="10" gradientUnits="userSpaceOnUse" gradientTransform="matrix(38.75 0 0 67.9 429.5 430)"><stop offset="0" stop-color="#FFFDFF" stop-opacity="0.95"/><stop offset="0.55" stop-color="#FFFDFF" stop-opacity="0.5"/><stop offset="1" stop-color="#FFFDFF" stop-opacity="0"/></radialGradient>
+<radialGradient id="holo_r1" cx="0" cy="0" r="10" gradientUnits="userSpaceOnUse" gradientTransform="matrix(43.1 0 0 51.45 770 70.5)"><stop offset="0" stop-color="#7DEFF5" stop-opacity="0.9"/><stop offset="0.6" stop-color="#8EE9F7" stop-opacity="0.45"/><stop offset="1" stop-color="#8EE9F7" stop-opacity="0"/></radialGradient>
+<radialGradient id="holo_r2" cx="0" cy="0" r="10" gradientUnits="userSpaceOnUse" gradientTransform="matrix(33.55 0 0 44.1 650.5 440)"><stop offset="0" stop-color="#F59FE8" stop-opacity="1"/><stop offset="0.55" stop-color="#F5A8EA" stop-opacity="0.55"/><stop offset="1" stop-color="#F5A8EA" stop-opacity="0"/></radialGradient>
+<radialGradient id="holo_r3" cx="0" cy="0" r="10" gradientUnits="userSpaceOnUse" gradientTransform="matrix(25.05 0 0 34.25 330.5 649.5)"><stop offset="0" stop-color="#F8F2B6" stop-opacity="0.85"/><stop offset="1" stop-color="#F8F2B6" stop-opacity="0"/></radialGradient>
+<radialGradient id="holo_r4" cx="0" cy="0" r="10" gradientUnits="userSpaceOnUse" gradientTransform="matrix(26.55 0 0 32.75 429.5 800.5)"><stop offset="0" stop-color="#93F0C6" stop-opacity="0.8"/><stop offset="1" stop-color="#93F0C6" stop-opacity="0"/></radialGradient>
+<radialGradient id="holo_r5" cx="0" cy="0" r="10" gradientUnits="userSpaceOnUse" gradientTransform="matrix(26.25 0 0 45.45 1059.5 619.5)"><stop offset="0" stop-color="#FFFDFF" stop-opacity="0.7"/><stop offset="1" stop-color="#FFFDFF" stop-opacity="0"/></radialGradient>
+<radialGradient id="holo_r6" cx="0" cy="0" r="10" gradientUnits="userSpaceOnUse" gradientTransform="matrix(37.8 0 0 54.95 1200 539.5)"><stop offset="0" stop-color="#F3B5EC" stop-opacity="0.75"/><stop offset="1" stop-color="#F3B5EC" stop-opacity="0"/></radialGradient>
+<radialGradient id="holo_r7" cx="0" cy="0" r="10" gradientUnits="userSpaceOnUse" gradientTransform="matrix(31.2 0 0 38.05 1390 129.5)"><stop offset="0" stop-color="#9FD6FF" stop-opacity="0.6"/><stop offset="1" stop-color="#9FD6FF" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1440" height="960" fill="url(#holo_base)"/>
+<rect width="1440" height="960" fill="url(#holo_r0)"/>
+<rect width="1440" height="960" fill="url(#holo_r1)"/>
+<rect width="1440" height="960" fill="url(#holo_r2)"/>
+<rect width="1440" height="960" fill="url(#holo_r3)"/>
+<rect width="1440" height="960" fill="url(#holo_r4)"/>
+<rect width="1440" height="960" fill="url(#holo_r5)"/>
+<rect width="1440" height="960" fill="url(#holo_r6)"/>
+<rect width="1440" height="960" fill="url(#holo_r7)"/>
+</svg>

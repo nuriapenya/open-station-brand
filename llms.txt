@@ -19,10 +19,12 @@ Shade palette (secondary, a ten-step grays ramp from dark to light; Void, Obsidi
 
 - Void #0C0B0F, Obsidian #1A1721, Astro #33303A, Silver #4D4A52, Pewter #66636B, Osmium #99969C, Ash #B3AFB5, Cloud #CCC8CE, Mist #E6E2E6, Starlight #FFFBFF
 
-Two named gradient meshes, reserved for hero surfaces:
+Named gradient fills and backgrounds (all vector SVGs, defined as gradient recipes in Figma):
 
-- Holomesh (holographic: lavender, pink, cyan, mint): assets/holomesh.jpg. For backgrounds, CTAs and surfaces; never a background behind the logo.
-- Pulsemesh (pulsar style: magenta, pink, cyan, white): assets/pulsemesh.jpg (formerly named Pulsarmesh)
+- Holomesh (holographic: lavender, pink, cyan, mint): assets/holomesh.svg. For hero surfaces, backgrounds and CTAs; never a background behind the logo.
+- Pulsemesh (pulsar style: magenta, pink, cyan, white): assets/pulsemesh.svg (formerly named Pulsarmesh)
+- Space (deep-space backdrop: #010101 to #111114 to #1E1D23 linear): assets/space.svg. The default dark background behind content.
+- Galaxy (Void base, Nebula glows, Starlight starfield): assets/galaxy.svg. Hero background.
 
 ## Typography
 
@@ -33,9 +35,9 @@ Two named gradient meshes, reserved for hero surfaces:
 
 ## Logo
 
-- Logomark: assets/logomark.svg (a circle with a fluid blob cut; refined upright version, August 2026). Two fills: Starlight, or the Holomesh holographic gradient baked in as a vector gradient stack (assets/logomark-holo.svg).
+- Logomark: assets/logomark.svg (a circle with a fluid blob cut; refined upright version, August 2026). Two flat fills: Starlight, or the Holomesh holographic gradient baked in as a vector gradient stack (assets/logomark-holo.svg). No shadows or effects outside the app icons.
 - Logoword: assets/logoword.svg (the full lockup with the name outlined; the live text version is "OpenStation" in Geist SemiBold 600, sentence case, no added tracking). Holo-mark version: assets/logoword-holo.svg.
-- App icon: Void #0C0B0F tile, rounded square (radius 25/120 of the icon size, assets/logomark-app.svg and assets/logomark-app-holo.svg) or circle (assets/logomark-app-circle.svg and assets/logomark-app-circle-holo.svg), soft white inner shadow, mark fills the central 2/3 of the tile. The mark is Starlight or Holomesh-filled, always on Void. There is no inverted or holo-background app icon.
+- App icon: Void #0C0B0F tile, rounded square (radius 25/120 of the icon size, assets/logomark-app.svg and assets/logomark-app-holo.svg) or circle (assets/logomark-app-circle.svg and assets/logomark-app-circle-holo.svg), soft white inner shadow, mark fills the central 3/5 of the tile. Inside the icon the mark gets the dimensional treatment (baked into the SVGs): the Pearl radial fill (Starlight to Cloud) or Holomesh, a Mist edge stroke, a soft halo ring, stacked drop shadows and an inner highlight. Always on Void; there is no inverted or holo-background app icon.
 - Lockup banner: the Holomesh-filled mark with Starlight text on Void (padding 12px at the 40px-mark size, radius 8px). There is no positive banner on Holomesh.
 - Rule: Holomesh may fill the mark, and may be used on backgrounds and CTAs elsewhere, but never sits behind the logo; the knocked-out (negative) logo on Holomesh is not part of the system.
 - Rule: the logomark and the logoword always travel together.

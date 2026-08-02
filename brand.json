@@ -2,7 +2,7 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "name": "OpenStation",
   "description": "Brand tokens for OpenStation, the open-source WordPress plugin that turns wp-admin into a desktop OS.",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "updated": "2026-08-02",
   "guidelines": "https://nuriapenya.github.io/open-station-brand/",
   "color": {
@@ -90,13 +90,23 @@
   "mesh": {
     "holomesh": {
       "$type": "asset",
-      "$value": "assets/holomesh.jpg",
-      "$description": "Holomesh. Holographic mesh gradient (lavender, pink, cyan, mint) for hero surfaces, backgrounds and CTAs. Never used as a background behind the logo: the mark can carry a holo fill, but there is no knocked-out logo on Holomesh."
+      "$value": "assets/holomesh.svg",
+      "$description": "Holomesh. Holographic mesh gradient (lavender, pink, cyan, mint) for hero surfaces, backgrounds and CTAs, defined in Figma as a vector gradient fill: a lavender base linear (#AFA2E8 to #C3B8EF) with eight radial glows. Never used as a background behind the logo: the mark can carry a holo fill, but there is no knocked-out logo on Holomesh."
     },
     "pulsemesh": {
       "$type": "asset",
-      "$value": "assets/pulsemesh.jpg",
-      "$description": "Pulsemesh. Pulsar-style mesh gradient (magenta, pink, cyan, white) for hero surfaces. Formerly named Pulsarmesh."
+      "$value": "assets/pulsemesh.svg",
+      "$description": "Pulsemesh. Pulsar-style mesh gradient (magenta, pink, cyan, white) for hero surfaces, defined in Figma as a vector gradient fill: a violet base linear (#A98EF0 to #C776F2) with five radial glows. Formerly named Pulsarmesh."
+    },
+    "space": {
+      "$type": "asset",
+      "$value": "assets/space.svg",
+      "$description": "Space. Quiet deep-space backdrop: a linear gradient from #010101 through #111114 to #1E1D23. The default dark background behind content."
+    },
+    "galaxy": {
+      "$type": "asset",
+      "$value": "assets/galaxy.svg",
+      "$description": "Galaxy. Hero background: Void base with soft Nebula glows and a Starlight starfield (bright, dim and large star layers)."
     }
   },
   "typography": {
@@ -179,9 +189,9 @@
       "The logoword is the name set in Geist SemiBold (600), sentence case, no added tracking.",
       "Lockup proportions: the logomark's height is 5/3 of the logoword's font size (a 40px mark next to 24px type), the gap between them is half the font size, and both center on the same axis.",
       "The logomark and the logoword always travel together.",
-      "The mark has two fills: Starlight, or the Holomesh holographic gradient (a vector gradient stack baked into the holo SVGs).",
+      "The standalone mark has two flat fills: Starlight, or the Holomesh holographic gradient (a vector gradient stack baked into the holo SVGs). No shadows or effects outside the app icons.",
       "Holomesh is for backgrounds, CTAs and surfaces, never a background behind the logo: the knocked-out (negative) logo on Holomesh is not part of the system.",
-      "App icon: Void (#0C0B0F) tile, rounded square (radius 25/120 of the icon size) or circle, with a soft white inner shadow; the mark fills the central 2/3 of the tile (1/6 margin on each side). Variants: Starlight or Holomesh-filled mark, always on Void. There is no inverted or holo-background app icon.",
+      "App icon: Void (#0C0B0F) tile, rounded square (radius 25/120 of the icon size) or circle, with a soft white inner shadow; the mark fills the central 3/5 of the tile (1/5 margin on each side). Inside the icon the mark gets the dimensional treatment: the Pearl radial fill (Starlight to Cloud) or Holomesh, a Mist edge stroke, a soft halo ring, stacked drop shadows and an inner highlight, all baked into the SVGs. Always on Void; there is no inverted or holo-background app icon.",
       "Lockup banner: the Holomesh-filled mark with Starlight text on Void. Padding 12px at the 40px-mark size, radius 8px. There is no positive banner on Holomesh.",
       "Clear-space ratios are provisional."
     ]
