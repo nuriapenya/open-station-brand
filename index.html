@@ -171,12 +171,12 @@
   }
   .mio-wrap svg {
     display: block;
-    width: 92px;
-    height: 92px;
+    width: 108px;
+    height: 108px;
     filter:
       drop-shadow(0 0 6px rgba(242, 82, 252, .7))
       drop-shadow(0 0 22px rgba(242, 82, 252, .35));
-    animation: mio-float 11s ease-in-out 2.7s infinite;
+    animation: mio-float 8.5s ease-in-out 2.7s infinite;
   }
   .mio-eyes { animation: mio-blink 5.5s 3s infinite; transform-origin: 60px 61px; }
   @keyframes mio-appear {
@@ -204,9 +204,18 @@
     line-height: .94;
     letter-spacing: -.045em;
     font-weight: 550;
+    /* The Holomesh recipe (assets/holomesh.svg) inlined as CSS gradients:
+       background-clip: text over SVG urls is unreliable in Safari. */
     background:
-      url('assets/holomesh.svg') center 30% / cover no-repeat,
-      linear-gradient(96deg, #b1a6e9 0%, #f4f2fb 20%, #9fe8f5 38%, #eec0f2 58%, #a9c8f3 78%, #c0b4ee 100%);
+      radial-gradient(ellipse 21.7% 39.6% at 96.5% 13.5%, rgba(159,214,255,.6), transparent),
+      radial-gradient(ellipse 26.3% 57.2% at 83.3% 56.2%, rgba(243,181,236,.75), transparent),
+      radial-gradient(ellipse 18.2% 47.3% at 73.6% 64.5%, rgba(255,253,255,.7), transparent),
+      radial-gradient(ellipse 18.4% 34.1% at 29.8% 83.4%, rgba(147,240,198,.8), transparent),
+      radial-gradient(ellipse 17.4% 35.7% at 23% 67.7%, rgba(248,242,182,.85), transparent),
+      radial-gradient(ellipse 23.3% 45.9% at 45.2% 45.8%, #f59fe8, rgba(245,168,234,.55) 55%, transparent),
+      radial-gradient(ellipse 29.9% 53.6% at 53.5% 7.3%, rgba(125,239,245,.9), rgba(142,233,247,.45) 60%, transparent),
+      radial-gradient(ellipse 26.9% 70.7% at 29.8% 44.8%, rgba(255,253,255,.95), rgba(255,253,255,.5) 55%, transparent),
+      linear-gradient(123.69deg, #afa2e8 0%, #b7abea 55%, #c3b8ef 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -594,7 +603,6 @@
     color: var(--muted);
   }
   .img-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
-  .img-icon img { width: 120px; height: 120px; border: none; border-radius: 0; }
 
   /* ---------- Legal ---------- */
   .legal { columns: 2; column-gap: 48px; }
@@ -1003,7 +1011,6 @@
       <figure><img src="assets/mio/15-ghost-blob-pebble.jpg" alt="Mio exploration: Asteroide, a pebble"><figcaption>Asteroide</figcaption></figure>
       <figure><img src="assets/mio/17-ghost-blob-compact-droplet.jpg" alt="Mio exploration: Gotita, a compact droplet"><figcaption>Gotita</figcaption></figure>
     </div>
-    <div class="tbd" style="margin-top:40px;">Final form, expressions, poses and usage rules to be defined.</div>
   </section>
 
   <!-- ============ MERCH ============ -->
@@ -1013,22 +1020,6 @@
       <figure><img src="assets/merch/stickers-logomark.jpg" alt="Holographic logomark stickers in rounded square and circle die cuts"><figcaption>Holographic stickers · logomark</figcaption></figure>
       <figure><img src="assets/merch/pins-logomark.jpg" alt="Enamel pins with the holographic logomark on black"><figcaption>Enamel pins · logomark</figcaption></figure>
       <figure><img src="assets/merch/stickers-pins-mio.jpg" alt="Mio stickers and enamel pins with neon holographic rims"><figcaption>Stickers + pins · Mio</figcaption></figure>
-    </div>
-  </section>
-
-  <!-- ============ ICONOGRAPHY ============ -->
-  <section>
-    <span class="label">Iconography</span>
-    <div class="icon-band">
-      <div class="icon-row">
-        <div class="icon-dot"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1.5"/><line x1="2" y1="6" x2="14" y2="6"/></svg></div>
-        <div class="icon-dot"><svg viewBox="0 0 16 16"><circle cx="4" cy="12" r="1.4"/><circle cx="8" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><line x1="2" y1="8.5" x2="14" y2="8.5"/></svg></div>
-        <div class="icon-dot"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5"/><ellipse cx="8" cy="8" rx="5.5" ry="2.2"/></svg></div>
-        <div class="icon-dot"><svg viewBox="0 0 16 16"><path d="M8 2 L9.5 6.5 L14 8 L9.5 9.5 L8 14 L6.5 9.5 L2 8 L6.5 6.5 Z"/></svg></div>
-        <div class="icon-dot"><svg viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="4.5" height="4.5" rx="1"/><rect x="9" y="2.5" width="4.5" height="4.5" rx="1"/><rect x="2.5" y="9" width="4.5" height="4.5" rx="1"/><rect x="9" y="9" width="4.5" height="4.5" rx="1"/></svg></div>
-        <div class="icon-dot"><svg viewBox="0 0 16 16"><path d="M3 13 L8 3 L13 13"/><line x1="5" y1="9.5" x2="11" y2="9.5"/></svg></div>
-      </div>
-      <div class="tbd">WIP · Icon grid, stroke weight and corner language to be defined with the product icon set.</div>
     </div>
   </section>
 
@@ -1055,10 +1046,22 @@
           <figcaption>Social · X · Galaxy</figcaption>
         </figure>
       </div>
-      <figure class="img-icon">
-        <img src="assets/plugins-icon.svg" alt="wordpress.org plugin directory icon: Pearl mark on the Void chip" width="120" height="120">
-        <figcaption>wordpress.org · plugin icon · 192px chip, radius 13</figcaption>
-      </figure>
+    </div>
+  </section>
+
+  <!-- ============ ICONOGRAPHY ============ -->
+  <section>
+    <span class="label">Iconography</span>
+    <div class="icon-band">
+      <div class="icon-row">
+        <div class="icon-dot"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1.5"/><line x1="2" y1="6" x2="14" y2="6"/></svg></div>
+        <div class="icon-dot"><svg viewBox="0 0 16 16"><circle cx="4" cy="12" r="1.4"/><circle cx="8" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><line x1="2" y1="8.5" x2="14" y2="8.5"/></svg></div>
+        <div class="icon-dot"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5"/><ellipse cx="8" cy="8" rx="5.5" ry="2.2"/></svg></div>
+        <div class="icon-dot"><svg viewBox="0 0 16 16"><path d="M8 2 L9.5 6.5 L14 8 L9.5 9.5 L8 14 L6.5 9.5 L2 8 L6.5 6.5 Z"/></svg></div>
+        <div class="icon-dot"><svg viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="4.5" height="4.5" rx="1"/><rect x="9" y="2.5" width="4.5" height="4.5" rx="1"/><rect x="2.5" y="9" width="4.5" height="4.5" rx="1"/><rect x="9" y="9" width="4.5" height="4.5" rx="1"/></svg></div>
+        <div class="icon-dot"><svg viewBox="0 0 16 16"><path d="M3 13 L8 3 L13 13"/><line x1="5" y1="9.5" x2="11" y2="9.5"/></svg></div>
+      </div>
+      <div class="tbd">WIP · Icon grid, stroke weight and corner language to be defined with the product icon set.</div>
     </div>
   </section>
 
