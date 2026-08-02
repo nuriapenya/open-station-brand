@@ -282,6 +282,60 @@
   }
   .icon-head { display: block; margin-top: 72px; }
 
+  /* Contextual download buttons: a small pill next to each asset.
+     Gentle on hover: the pill lifts a touch and the arrow dips. */
+  .dl-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px 9px 13px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .05);
+    border: 1px solid var(--line-soft);
+    color: var(--paper);
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: .01em;
+    text-decoration: none;
+    transition: background .3s ease, border-color .3s ease, transform .3s ease;
+  }
+  .dl-btn svg {
+    width: 14px; height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .dl-btn:hover {
+    background: rgba(255, 255, 255, .11);
+    border-color: rgba(255, 255, 255, .24);
+    transform: translateY(-1px);
+  }
+  .dl-btn:active { transform: translateY(0); }
+  .dl-btn:hover .arr { animation: dl-dip .55s ease; }
+  @keyframes dl-dip {
+    0%, 100% { transform: translateY(0); }
+    40% { transform: translateY(2.2px); }
+  }
+  .lockup .dl-btn { position: absolute; right: 14px; bottom: 14px; }
+  .ctile .dl-btn {
+    position: absolute;
+    left: 22px;
+    bottom: 20px;
+    background: rgba(12, 11, 15, .45);
+    border-color: rgba(255, 255, 255, .28);
+    color: var(--starlight);
+    backdrop-filter: blur(6px);
+  }
+  .ctile .dl-btn:hover { background: rgba(12, 11, 15, .62); }
+  .dl-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+  @media (prefers-reduced-motion: reduce) {
+    .dl-btn { transition: none; }
+    .dl-btn:hover { transform: none; }
+    .dl-btn:hover .arr { animation: none; }
+  }
+
   /* App icon chip (self-contained SVGs from Figma): Void tile, rounded square
      (radius 25/120 of the icon size) or circle, soft white inner shadow, mark
      at the central 3/5. The mark gets the dimensional treatment: Pearl radial
@@ -421,7 +475,7 @@
     grid-auto-rows: 230px;
     margin: 0 calc(-1 * var(--pad));
   }
-  .ctile { padding: 20px 22px; }
+  .ctile { padding: 20px 22px; position: relative; }
   .ctile b {
     display: block;
     font-size: 14px;
@@ -730,17 +784,21 @@
       <div>
         <div class="lockup">
           <img src="assets/logomark.svg" alt="OpenStation logomark in Starlight">
+          <a class="dl-btn" href="assets/logomark.svg" download aria-label="Download logomark.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
         </div>
         <div class="lockup">
           <img src="assets/logomark-holo.svg" alt="OpenStation logomark with Holomesh fill">
+          <a class="dl-btn" href="assets/logomark-holo.svg" download aria-label="Download logomark-holo.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
         </div>
       </div>
       <div>
         <div class="lockup">
           <img class="wordmark-img" src="assets/logoword.svg" alt="OpenStation wordmark in Starlight">
+          <a class="dl-btn" href="assets/logoword.svg" download aria-label="Download logoword.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
         </div>
         <div class="lockup">
           <img class="wordmark-img" src="assets/logoword-holo.svg" alt="OpenStation wordmark with the Holomesh mark">
+          <a class="dl-btn" href="assets/logoword-holo.svg" download aria-label="Download logoword-holo.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
         </div>
       </div>
     </div>
@@ -751,9 +809,11 @@
       <div>
         <div class="lockup">
           <img class="app-icon" src="assets/logomark-app.svg" alt="Icon: Pearl mark on the Void chip">
+          <a class="dl-btn" href="assets/logomark-app.svg" download aria-label="Download logomark-app.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
         </div>
         <div class="lockup">
           <img class="app-icon" src="assets/logomark-app-holo.svg" alt="Icon: Holomesh mark on the Void chip">
+          <a class="dl-btn" href="assets/logomark-app-holo.svg" download aria-label="Download logomark-app-holo.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
         </div>
       </div>
       <div>
@@ -816,24 +876,28 @@
         <span>Colors Lavender, Pink, Cyan, Mint</span>
         <span>Style Holographic</span>
         <span>Use Backgrounds and CTAs, never behind the logo</span>
+        <a class="dl-btn" href="assets/holomesh.svg" download aria-label="Download holomesh.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
       </div>
       <div class="ctile t-pulsemesh">
         <b>Pulsemesh</b>
         <span>Type Mesh gradient</span>
         <span>Colors Magenta, Pink, Cyan, White</span>
         <span>Style Pulsar</span>
+        <a class="dl-btn" href="assets/pulsemesh.svg" download aria-label="Download pulsemesh.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
       </div>
       <div class="ctile t-space">
         <b>Space</b>
         <span>Type Linear gradient</span>
         <span>Colors #010101, #111114, #1E1D23</span>
         <span>Style Deep-space backdrop</span>
+        <a class="dl-btn" href="assets/space.svg" download aria-label="Download space.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
       </div>
       <div class="ctile t-galaxy">
         <b>Galaxy</b>
         <span>Type Nebula + starfield</span>
         <span>Colors Void, Nebula glows, Starlight</span>
         <span>Style Hero background</span>
+        <a class="dl-btn" href="assets/galaxy.svg" download aria-label="Download galaxy.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
       </div>
     </div>
     <div class="shade-strip">
@@ -902,6 +966,10 @@
           <div><b>H3</b><span>30px · Regular 400</span></div>
           <div><b>Body</b><span>16 / 14px · Regular 400</span></div>
           <div><b>Caption</b><span>12px · Regular 400</span></div>
+        </div>
+        <div class="dl-row">
+          <a class="dl-btn" href="fonts/Geist-Variable.woff2" download aria-label="Download Geist-Variable.woff2"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download Geist</a>
+          <a class="dl-btn" href="fonts/GeistMono-Variable.woff2" download aria-label="Download GeistMono-Variable.woff2"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download Geist Mono</a>
         </div>
       </div>
 
