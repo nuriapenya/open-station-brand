@@ -227,7 +227,7 @@
   }
   .contact a:hover { color: var(--paper); }
 
-  /* ---------- Elements of branding ---------- */
+  /* ---------- Wordmark + Icon ---------- */
   .lockups {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -249,7 +249,9 @@
     background: rgba(23, 22, 27, .92);   /* logomark areas stay near-opaque */
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05);
   }
-  .lockup img { width: 72px; height: 72px; }
+  .lockup img { width: 88px; height: 88px; }
+  .lockup .wordmark-img { width: min(380px, 76%); height: auto; }
+  .lockup .app-icon { width: 96px; height: 96px; }
   .lockup.grid-bg {
     background:
       linear-gradient(var(--line-soft) 1px, transparent 1px),
@@ -270,51 +272,23 @@
   .construction-svg { width: 280px; height: 280px; flex: none; position: relative; z-index: 1; }
   .lockup-note { margin-top: 14px; }
 
-  .primary-lockup {
-    margin-top: 56px;
-    border: 1px solid var(--line-soft);
-    border-radius: 10px;
-    background: rgba(23, 22, 27, .92);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 19.2px;                        /* half the type size */
-    padding: 64px 30px;
+  /* Wordmark and Icon subsections: label + intro copy, then the card grid */
+  .logo-copy {
+    margin: 14px 0 28px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--paper);
+    max-width: 62ch;
   }
-  .primary-lockup img { width: 64px; height: 64px; }  /* 5/3 of the type size */
-  .primary-lockup .wordmark {
-    font-size: 38.4px;
-    font-weight: 600;                   /* Geist SemiBold */
-    letter-spacing: 0;
-    white-space: nowrap;
-  }
+  .icon-head { display: block; margin-top: 72px; }
 
-  /* ---------- Logo App ---------- */
-  .app-lockup { gap: 32px; flex-wrap: wrap; }
-  /* App template (self-contained SVGs from Figma): Void tile, rounded square
+  /* App icon chip (self-contained SVGs from Figma): Void tile, rounded square
      (radius 25/120 of the icon size) or circle, soft white inner shadow, mark
      at the central 3/5. The mark gets the dimensional treatment: Pearl radial
      fill (Starlight to Cloud) or Holomesh, Mist edge, halo, stacked drop
      shadows. The tile is always Void: Holomesh never fills the tile, so there
      is no negative app icon. */
   .app-icon { width: 96px; height: 96px; display: block; }
-
-  /* Lockup banner: Holomesh mark, Starlight type, Void surface
-     (padding 12, 40px mark, 24px type). Holo backgrounds are for surfaces and
-     CTAs, never behind the logo, so there is no positive banner. */
-  .lockup-banner {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 22px 12px 12px;
-    border-radius: 8px;
-    background: var(--void);
-    color: var(--starlight);
-    border: 1px solid var(--line-soft);
-  }
-  .lockup-banner .bmark { width: 40px; height: 40px; }
-  .lockup-banner span { font-size: 24px; font-weight: 600; letter-spacing: 0; white-space: nowrap; }
 
   /* ---------- Use this brand ---------- */
   .use-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 72px); }
@@ -748,9 +722,10 @@
     </div>
   </div>
 
-  <!-- ============ ELEMENTS OF BRANDING ============ -->
+  <!-- ============ WORDMARK + ICON ============ -->
   <section>
-    <span class="label">Elements of branding</span>
+    <span class="label">Wordmark</span>
+    <p class="logo-copy">The OpenStation wordmark should be used in all references to the product as space allows. Monochrome usage is preferred, with the brand colors below.</p>
     <div class="lockups">
       <div>
         <div class="lockup">
@@ -759,11 +734,33 @@
         <div class="lockup">
           <img src="assets/logomark-holo.svg" alt="OpenStation logomark with Holomesh fill">
         </div>
-        <p class="label lockup-note">Logomark · Starlight · Holomesh fill</p>
+      </div>
+      <div>
+        <div class="lockup">
+          <img class="wordmark-img" src="assets/logoword.svg" alt="OpenStation wordmark in Starlight">
+        </div>
+        <div class="lockup">
+          <img class="wordmark-img" src="assets/logoword-holo.svg" alt="OpenStation wordmark with the Holomesh mark">
+        </div>
+      </div>
+    </div>
+    <p class="label lockup-note">Wordmark · Geist SemiBold · mark height 5/3 of the type size · gap half the type size</p>
+
+    <span class="label icon-head">Icon</span>
+    <p class="logo-copy">When referring to OpenStation as a product, such as on social media or the plugins page, always add the chip.</p>
+    <div class="lockups">
+      <div>
+        <div class="lockup">
+          <img class="app-icon" src="assets/logomark-app.svg" alt="Icon: Pearl mark on the Void chip">
+        </div>
+        <div class="lockup">
+          <img class="app-icon" src="assets/logomark-app-holo.svg" alt="Icon: Holomesh mark on the Void chip">
+        </div>
+        <p class="label lockup-note">Icon · Pearl and Holomesh marks · the chip is always Void</p>
       </div>
       <div>
         <div class="lockup grid-bg construction">
-          <svg class="construction-svg" viewBox="0 0 480 480" role="img" aria-label="Logomark construction: the mark outlined inside its container square">
+          <svg class="construction-svg" viewBox="0 0 480 480" role="img" aria-label="Icon construction: the mark outlined inside its chip">
             <rect x="70" y="70" width="340" height="340" rx="70.8" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/>
             <circle cx="240" cy="240" r="102" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1" stroke-dasharray="2 7"/>
             <g transform="translate(138,138) scale(2.55)">
@@ -771,25 +768,9 @@
             </g>
           </svg>
         </div>
-        <p class="label lockup-note">Construction · mark at 3/5 of the app tile · rules provisional</p>
+        <p class="label lockup-note">Construction · mark at 3/5 of the chip · rules provisional</p>
       </div>
     </div>
-    <div class="primary-lockup">
-      <img src="assets/logomark.svg" alt="">
-      <span class="wordmark">OpenStation</span>
-    </div>
-    <p class="label lockup-note">Logoword · Geist SemiBold · mark height 5/3 of the type size · gap half the type size</p>
-    <div class="primary-lockup app-lockup">
-      <img class="app-icon" src="assets/logomark-app.svg" alt="App icon: Pearl mark on a Void rounded square">
-      <img class="app-icon" src="assets/logomark-app-holo.svg" alt="App icon: Holomesh mark on a Void rounded square">
-      <img class="app-icon" src="assets/logomark-app-circle.svg" alt="App icon: Pearl mark on a Void circle">
-      <img class="app-icon" src="assets/logomark-app-circle-holo.svg" alt="App icon: Holomesh mark on a Void circle">
-    </div>
-    <p class="label lockup-note">Logo App · Pearl and Holomesh marks · rounded square and circle · the tile is always Void</p>
-    <div class="primary-lockup app-lockup">
-      <div class="lockup-banner"><img class="bmark" src="assets/logomark-holo.svg" alt=""><span>OpenStation</span></div>
-    </div>
-    <p class="label lockup-note">Lockup banner · Holomesh mark, Starlight type, always on Void · holo is for backgrounds and CTAs, never behind the logo</p>
   </section>
 
   <!-- ============ COLOR ============ -->

@@ -188,11 +188,11 @@
       "The name is OpenStation, one word, capital O and capital S.",
       "The logoword is the name set in Geist SemiBold (600), sentence case, no added tracking.",
       "Lockup proportions: the logomark's height is 5/3 of the logoword's font size (a 40px mark next to 24px type), the gap between them is half the font size, and both center on the same axis.",
-      "The logomark and the logoword always travel together.",
+      "The wordmark is used in all references to the product as space allows; monochrome usage is preferred, with the brand colors as accents.",
+      "When referring to OpenStation as a product (social media, the plugins page, app listings), always add the chip: the mark sits on its Void app tile, never bare.",
       "The standalone mark has two flat fills: Starlight, or the Holomesh holographic gradient (a vector gradient stack baked into the holo SVGs). No shadows or effects outside the app icons.",
       "Holomesh is for backgrounds, CTAs and surfaces, never a background behind the logo: the knocked-out (negative) logo on Holomesh is not part of the system.",
       "App icon: Void (#0C0B0F) tile, rounded square (radius 25/120 of the icon size) or circle, with a soft white inner shadow; the mark fills the central 3/5 of the tile (1/5 margin on each side). Inside the icon the mark gets the dimensional treatment: the Pearl radial fill (Starlight to Cloud) or Holomesh, a Mist edge stroke, a soft halo ring, stacked drop shadows and an inner highlight, all baked into the SVGs. Always on Void; there is no inverted or holo-background app icon.",
-      "Lockup banner: the Holomesh-filled mark with Starlight text on Void. Padding 12px at the 40px-mark size, radius 8px. There is no positive banner on Holomesh.",
       "Clear-space ratios are provisional."
     ]
   },
