@@ -1,9 +1,9 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "name": "Open Station",
-  "description": "Brand tokens for Open Station, the open-source WordPress plugin that turns wp-admin into a desktop OS.",
-  "version": "0.1.0",
-  "updated": "2026-08-01",
+  "name": "OpenStation",
+  "description": "Brand tokens for OpenStation, the open-source WordPress plugin that turns wp-admin into a desktop OS.",
+  "version": "0.2.0",
+  "updated": "2026-08-02",
   "guidelines": "https://nuriapenya.github.io/open-station-brand/",
   "color": {
     "pulsar": {
@@ -52,14 +52,22 @@
   "typography": {
     "sans": {
       "$type": "fontFamily",
-      "$value": ["Geist", "system-ui", "sans-serif"],
+      "$value": [
+        "Geist",
+        "system-ui",
+        "sans-serif"
+      ],
       "$description": "Everything human: headlines, UI copy, body text.",
       "file": "fonts/Geist-Variable.woff2",
       "license": "SIL OFL 1.1 (fonts/OFL.txt)"
     },
     "mono": {
       "$type": "fontFamily",
-      "$value": ["Geist Mono", "ui-monospace", "monospace"],
+      "$value": [
+        "Geist Mono",
+        "ui-monospace",
+        "monospace"
+      ],
       "$description": "The instrument voice: labels, metadata, statuses, coordinates. Small, uppercase, letterspaced.",
       "file": "fonts/GeistMono-Variable.woff2",
       "license": "SIL OFL 1.1 (fonts/OFL.txt)"
@@ -72,19 +80,34 @@
     }
   },
   "radius": {
-    "poster": { "$type": "dimension", "$value": "13px" },
-    "card": { "$type": "dimension", "$value": "10px" },
-    "inner": { "$type": "dimension", "$value": "8px" },
-    "appIcon": { "$type": "dimension", "$value": "113/512 of icon size" }
+    "poster": {
+      "$type": "dimension",
+      "$value": "13px"
+    },
+    "card": {
+      "$type": "dimension",
+      "$value": "10px"
+    },
+    "inner": {
+      "$type": "dimension",
+      "$value": "8px"
+    },
+    "appIcon": {
+      "$type": "dimension",
+      "$value": "113/512 of icon size"
+    }
   },
   "logo": {
     "logomark": "assets/logomark.svg",
+    "logoword": "assets/logoword.svg",
     "appIcon": "assets/logomark-app.svg",
     "rules": [
-      "The logomark and the wordmark always travel together.",
-      "Wordmark is set in Geist at weight 520 with tracking -0.03em.",
+      "The name is OpenStation, one word, capital O and capital S.",
+      "The logoword is the name set in Geist SemiBold (600), sentence case, no added tracking.",
+      "Lockup proportions: the logomark's height is 5/3 of the logoword's font size (a 40px mark next to 24px type), the gap between them is half the font size, and both center on the same axis.",
+      "The logomark and the logoword always travel together.",
       "App icon: dark rounded square (radius 113/512) with inner shadow 3px 3px 4px rgba(255,255,255,0.25); the mark sits inside an 18% margin and may be filled with a mesh.",
-      "Construction and clear-space ratios are provisional."
+      "Clear-space ratios are provisional."
     ]
   },
   "mascot": {
@@ -94,7 +117,7 @@
     "status": "Final form, expressions, poses and usage rules to be defined."
   },
   "license": {
-    "summary": "Open Station is an open-source WordPress plugin (GPL). Brand assets are meant to be reused; fonts are SIL OFL 1.1.",
+    "summary": "OpenStation is an open-source WordPress plugin (GPL). Brand assets are meant to be reused; fonts are SIL OFL 1.1.",
     "product": "https://wordpress.org/plugins/desktop-mode/",
     "repository": "https://github.com/WordPress/desktop-mode"
   }

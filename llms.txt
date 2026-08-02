@@ -1,6 +1,6 @@
-# Open Station Brand
+# OpenStation Brand
 
-> Brand guidelines for Open Station, the open-source WordPress plugin that turns wp-admin into a desktop OS: windows, a dock, spaces and a command palette on top of WordPress. This file is the machine-readable summary; the visual reference lives at index.html and the structured tokens at brand.json.
+> Brand guidelines for OpenStation (one word, capital O and capital S), the open-source WordPress plugin that turns wp-admin into a desktop OS: windows, a dock, spaces and a command palette on top of WordPress. This file is the machine-readable summary; the visual reference lives at index.html and the structured tokens at brand.json.
 
 The name works on three levels: the space and cosmos territory, the initials hinting at OS, and "Open" saying open source out loud. The visual world is a calm, engineered station in deep space: dark surfaces, neon pulsar accents, holographic meshes, and a small ghost mascot.
 
@@ -26,9 +26,11 @@ Two named gradient meshes, reserved for hero surfaces:
 ## Logo
 
 - Logomark: assets/logomark.svg (a circle with a fluid blob cut, single color)
+- Logoword: assets/logoword.svg (the full lockup with the name outlined; the live text version is "OpenStation" in Geist SemiBold 600, sentence case, no added tracking)
 - App icon: assets/logomark-app.svg (dark rounded square, radius 113/512, inner shadow 3px 3px 4px rgba(255,255,255,0.25), mark inset 18%, optionally filled with a mesh)
-- Rule: the logomark and the wordmark ("Open Station", Geist 520, tracking -0.03em) always travel together.
-- Construction and clear-space ratios are provisional.
+- Rule: the logomark and the logoword always travel together.
+- Lockup proportions: the mark's height is 5/3 of the logoword's font size (40px mark with 24px type), the gap is half the font size, both centered on the same axis.
+- Clear-space ratios are provisional.
 
 ## Mascot
 
@@ -37,9 +39,9 @@ Mio, a small ghost blob that glows in Pulsar and drifts between windows. Named e
 ## Files
 
 - [brand.json](brand.json): design tokens (colors, meshes, type, radii, logo rules)
-- [assets/](assets/): logomark, app icon, meshes, Mio explorations, merch renders
+- [assets/](assets/): logomark, logoword, app icon, meshes, Mio explorations, merch renders
 - [fonts/](fonts/): Geist and Geist Mono variable files plus the OFL license
 
 ## Licensing
 
-Open Station is an open-source WordPress plugin (GPL): https://wordpress.org/plugins/desktop-mode/ and https://github.com/WordPress/desktop-mode. Brand assets are meant to be reused; keep attribution sensible and do not present modified marks as official.
+OpenStation is an open-source WordPress plugin (GPL): https://wordpress.org/plugins/desktop-mode/ and https://github.com/WordPress/desktop-mode. Brand assets are meant to be reused; keep attribution sensible and do not present modified marks as official.

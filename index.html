@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Open Station · Brand Guidelines</title>
+<title>OpenStation · Brand Guidelines</title>
 <style>
   /* ---------- Fonts (self-hosted, SIL OFL 1.1, see fonts/OFL.txt) ---------- */
   @font-face {
@@ -143,9 +143,11 @@
     justify-content: space-between;
     gap: 16px;
   }
-  .lockup-head { display: inline-flex; align-items: center; gap: 12px; }
-  .lockup-head img { width: 24px; height: 24px; }
-  .lockup-head span { font-size: 19px; font-weight: 520; letter-spacing: -.02em; }
+  /* Lockup proportions (from Figma): mark height = 5/3 of the type size,
+     gap = half the type size, both centered on the same axis */
+  .lockup-head { display: inline-flex; align-items: center; gap: 9.5px; }
+  .lockup-head img { width: 32px; height: 32px; }
+  .lockup-head span { font-size: 19px; font-weight: 600; letter-spacing: 0; }
 
   /* ---------- Masthead ---------- */
   .masthead {
@@ -274,14 +276,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 22px;
+    gap: 19.2px;                        /* half the type size */
     padding: 64px 30px;
   }
-  .primary-lockup img { width: 64px; height: 64px; }
+  .primary-lockup img { width: 64px; height: 64px; }  /* 5/3 of the type size */
   .primary-lockup .wordmark {
-    font-size: clamp(28px, 4.4vw, 46px);
-    font-weight: 520;
-    letter-spacing: -.03em;
+    font-size: 38.4px;
+    font-weight: 600;                   /* Geist SemiBold */
+    letter-spacing: 0;
     white-space: nowrap;
   }
 
@@ -593,9 +595,9 @@
       radial-gradient(60% 80% at 15% 85%, rgba(236,155,255,.14), transparent 60%),
       var(--astro);
   }
-  .tile.wallpaper .lockup-mini { display: flex; align-items: center; gap: 10px; }
-  .tile.wallpaper .lockup-mini img { width: 26px; height: 26px; }
-  .tile.wallpaper .lockup-mini span { font-size: 17px; font-weight: 520; letter-spacing: -.02em; }
+  .tile.wallpaper .lockup-mini { display: flex; align-items: center; gap: 8.5px; }
+  .tile.wallpaper .lockup-mini img { width: 28px; height: 28px; }
+  .tile.wallpaper .lockup-mini span { font-size: 17px; font-weight: 600; letter-spacing: 0; }
 
   .mini-window {
     position: absolute;
@@ -673,10 +675,10 @@
   <!-- ============ HEADER ============ -->
   <header class="brand-row">
     <div class="lockup-head">
-      <img src="assets/logomark.svg" alt="Open Station logomark">
-      <span>Open Station</span>
+      <img src="assets/logomark.svg" alt="OpenStation logomark">
+      <span>OpenStation</span>
     </div>
-    <span class="label" style="font-size:11px;">Last updated · Aug 1, 2026</span>
+    <span class="label" style="font-size:11px;">Last updated · Aug 2, 2026</span>
   </header>
 
   <!-- ============ MASTHEAD ============ -->
@@ -699,7 +701,7 @@
     </div>
     <div>
       <h1>Brand<br>Guidelines</h1>
-      <p class="subtitle">Open Station · Visual Identity Reference</p>
+      <p class="subtitle">OpenStation · Visual Identity Reference</p>
     </div>
     <div class="contact">
       <span class="label">Links</span>
@@ -717,10 +719,10 @@
     <div class="lockups">
       <div>
         <div class="lockup">
-          <img src="assets/logomark.svg" alt="Open Station logomark">
+          <img src="assets/logomark.svg" alt="OpenStation logomark">
         </div>
         <div class="lockup">
-          <img src="assets/logomark-app.svg" alt="Open Station app icon">
+          <img src="assets/logomark-app.svg" alt="OpenStation app icon">
         </div>
         <p class="label lockup-note">Logomark</p>
       </div>
@@ -729,8 +731,8 @@
           <svg class="construction-svg" viewBox="0 0 480 480" role="img" aria-label="Logomark construction: the mark outlined inside its container square">
             <rect x="70" y="70" width="340" height="340" rx="104" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/>
             <circle cx="240" cy="240" r="96" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1" stroke-dasharray="2 7"/>
-            <g transform="translate(127.5,127.5) scale(0.75)">
-              <path d="M145.471 0.0697654C228.318 -2.43338 297.492 62.7318 299.934 145.581C302.373 228.344 237.291 297.432 154.53 299.931C71.7697 302.433 2.6357 237.401 0.0732452 154.642C-2.49165 71.7959 62.6239 2.57333 145.471 0.0697654ZM145.124 35.0629C134.336 29.5466 122.817 30.8515 111.912 34.7553C47.4055 55.1269 12.5653 127.103 35.3897 190.52C41.3286 207.017 50.8057 223.125 63.5439 235.448C81.0555 253.263 103.653 265.222 128.231 269.681C138.791 271.576 153.744 274.029 162.075 265.471C174.021 253.199 165.4 241.65 161.643 228.161C157.98 214.784 156.027 201 155.828 187.134C155.739 175.4 158.219 159.26 160.561 147.57C166.085 119.99 175.816 92.6857 167.044 64.6303C163.143 52.6645 156.747 41.0065 145.124 35.0629Z" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
+            <g transform="translate(127.5,127.5) scale(1.875)">
+              <path d="M42.7328 2.55503C74.4752 -6.98663 107.94 11.0251 117.458 42.7748C126.966 74.491 108.977 107.913 77.2679 117.445C45.5587 126.977 12.1231 109.012 2.56772 77.3099C-6.99735 45.5745 10.9906 12.0968 42.7328 2.55503ZM58.0511 14.057C53.7371 11.851 49.1309 12.3728 44.7699 13.9339C18.9738 22.0804 5.04087 50.8627 14.1683 76.223C16.5433 82.82 20.3331 89.2618 25.4271 94.1898C32.4298 101.314 41.4666 106.096 51.2953 107.879C55.5181 108.637 61.4977 109.618 64.8294 106.196C69.6066 101.288 66.1593 96.6701 64.6566 91.2757C63.1921 85.9266 62.4109 80.4143 62.3314 74.8695C62.2959 70.1769 63.2876 63.7219 64.224 59.0472C66.4331 48.0183 70.3246 37.0994 66.8167 25.8802C65.2567 21.0952 62.699 16.4338 58.0511 14.057Z" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
             </g>
           </svg>
         </div>
@@ -739,9 +741,9 @@
     </div>
     <div class="primary-lockup">
       <img src="assets/logomark.svg" alt="">
-      <span class="wordmark">Open Station</span>
+      <span class="wordmark">OpenStation</span>
     </div>
-    <p class="label lockup-note">Logomark + wordmark combined</p>
+    <p class="label lockup-note">Logoword · Geist SemiBold · mark height 5/3 of the type size · gap half the type size</p>
     <div class="primary-lockup app-lockup">
       <div class="app-icon"><i class="mark m1"></i></div>
       <div class="app-icon inverted bg-holo"><i class="mark"></i></div>
@@ -898,7 +900,7 @@
   <section>
     <span class="label">Licensing &amp; open source</span>
     <div class="legal">
-      <p><b>Everything here is meant to be reused.</b> Open Station is an open-source WordPress plugin (GPL). Every asset that ships with the brand, including logo, wallpapers, illustrations and fonts, must be freely licensable and GPL-compatible.</p>
+      <p><b>Everything here is meant to be reused.</b> OpenStation is an open-source WordPress plugin (GPL). Every asset that ships with the brand, including logo, wallpapers, illustrations and fonts, must be freely licensable and GPL-compatible.</p>
       <p><b>Typefaces.</b> Geist and Geist Mono by Vercel are licensed under the SIL Open Font License 1.1. The license text is bundled in this repository next to the font files.</p>
       <p><b>Extenders.</b> Third parties build on the public APIs and component kit. Treat the visual system as something others will reuse outside our control: tokens over one-offs, rules over exceptions.</p>
       <p><b>No internal content.</b> This guide is public. Only public links, public-safe imagery and freely licensed assets belong in it.</p>
@@ -911,9 +913,9 @@
       <div>
         <span class="label" style="display:block; margin-bottom:40px;">Usage examples</span>
         <div class="print-shapes">
-          <div class="shape sh-a4"><span class="chip"><img src="assets/logomark.svg" alt="">Open Station</span><em>A4</em></div>
+          <div class="shape sh-a4"><span class="chip"><img src="assets/logomark.svg" alt="">OpenStation</span><em>A4</em></div>
           <div class="shape sh-disc"></div>
-          <div class="shape sh-a5"><span class="chip"><img src="assets/logomark.svg" alt="">Open Station</span><em>A5</em></div>
+          <div class="shape sh-a5"><span class="chip"><img src="assets/logomark.svg" alt="">OpenStation</span><em>A5</em></div>
           <div class="shape sh-tag"><span class="chip"><img src="assets/logomark.svg" alt=""></span></div>
         </div>
       </div>
@@ -922,7 +924,7 @@
         <div class="product-tiles">
           <div class="tile wallpaper">
             <span class="tile-label">Wallpaper</span>
-            <div class="lockup-mini"><img src="assets/logomark.svg" alt=""><span>Open Station</span></div>
+            <div class="lockup-mini"><img src="assets/logomark.svg" alt=""><span>OpenStation</span></div>
           </div>
           <div class="tile shell">
             <span class="tile-label">Shell</span>
@@ -945,6 +947,7 @@
         <p class="use-head">Download</p>
         <ul class="dl-list">
           <li><a href="assets/logomark.svg" download>logomark.svg <span>vector</span></a></li>
+          <li><a href="assets/logoword.svg" download>logoword.svg <span>lockup · text outlined</span></a></li>
           <li><a href="assets/logomark-app.svg" download>logomark-app.svg <span>app icon</span></a></li>
           <li><a href="assets/pulsarmesh.jpg" download>pulsarmesh.jpg <span>mesh</span></a></li>
           <li><a href="assets/holomesh.jpg" download>holomesh.jpg <span>mesh</span></a></li>
@@ -966,7 +969,7 @@
   </section>
 
   <footer>
-    <span>Open Station · Brand Guidelines</span>
+    <span>OpenStation · Brand Guidelines</span>
     <span>V0.1 · August 2026</span>
     <span>Made in the open</span>
   </footer>
