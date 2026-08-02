@@ -51,7 +51,7 @@ Mio, a small ghost blob that glows in Pulse and drifts between windows. Named ex
 ## Files
 
 - [brand.json](brand.json): design tokens (colors, grays, meshes, type scale, radii, logo rules)
-- [assets/](assets/): logomark, logoword, app icon, meshes, Mio explorations, merch renders
+- [assets/](assets/): logomark, logoword, app icons, the wordpress.org plugin icon (plugins-icon.svg, 192px chip with radius 13), meshes and backgrounds, Mio explorations, merch renders, and imagery mockups under assets/imagery/ (wordpress.org plugin banner, X profile mockups)
 - [fonts/](fonts/): Geist and Geist Mono variable files plus the OFL license
 
 ## Licensing

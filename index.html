@@ -562,26 +562,24 @@
   .icon-dot svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.5; }
 
   /* ---------- Imagery ---------- */
-  .imagery { display: grid; grid-template-columns: 1fr 2fr; gap: 28px; align-items: stretch; }
-  .imagery .tbd { height: 100%; }
-  .img-ph {
-    position: relative;
-    min-height: 240px;
-    border: 1px dashed rgba(255,255,255,.22);
-    border-radius: 10px;
-    background:
-      radial-gradient(60% 80% at 70% 20%, rgba(242,82,252,.20), transparent 60%),
-      radial-gradient(50% 70% at 20% 80%, rgba(236,155,255,.16), transparent 60%),
-      radial-gradient(40% 50% at 85% 75%, rgba(25,22,30,.85), transparent 60%);
+  .imagery { display: grid; gap: 28px; }
+  .imagery figure { margin: 0; }
+  .imagery img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;          /* clips the renders' square corners */
+    border: 1px solid var(--line-soft);
   }
-  .img-ph span {
-    position: absolute;
-    left: 14px; bottom: 12px;
-    font: 500 9px/1.4 var(--mono);
-    letter-spacing: .12em;
+  .imagery figcaption {
+    margin-top: 10px;
+    font: 500 10px/1.4 var(--mono);
+    letter-spacing: .1em;
     text-transform: uppercase;
     color: var(--muted);
   }
+  .img-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .img-icon img { width: 120px; height: 120px; border: none; border-radius: 0; }
 
   /* ---------- Legal ---------- */
   .legal { columns: 2; column-gap: 48px; }
@@ -720,7 +718,7 @@
     .masthead { grid-template-columns: 1fr; align-items: start; padding-bottom: 72px; }
     .contact { text-align: left; }
     .band, .icon-band { grid-template-columns: 1fr; }
-    .lockups, .imagery, .examples, .product-tiles { grid-template-columns: 1fr; }
+    .lockups, .imagery, .img-row, .examples, .product-tiles { grid-template-columns: 1fr; }
     .legal { columns: 1; }
     .specimen-aa { font-size: 88px; }
     .mosaic { grid-template-columns: 1fr 1fr; grid-auto-rows: 170px; }
@@ -1015,16 +1013,37 @@
         <div class="icon-dot"><svg viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="4.5" height="4.5" rx="1"/><rect x="9" y="2.5" width="4.5" height="4.5" rx="1"/><rect x="2.5" y="9" width="4.5" height="4.5" rx="1"/><rect x="9" y="9" width="4.5" height="4.5" rx="1"/></svg></div>
         <div class="icon-dot"><svg viewBox="0 0 16 16"><path d="M3 13 L8 3 L13 13"/><line x1="5" y1="9.5" x2="11" y2="9.5"/></svg></div>
       </div>
-      <div class="tbd">Icon grid, stroke weight and corner language to be defined with the product icon set.</div>
+      <div class="tbd">WIP · Icon grid, stroke weight and corner language to be defined with the product icon set.</div>
     </div>
   </section>
 
   <!-- ============ IMAGERY ============ -->
   <section>
     <span class="label">Imagery</span>
+    <p class="logo-copy">Deep space, engineered calm, gradients over photography. The product shows up on the Galaxy backdrop; the marks travel on their chips; the meshes do the color work.</p>
     <div class="imagery">
-      <div class="tbd">Art direction for illustrations, wallpapers and press imagery. Working hypothesis: deep space, engineered calm, gradients over photography.</div>
-      <div class="img-ph"><span>Imagery slot · wallpaper / illustration</span></div>
+      <figure>
+        <img src="assets/imagery/plugins-banner.png" alt="wordpress.org plugin banner: Your wp-admin, now a desktop, product windows over the Galaxy background">
+        <figcaption>wordpress.org · plugin banner</figcaption>
+      </figure>
+      <div class="img-row">
+        <figure>
+          <img src="assets/imagery/social-x-holomesh.png" alt="X profile mockup with the Holomesh header">
+          <figcaption>Social · X · Holomesh</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/imagery/social-x-pulsemesh.png" alt="X profile mockup with the Pulsemesh header">
+          <figcaption>Social · X · Pulsemesh</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/imagery/social-x-galaxy.png" alt="X profile mockup with the Galaxy header">
+          <figcaption>Social · X · Galaxy</figcaption>
+        </figure>
+      </div>
+      <figure class="img-icon">
+        <img src="assets/plugins-icon.svg" alt="wordpress.org plugin directory icon: Pearl mark on the Void chip" width="120" height="120">
+        <figcaption>wordpress.org · plugin icon · 192px chip, radius 13</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -1092,6 +1111,7 @@
           <li><a href="assets/logomark-app-holo.svg" download>logomark-app-holo.svg <span>app icon · square · holo</span></a></li>
           <li><a href="assets/logomark-app-circle.svg" download>logomark-app-circle.svg <span>app icon · circle</span></a></li>
           <li><a href="assets/logomark-app-circle-holo.svg" download>logomark-app-circle-holo.svg <span>app icon · circle · holo</span></a></li>
+          <li><a href="assets/plugins-icon.svg" download>plugins-icon.svg <span>wordpress.org icon · 192</span></a></li>
           <li><a href="assets/holomesh.svg" download>holomesh.svg <span>mesh</span></a></li>
           <li><a href="assets/pulsemesh.svg" download>pulsemesh.svg <span>mesh</span></a></li>
           <li><a href="assets/space.svg" download>space.svg <span>background</span></a></li>
