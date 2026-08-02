@@ -30,12 +30,14 @@
     --muted: #8f8f8f;       /* secondary text */
     --dim: #5c5c5c;         /* tertiary text */
 
-    /* Brand palette · from the Figma palette frame (node 2219:15033) */
-    --pulsar: #f252fc;      /* Pulsar */
+    /* Brand palette · from the Figma Branding section (node 2265:18557) */
+    --pulse: #f252fc;       /* Pulse */
     --nebula: #ec9bff;      /* Nebula */
     --starlight: #fffbff;   /* Starlight */
-    --astro: #19161e;       /* Astro */
-    /* Void (#08060d) is defined above; meshes: Holomesh (soft holographic), Pulsarmesh (assets/pulsarmesh.jpg) */
+    --sirius: #c2f1f1;      /* Sirius */
+    --obsidian: #1a1721;    /* Obsidian */
+    /* Void (#0c0b0f) is defined above; the full Shade palette (grays) lives in the Color section;
+       meshes: Holomesh (assets/holomesh.jpg), Pulsemesh (assets/pulsemesh.jpg) */
 
     --pad: clamp(24px, 4vw, 64px);
     --mono: 'Geist Mono', ui-monospace, monospace;
@@ -289,14 +291,12 @@
 
   /* ---------- Logo App ---------- */
   .app-lockup { gap: 32px; flex-wrap: wrap; }
-  /* App template: background #000, inset 3px 3px 4px rgba(255,255,255,.25),
-     backdrop blur 13.4px, radius 113px at the 512 grid (21px at this size) */
+  /* App template: background Void #0C0B0F, inset 3px 3px 4px rgba(255,255,255,.25)
+     at the 512 grid, radius 113px at the 512 grid (21px at this size) */
   .app-icon {
     width: 96px; height: 96px;
     border-radius: 21px;
-    background: #000000;
-    -webkit-backdrop-filter: blur(13.4px);
-    backdrop-filter: blur(13.4px);
+    background: var(--void);
     position: relative;
   }
   .app-icon::after {
@@ -308,18 +308,36 @@
   }
   .app-icon .mark {
     position: absolute;
-    inset: 18%;                         /* 91/512 clear space, per the template */
+    inset: 16.66%;                      /* the mark fills the central 2/3 of the tile */
     display: block;
     -webkit-mask: url('assets/logomark.svg') center / contain no-repeat;
     mask: url('assets/logomark.svg') center / contain no-repeat;
   }
-  .app-icon .m1 { background: url('assets/pulsarmesh.jpg') 15% 25% / 240% auto; }
-  .app-icon .m4 { background: url('assets/mesh-soft.jpg') 30% 30% / 260% auto; }
-  .app-icon .m5 { background: url('assets/holomesh.jpg') 80% 70% / 280% auto; }
-  /* Inverted variants: mesh fills the tile, the mark goes black */
+  .app-icon .m-star { background: var(--starlight); }
+  .app-icon .m-holo { background: url('assets/holomesh.jpg') 60% 30% / 280% auto; }
+  .app-icon .m-void { background: var(--void); }
+  /* Inverted variants: Starlight or Holomesh fills the tile, the mark goes Void */
+  .app-icon.light { background: var(--starlight); }
   .app-icon.bg-holo { background: url('assets/holomesh.jpg') 60% 30% / cover; }
-  .app-icon.bg-pulsar { background: url('assets/pulsarmesh.jpg') center / cover; }
-  .app-icon.inverted .mark { background: #000000; }
+
+  /* Lockup banners: negative on Void, positive on Holomesh (padding 12, 40px mark, 24px type) */
+  .lockup-banner {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 22px 12px 12px;
+    border-radius: 8px;
+  }
+  .lockup-banner .bmark {
+    width: 40px; height: 40px;
+    -webkit-mask: url('assets/logomark.svg') center / contain no-repeat;
+    mask: url('assets/logomark.svg') center / contain no-repeat;
+  }
+  .lockup-banner span { font-size: 24px; font-weight: 600; letter-spacing: 0; white-space: nowrap; }
+  .lockup-banner.negative { background: var(--void); color: var(--starlight); border: 1px solid var(--line-soft); }
+  .lockup-banner.negative .bmark { background: url('assets/holomesh.jpg') 60% 30% / 280% auto; }
+  .lockup-banner.positive { background: url('assets/holomesh.jpg') center / cover; color: var(--void); }
+  .lockup-banner.positive .bmark { background: var(--void); }
 
   /* ---------- Use this brand ---------- */
   .use-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 72px); }
@@ -441,11 +459,14 @@
     color: var(--muted);
   }
   .type-rules b { color: var(--paper); font-weight: 600; }
+  .type-rules .tr-head { background: rgba(255,255,255,.04); }
+  .type-rules + .type-rules { margin-top: 16px; }
 
   /* ---------- Color ---------- */
+  /* Primary Color Grid · mirrors the Figma layout (node 2247:15345) */
   .mosaic {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     grid-auto-rows: 230px;
     margin: 0 calc(-1 * var(--pad));
   }
@@ -464,21 +485,53 @@
     text-transform: uppercase;
     opacity: .72;
   }
-  .t-astro      { grid-column: 1; grid-row: 1; background: var(--astro); color: var(--paper); }
-  .t-pulsarmesh { grid-column: 2 / span 2; grid-row: 1; background: url('assets/pulsarmesh.jpg') center / cover; color: #fff; }
-  .t-starlight  { grid-column: 4; grid-row: 1 / span 2; background: var(--starlight); color: #221a2e; }
-  .t-nebula     { grid-column: 1; grid-row: 2; background: var(--nebula); color: #45184f; }
-  .t-holomesh   { grid-column: 2 / span 2; grid-row: 2; color: #3a2a63;
-                  background: url('assets/holomesh.jpg') center / cover; }
-  .t-void       { grid-column: 1 / span 2; grid-row: 3; background: var(--void); color: var(--paper); }
-  .t-pulsar     { grid-column: 3 / span 2; grid-row: 3; background: var(--pulsar); color: #4d094e; }
+  .t-pulse     { grid-column: 1 / span 2; grid-row: 1; background: var(--pulse); color: #4d094e; }
+  .t-nebula    { grid-column: 3 / span 4; grid-row: 1; background: var(--nebula); color: #45184f; }
+  .t-starlight { grid-column: 1 / span 4; grid-row: 2; background: var(--starlight); color: #221a2e; }
+  .t-sirius    { grid-column: 5 / span 2; grid-row: 2; background: var(--sirius); color: #123a3a; }
+  .t-void      { grid-column: 1 / span 4; grid-row: 3; background: var(--void); color: var(--paper); }
+  .t-obsidian  { grid-column: 5 / span 2; grid-row: 3; background: var(--obsidian); color: var(--paper); }
+  .t-holomesh  { grid-column: 1 / span 3; grid-row: 4; color: #3a2a63;
+                 background: url('assets/holomesh.jpg') center / cover; }
+  .t-pulsemesh { grid-column: 4 / span 3; grid-row: 4; color: #fff;
+                 background: url('assets/pulsemesh.jpg') center / cover; }
+
+  /* Shade palette · the secondary grays ramp, kept quieter than the grid above */
+  .shade-strip { margin-top: 56px; }
+  .shade-strip > .label { display: block; margin-bottom: 18px; }
+  .shades {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 1px;
+    background: var(--line-soft);
+    border: 1px solid var(--line-soft);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .shade { background: var(--raised); }
+  .shade i { display: block; height: 64px; }
+  .shade b {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0;
+    padding: 8px 10px 1px;
+  }
+  .shade span {
+    display: block;
+    font: 400 8px/1.5 var(--mono);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0 10px 9px;
+  }
 
   .usage-row { display: flex; gap: 18px; align-items: flex-start; margin-top: 56px; max-width: 560px; }
   .donut {
     flex: none;
     width: 62px; height: 62px;
     border-radius: 50%;
-    background: conic-gradient(var(--pulsar), var(--nebula), var(--starlight), var(--astro), var(--pulsar));
+    background: conic-gradient(var(--pulse), var(--nebula), var(--sirius), var(--starlight), var(--obsidian), var(--pulse));
     -webkit-mask: radial-gradient(circle, transparent 42%, #000 43%);
     mask: radial-gradient(circle, transparent 42%, #000 43%);
   }
@@ -575,7 +628,7 @@
     background:
       radial-gradient(70% 80% at 70% 15%, rgba(242,82,252,.14), transparent 60%),
       radial-gradient(50% 70% at 15% 85%, rgba(236,155,255,.10), transparent 60%),
-      var(--astro);
+      var(--obsidian);
   }
   .tile .tile-label {
     position: absolute;
@@ -593,7 +646,7 @@
     background:
       radial-gradient(70% 90% at 75% 15%, rgba(242,82,252,.20), transparent 60%),
       radial-gradient(60% 80% at 15% 85%, rgba(236,155,255,.14), transparent 60%),
-      var(--astro);
+      var(--obsidian);
   }
   .tile.wallpaper .lockup-mini { display: flex; align-items: center; gap: 8.5px; }
   .tile.wallpaper .lockup-mini img { width: 28px; height: 28px; }
@@ -665,7 +718,8 @@
     .mio-grid { grid-template-columns: 1fr 1fr; }
     .merch-grid { grid-template-columns: 1fr; }
     .mosaic > div { grid-column: auto / span 1; grid-row: auto; }
-    .t-pulsarmesh, .t-holomesh, .t-void, .t-pulsar { grid-column: auto / span 2; }
+    .t-holomesh, .t-pulsemesh { grid-column: auto / span 2; }
+    .shades { grid-template-columns: repeat(5, 1fr); }
   }
 </style>
 </head>
@@ -729,14 +783,14 @@
       <div>
         <div class="lockup grid-bg construction">
           <svg class="construction-svg" viewBox="0 0 480 480" role="img" aria-label="Logomark construction: the mark outlined inside its container square">
-            <rect x="70" y="70" width="340" height="340" rx="104" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/>
-            <circle cx="240" cy="240" r="96" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1" stroke-dasharray="2 7"/>
-            <g transform="translate(127.5,127.5) scale(1.875)">
-              <path d="M42.7328 2.55503C74.4752 -6.98663 107.94 11.0251 117.458 42.7748C126.966 74.491 108.977 107.913 77.2679 117.445C45.5587 126.977 12.1231 109.012 2.56772 77.3099C-6.99735 45.5745 10.9906 12.0968 42.7328 2.55503ZM58.0511 14.057C53.7371 11.851 49.1309 12.3728 44.7699 13.9339C18.9738 22.0804 5.04087 50.8627 14.1683 76.223C16.5433 82.82 20.3331 89.2618 25.4271 94.1898C32.4298 101.314 41.4666 106.096 51.2953 107.879C55.5181 108.637 61.4977 109.618 64.8294 106.196C69.6066 101.288 66.1593 96.6701 64.6566 91.2757C63.1921 85.9266 62.4109 80.4143 62.3314 74.8695C62.2959 70.1769 63.2876 63.7219 64.224 59.0472C66.4331 48.0183 70.3246 37.0994 66.8167 25.8802C65.2567 21.0952 62.699 16.4338 58.0511 14.057Z" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
+            <rect x="70" y="70" width="340" height="340" rx="75" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/>
+            <circle cx="240" cy="240" r="113.3" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1" stroke-dasharray="2 7"/>
+            <g transform="translate(126.67,126.67) scale(2.8333)">
+              <path d="M38.792 0.0186131C60.8846 -0.649069 79.3313 16.7291 79.9824 38.8223C80.6326 60.8921 63.2773 79.3149 41.208 79.9815C19.1385 80.6488 0.702853 63.3074 0.0195305 41.2383C-0.66441 19.1462 16.6995 0.686396 38.792 0.0186131ZM38.71 9.36236C35.8339 7.89166 32.7628 8.23954 29.8555 9.28033C12.6582 14.7114 3.37017 33.8997 9.45508 50.8067C11.0384 55.2047 13.565 59.4989 16.9609 62.7842C21.6294 67.5336 27.6536 70.7223 34.2061 71.9112C37.0214 72.4165 41.0083 73.0707 43.2295 70.7891C46.4143 67.5174 44.115 64.4383 43.1133 60.8419C42.137 57.2757 41.6165 53.6009 41.5635 49.9044C41.5398 46.776 42.201 42.473 42.8252 39.3565C44.2979 32.0039 46.892 24.7246 44.5537 17.2452C43.5137 14.0551 41.8086 10.9469 38.71 9.36236Z" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
             </g>
           </svg>
         </div>
-        <p class="label lockup-note">Construction · rules provisional</p>
+        <p class="label lockup-note">Construction · mark at 2/3 of the app tile · rules provisional</p>
       </div>
     </div>
     <div class="primary-lockup">
@@ -745,33 +799,28 @@
     </div>
     <p class="label lockup-note">Logoword · Geist SemiBold · mark height 5/3 of the type size · gap half the type size</p>
     <div class="primary-lockup app-lockup">
-      <div class="app-icon"><i class="mark m1"></i></div>
-      <div class="app-icon inverted bg-holo"><i class="mark"></i></div>
-      <div class="app-icon"><i class="mark m4"></i></div>
-      <div class="app-icon inverted bg-pulsar"><i class="mark"></i></div>
-      <div class="app-icon"><i class="mark m5"></i></div>
+      <div class="app-icon"><i class="mark m-star"></i></div>
+      <div class="app-icon"><i class="mark m-holo"></i></div>
+      <div class="app-icon light"><i class="mark m-void"></i></div>
+      <div class="app-icon bg-holo"><i class="mark m-void"></i></div>
     </div>
-    <p class="label lockup-note">Logo App · Mark over the meshes</p>
+    <p class="label lockup-note">Logo App · Starlight and Holomesh marks on Void · Void mark on Starlight and Holomesh</p>
+    <div class="primary-lockup app-lockup">
+      <div class="lockup-banner negative"><i class="bmark"></i><span>OpenStation</span></div>
+      <div class="lockup-banner positive"><i class="bmark"></i><span>OpenStation</span></div>
+    </div>
+    <p class="label lockup-note">Lockup banners · Negative on Void · Positive on Holomesh</p>
   </section>
 
   <!-- ============ COLOR ============ -->
   <section>
     <span class="label">Color</span>
     <div class="mosaic">
-      <div class="ctile t-astro">
-        <b>Astro</b>
-        <span>HEX #19161E</span>
-        <span>RGB 25, 22, 30</span>
-        <span>HSL 263, 15, 10</span>
-      </div>
-      <div class="ctile t-pulsarmesh">
-        <b>Pulsarmesh</b>
-      </div>
-      <div class="ctile t-starlight">
-        <b>Starlight</b>
-        <span>HEX #FFFBFF</span>
-        <span>RGB 255, 251, 255</span>
-        <span>HSL 300, 100, 99</span>
+      <div class="ctile t-pulse">
+        <b>Pulse</b>
+        <span>HEX #F252FC</span>
+        <span>RGB 242, 82, 252</span>
+        <span>HSL 296, 97, 65</span>
       </div>
       <div class="ctile t-nebula">
         <b>Nebula</b>
@@ -779,8 +828,17 @@
         <span>RGB 236, 155, 255</span>
         <span>HSL 289, 100, 80</span>
       </div>
-      <div class="ctile t-holomesh">
-        <b>Holomesh</b>
+      <div class="ctile t-starlight">
+        <b>Starlight</b>
+        <span>HEX #FFFBFF</span>
+        <span>RGB 255, 251, 255</span>
+        <span>HSL 300, 100, 99</span>
+      </div>
+      <div class="ctile t-sirius">
+        <b>Sirius</b>
+        <span>HEX #C2F1F1</span>
+        <span>RGB 194, 241, 241</span>
+        <span>HSL 180, 63, 85</span>
       </div>
       <div class="ctile t-void">
         <b>Void</b>
@@ -788,16 +846,43 @@
         <span>RGB 12, 11, 15</span>
         <span>HSL 255, 15, 5</span>
       </div>
-      <div class="ctile t-pulsar">
-        <b>Pulsar</b>
-        <span>HEX #F252FC</span>
-        <span>RGB 242, 82, 252</span>
-        <span>HSL 296, 97, 65</span>
+      <div class="ctile t-obsidian">
+        <b>Obsidian</b>
+        <span>HEX #1A1721</span>
+        <span>RGB 26, 23, 33</span>
+        <span>HSL 258, 18, 11</span>
+      </div>
+      <div class="ctile t-holomesh">
+        <b>Holomesh</b>
+        <span>Type Mesh gradient</span>
+        <span>Colors Lavender, Pink, Cyan, Mint</span>
+        <span>Style Holographic</span>
+      </div>
+      <div class="ctile t-pulsemesh">
+        <b>Pulsemesh</b>
+        <span>Type Mesh gradient</span>
+        <span>Colors Magenta, Pink, Cyan, White</span>
+        <span>Style Pulsar</span>
+      </div>
+    </div>
+    <div class="shade-strip">
+      <span class="label">Shade palette · grays</span>
+      <div class="shades">
+        <div class="shade"><i style="background:#0c0b0f"></i><b>Void</b><span>#0C0B0F</span></div>
+        <div class="shade"><i style="background:#1a1721"></i><b>Obsidian</b><span>#1A1721</span></div>
+        <div class="shade"><i style="background:#33303a"></i><b>Astro</b><span>#33303A</span></div>
+        <div class="shade"><i style="background:#4d4a52"></i><b>Silver</b><span>#4D4A52</span></div>
+        <div class="shade"><i style="background:#66636b"></i><b>Pewter</b><span>#66636B</span></div>
+        <div class="shade"><i style="background:#99969c"></i><b>Osmium</b><span>#99969C</span></div>
+        <div class="shade"><i style="background:#b3afb5"></i><b>Ash</b><span>#B3AFB5</span></div>
+        <div class="shade"><i style="background:#ccc8ce"></i><b>Cloud</b><span>#CCC8CE</span></div>
+        <div class="shade"><i style="background:#e6e2e6"></i><b>Mist</b><span>#E6E2E6</span></div>
+        <div class="shade"><i style="background:#fffbff"></i><b>Starlight</b><span>#FFFBFF</span></div>
       </div>
     </div>
     <div class="usage-row">
       <div class="donut"></div>
-      <div class="tbd">Ratios and rules land here: Void as the base, Astro for surfaces, Pulsar and Nebula for identity moments, Starlight for contrast, meshes reserved for hero surfaces.</div>
+      <div class="tbd">Ratios and rules land here: Void as the base, Obsidian for surfaces, Pulse and Nebula for identity moments, Sirius and Starlight for contrast, the Shade palette for text hierarchy and lines, meshes reserved for hero surfaces.</div>
     </div>
   </section>
 
@@ -828,10 +913,24 @@
         <p><b>Geist Mono</b> carries everything the station says about itself: labels, metadata, statuses, coordinates. Small, uppercase, letterspaced.</p>
         <p>Both families are licensed under the SIL Open Font License 1.1 and ship self-hosted with this guide.</p>
         <div class="type-rules">
-          <div><b>Display</b><span>Geist 520-550 · tracking -0.04em · line height 0.95</span></div>
-          <div><b>UI / Body</b><span>Geist 400-500 · normal tracking · line height 1.5</span></div>
-          <div><b>Labels</b><span>Geist Mono 500 · uppercase · tracking +0.12em</span></div>
-          <div><b>Data / Code</b><span>Geist Mono 400 · sentence case</span></div>
+          <div class="tr-head"><b>Geist Sans</b><span>Typographic scale · line height 1.4</span></div>
+          <div><b>Display</b><span>72px · Light 300</span></div>
+          <div><b>H1</b><span>48px · Bold 700</span></div>
+          <div><b>H2</b><span>36px · SemiBold 600</span></div>
+          <div><b>H3</b><span>30px · SemiBold 600</span></div>
+          <div><b>H4</b><span>24px · Medium 500</span></div>
+          <div><b>H5</b><span>20px · Medium 500</span></div>
+          <div><b>Body</b><span>18 / 16 / 14px · Regular 400</span></div>
+          <div><b>Caption</b><span>12px · Regular 400</span></div>
+        </div>
+        <div class="type-rules">
+          <div class="tr-head"><b>Geist Mono</b><span>Typographic scale · line height 1.4</span></div>
+          <div><b>Display</b><span>72px · Light 300</span></div>
+          <div><b>H1</b><span>48px · Bold 700</span></div>
+          <div><b>H2</b><span>36px · Regular 400</span></div>
+          <div><b>H3</b><span>30px · Regular 400</span></div>
+          <div><b>Body</b><span>16 / 14px · Regular 400</span></div>
+          <div><b>Caption</b><span>12px · Regular 400</span></div>
         </div>
       </div>
 
@@ -841,7 +940,7 @@
   <!-- ============ MIO ============ -->
   <section>
     <span class="label">Mio</span>
-    <p class="mio-intro"><b>Meet Mio.</b> A small ghost blob that lives aboard the station: it glows in Pulsar, drifts between windows, and shows up where the interface has something to say. Eight explorations so far.</p>
+    <p class="mio-intro"><b>Meet Mio.</b> A small ghost blob that lives aboard the station: it glows in Pulse, drifts between windows, and shows up where the interface has something to say. Eight explorations so far.</p>
     <div class="mio-grid">
       <figure><img src="assets/mio/01-rounded-blob.jpg" alt="Mio exploration: Luna, a rounded blob"><figcaption>Luna</figcaption></figure>
       <figure><img src="assets/mio/02-comet.jpg" alt="Mio exploration: Cometa, a comet"><figcaption>Cometa</figcaption></figure>
@@ -949,9 +1048,8 @@
           <li><a href="assets/logomark.svg" download>logomark.svg <span>vector</span></a></li>
           <li><a href="assets/logoword.svg" download>logoword.svg <span>lockup · text outlined</span></a></li>
           <li><a href="assets/logomark-app.svg" download>logomark-app.svg <span>app icon</span></a></li>
-          <li><a href="assets/pulsarmesh.jpg" download>pulsarmesh.jpg <span>mesh</span></a></li>
+          <li><a href="assets/pulsemesh.jpg" download>pulsemesh.jpg <span>mesh</span></a></li>
           <li><a href="assets/holomesh.jpg" download>holomesh.jpg <span>mesh</span></a></li>
-          <li><a href="assets/mesh-soft.jpg" download>mesh-soft.jpg <span>mesh</span></a></li>
           <li><a href="fonts/Geist-Variable.woff2" download>Geist-Variable.woff2 <span>OFL 1.1</span></a></li>
           <li><a href="fonts/GeistMono-Variable.woff2" download>GeistMono-Variable.woff2 <span>OFL 1.1</span></a></li>
         </ul>
@@ -963,23 +1061,25 @@
           <li><a href="llms.txt">llms.txt <span>brand summary for AI agents</span></a></li>
           <li><a href="brand.json" download>brand.json <span>design tokens</span></a></li>
         </ul>
-        <p class="use-copy">And a small human shortcut: every solid tile in the Color section copies its HEX on click.</p>
+        <p class="use-copy">And a small human shortcut: every solid tile and gray swatch in the Color section copies its HEX on click.</p>
       </div>
     </div>
   </section>
 
   <footer>
     <span>OpenStation · Brand Guidelines</span>
-    <span>V0.1 · August 2026</span>
+    <span>V0.2 · August 2026</span>
     <span>Made in the open</span>
   </footer>
 
 </div>
 <script>
-  document.querySelectorAll('.ctile').forEach(function (tile) {
+  document.querySelectorAll('.ctile, .shade').forEach(function (tile) {
     var hexLine = tile.querySelector('span');
-    if (!hexLine || hexLine.textContent.indexOf('HEX #') !== 0) return;
-    var hex = hexLine.textContent.replace('HEX ', '');
+    if (!hexLine) return;
+    var match = hexLine.textContent.match(/#[0-9A-Fa-f]{6}/);
+    if (!match) return;
+    var hex = match[0];
     tile.style.cursor = 'copy';
     tile.title = 'Click to copy ' + hex;
     tile.addEventListener('click', function () {

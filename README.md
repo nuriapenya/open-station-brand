@@ -18,4 +18,4 @@ Everything here is meant to be reused: grab assets from the [Use this brand](htt
 
 ## Status
 
-V0.1, a work in progress designed in the open. Iconography, imagery art direction, voice, and Mio's final form are still evolving. Feedback and issues welcome.
+V0.2, a work in progress designed in the open. Iconography, imagery art direction, voice, and Mio's final form are still evolving. Feedback and issues welcome.

@@ -2,43 +2,52 @@
 
 > Brand guidelines for OpenStation (one word, capital O and capital S), the open-source WordPress plugin that turns wp-admin into a desktop OS: windows, a dock, spaces and a command palette on top of WordPress. This file is the machine-readable summary; the visual reference lives at index.html and the structured tokens at brand.json.
 
-The name works on three levels: the space and cosmos territory, the initials hinting at OS, and "Open" saying open source out loud. The visual world is a calm, engineered station in deep space: dark surfaces, neon pulsar accents, holographic meshes, and a small ghost mascot.
+The name works on three levels: the space and cosmos territory, the initials hinting at OS, and "Open" saying open source out loud. The visual world is a calm, engineered station in deep space: dark surfaces, neon pulse accents, holographic meshes, and a small ghost mascot.
 
 ## Colors (all named after spatial concepts)
 
-- Pulsar #F252FC (RGB 242, 82, 252): neon identity accent
+Primary palette:
+
+- Pulse #F252FC (RGB 242, 82, 252): neon identity accent (formerly named Pulsar)
 - Nebula #EC9BFF (RGB 236, 155, 255): soft identity accent
 - Starlight #FFFBFF (RGB 255, 251, 255): light contrast
-- Astro #19161E (RGB 25, 22, 30): surface dark
+- Sirius #C2F1F1 (RGB 194, 241, 241): aqua contrast accent
+- Obsidian #1A1721 (RGB 26, 23, 33): surface dark (replaces the former Astro #19161E)
 - Void #0C0B0F (RGB 12, 11, 15): darkest color, base background
+
+Shade palette (secondary, a ten-step grays ramp from dark to light; Void, Obsidian and Starlight are shared with the primary palette):
+
+- Void #0C0B0F, Obsidian #1A1721, Astro #33303A, Silver #4D4A52, Pewter #66636B, Osmium #99969C, Ash #B3AFB5, Cloud #CCC8CE, Mist #E6E2E6, Starlight #FFFBFF
 
 Two named gradient meshes, reserved for hero surfaces:
 
-- Holomesh (soft holographic): assets/holomesh.jpg
-- Pulsarmesh (neon magenta): assets/pulsarmesh.jpg
+- Holomesh (holographic: lavender, pink, cyan, mint): assets/holomesh.jpg
+- Pulsemesh (pulsar style: magenta, pink, cyan, white): assets/pulsemesh.jpg (formerly named Pulsarmesh)
 
 ## Typography
 
-- Geist (variable): headlines, UI, body. Display is tight (tracking -0.04em, line height 0.95).
-- Geist Mono (variable): labels, metadata, statuses. Small, uppercase, tracking +0.12em.
+- Geist (variable): everything human, headlines, UI, body.
+- Geist Mono (variable): the instrument voice, labels, metadata, statuses, code.
+- Typographic scale (line height 1.4). Geist Sans: Display 72px Light 300, H1 48px Bold 700, H2 36px SemiBold 600, H3 30px SemiBold 600, H4 24px Medium 500, H5 20px Medium 500, Body Large 18px Regular 400, Body 16px Regular 400, Body Small 14px Regular 400, Caption 12px Regular 400. Geist Mono: Display 72px Light 300, H1 48px Bold 700, H2 36px Regular 400, H3 30px Regular 400, Body 16px Regular 400, Body Small 14px Regular 400, Caption 12px Regular 400.
 - Both under SIL OFL 1.1, self-hosted: fonts/Geist-Variable.woff2, fonts/GeistMono-Variable.woff2, license at fonts/OFL.txt.
 
 ## Logo
 
-- Logomark: assets/logomark.svg (a circle with a fluid blob cut, single color)
+- Logomark: assets/logomark.svg (a circle with a fluid blob cut, single color; refined upright version, August 2026)
 - Logoword: assets/logoword.svg (the full lockup with the name outlined; the live text version is "OpenStation" in Geist SemiBold 600, sentence case, no added tracking)
-- App icon: assets/logomark-app.svg (dark rounded square, radius 113/512, inner shadow 3px 3px 4px rgba(255,255,255,0.25), mark inset 18%, optionally filled with a mesh)
+- App icon: assets/logomark-app.svg (Void #0C0B0F rounded square, radius 113/512, inner shadow 3px 3px 4px rgba(255,255,255,0.25), mark fills the central 2/3 of the tile). Variants: Starlight or Holomesh-filled mark on Void, Void mark on Starlight, Void mark on Holomesh.
+- Lockup banners: negative is the Holomesh-filled mark with Starlight text on Void; positive is the Void mark with Void text on Holomesh.
 - Rule: the logomark and the logoword always travel together.
 - Lockup proportions: the mark's height is 5/3 of the logoword's font size (40px mark with 24px type), the gap is half the font size, both centered on the same axis.
 - Clear-space ratios are provisional.
 
 ## Mascot
 
-Mio, a small ghost blob that glows in Pulsar and drifts between windows. Named explorations: Luna, Cometa, Órbita, Eclipse, Alba, Nube, Asteroide, Gotita (assets/mio/). Final form and usage rules are still open.
+Mio, a small ghost blob that glows in Pulse and drifts between windows. Named explorations: Luna, Cometa, Órbita, Eclipse, Alba, Nube, Asteroide, Gotita (assets/mio/). Final form and usage rules are still open.
 
 ## Files
 
-- [brand.json](brand.json): design tokens (colors, meshes, type, radii, logo rules)
+- [brand.json](brand.json): design tokens (colors, grays, meshes, type scale, radii, logo rules)
 - [assets/](assets/): logomark, logoword, app icon, meshes, Mio explorations, merch renders
 - [fonts/](fonts/): Geist and Geist Mono variable files plus the OFL license
 

@@ -2,14 +2,14 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "name": "OpenStation",
   "description": "Brand tokens for OpenStation, the open-source WordPress plugin that turns wp-admin into a desktop OS.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "updated": "2026-08-02",
   "guidelines": "https://nuriapenya.github.io/open-station-brand/",
   "color": {
-    "pulsar": {
+    "pulse": {
       "$type": "color",
       "$value": "#f252fc",
-      "$description": "Pulsar. Neon identity accent. RGB 242, 82, 252. HSL 296, 97, 65."
+      "$description": "Pulse. Neon identity accent, formerly named Pulsar. RGB 242, 82, 252. HSL 296, 97, 65."
     },
     "nebula": {
       "$type": "color",
@@ -21,32 +21,82 @@
       "$value": "#fffbff",
       "$description": "Starlight. Light contrast color. RGB 255, 251, 255. HSL 300, 100, 99."
     },
-    "astro": {
+    "sirius": {
       "$type": "color",
-      "$value": "#19161e",
-      "$description": "Astro. Surface dark. RGB 25, 22, 30. HSL 263, 15, 10."
+      "$value": "#c2f1f1",
+      "$description": "Sirius. Aqua contrast accent. RGB 194, 241, 241. HSL 180, 63, 85."
+    },
+    "obsidian": {
+      "$type": "color",
+      "$value": "#1a1721",
+      "$description": "Obsidian. Surface dark, replaces the former Astro #19161E. RGB 26, 23, 33. HSL 258, 18, 11."
     },
     "void": {
       "$type": "color",
       "$value": "#0c0b0f",
       "$description": "Void. Darkest brand color, base background. RGB 12, 11, 15. HSL 255, 15, 5."
+    },
+    "gray": {
+      "$description": "Shade palette: a ten-step secondary grays ramp from Void to Starlight. Void, Obsidian and Starlight are shared with the primary palette.",
+      "void": {
+        "$type": "color",
+        "$value": "{color.void}"
+      },
+      "obsidian": {
+        "$type": "color",
+        "$value": "{color.obsidian}"
+      },
+      "astro": {
+        "$type": "color",
+        "$value": "#33303a",
+        "$description": "Astro. RGB 51, 48, 58. HSL 258, 9, 21."
+      },
+      "silver": {
+        "$type": "color",
+        "$value": "#4d4a52",
+        "$description": "Silver. RGB 77, 74, 82. HSL 262, 5, 31."
+      },
+      "pewter": {
+        "$type": "color",
+        "$value": "#66636b",
+        "$description": "Pewter. RGB 102, 99, 107. HSL 263, 4, 40."
+      },
+      "osmium": {
+        "$type": "color",
+        "$value": "#99969c",
+        "$description": "Osmium. RGB 153, 150, 156. HSL 270, 3, 60."
+      },
+      "ash": {
+        "$type": "color",
+        "$value": "#b3afb5",
+        "$description": "Ash. RGB 179, 175, 181. HSL 280, 4, 70."
+      },
+      "cloud": {
+        "$type": "color",
+        "$value": "#ccc8ce",
+        "$description": "Cloud. RGB 204, 200, 206. HSL 280, 6, 80."
+      },
+      "mist": {
+        "$type": "color",
+        "$value": "#e6e2e6",
+        "$description": "Mist. RGB 230, 226, 230. HSL 300, 7, 89."
+      },
+      "starlight": {
+        "$type": "color",
+        "$value": "{color.starlight}"
+      }
     }
   },
   "mesh": {
     "holomesh": {
       "$type": "asset",
       "$value": "assets/holomesh.jpg",
-      "$description": "Holomesh. Soft holographic gradient mesh for hero surfaces."
+      "$description": "Holomesh. Holographic mesh gradient (lavender, pink, cyan, mint) for hero surfaces."
     },
-    "pulsarmesh": {
+    "pulsemesh": {
       "$type": "asset",
-      "$value": "assets/pulsarmesh.jpg",
-      "$description": "Pulsarmesh. Neon magenta gradient mesh for hero surfaces."
-    },
-    "mesh-soft": {
-      "$type": "asset",
-      "$value": "assets/mesh-soft.jpg",
-      "$description": "Soft pastel companion mesh."
+      "$value": "assets/pulsemesh.jpg",
+      "$description": "Pulsemesh. Pulsar-style mesh gradient (magenta, pink, cyan, white) for hero surfaces. Formerly named Pulsarmesh."
     }
   },
   "typography": {
@@ -68,15 +118,33 @@
         "ui-monospace",
         "monospace"
       ],
-      "$description": "The instrument voice: labels, metadata, statuses, coordinates. Small, uppercase, letterspaced.",
+      "$description": "The instrument voice: labels, metadata, statuses, code. Small, uppercase, letterspaced.",
       "file": "fonts/GeistMono-Variable.woff2",
       "license": "SIL OFL 1.1 (fonts/OFL.txt)"
     },
-    "rules": {
-      "display": "Geist 520-550, tracking -0.04em, line height 0.95",
-      "body": "Geist 400-500, normal tracking, line height 1.5",
-      "labels": "Geist Mono 500, uppercase, tracking +0.12em",
-      "data": "Geist Mono 400, sentence case"
+    "scale": {
+      "$description": "Typographic scale from the Figma Typography section. Line height 1.4 across all levels.",
+      "sans": {
+        "display": "72px, Light 300",
+        "h1": "48px, Bold 700",
+        "h2": "36px, SemiBold 600",
+        "h3": "30px, SemiBold 600",
+        "h4": "24px, Medium 500",
+        "h5": "20px, Medium 500",
+        "bodyLarge": "18px, Regular 400",
+        "body": "16px, Regular 400",
+        "bodySmall": "14px, Regular 400",
+        "caption": "12px, Regular 400"
+      },
+      "mono": {
+        "display": "72px, Light 300",
+        "h1": "48px, Bold 700",
+        "h2": "36px, Regular 400",
+        "h3": "30px, Regular 400",
+        "body": "16px, Regular 400",
+        "bodySmall": "14px, Regular 400",
+        "caption": "12px, Regular 400"
+      }
     }
   },
   "radius": {
@@ -106,13 +174,14 @@
       "The logoword is the name set in Geist SemiBold (600), sentence case, no added tracking.",
       "Lockup proportions: the logomark's height is 5/3 of the logoword's font size (a 40px mark next to 24px type), the gap between them is half the font size, and both center on the same axis.",
       "The logomark and the logoword always travel together.",
-      "App icon: dark rounded square (radius 113/512) with inner shadow 3px 3px 4px rgba(255,255,255,0.25); the mark sits inside an 18% margin and may be filled with a mesh.",
+      "App icon: Void (#0C0B0F) rounded square (radius 113/512) with inner shadow 3px 3px 4px rgba(255,255,255,0.25); the mark fills the central 2/3 of the tile (1/6 margin on each side). Variants: Starlight or Holomesh-filled mark on Void, Void mark on Starlight, Void mark on Holomesh.",
+      "Lockup banners: negative is the Holomesh-filled mark with Starlight text on Void; positive is the Void mark with Void text on Holomesh. Padding 12px at the 40px-mark size, radius 8px.",
       "Clear-space ratios are provisional."
     ]
   },
   "mascot": {
     "name": "Mio",
-    "description": "A small ghost blob that lives aboard the station: it glows in Pulsar, drifts between windows, and shows up where the interface has something to say.",
+    "description": "A small ghost blob that lives aboard the station: it glows in Pulse, drifts between windows, and shows up where the interface has something to say.",
     "explorations": "assets/mio/",
     "status": "Final form, expressions, poses and usage rules to be defined."
   },
