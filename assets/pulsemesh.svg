@@ -1,11 +1,12 @@
 <svg width="1440" height="960" viewBox="0 0 1440 960" xmlns="http://www.w3.org/2000/svg">
 <defs>
-<linearGradient id="pulse_base" gradientUnits="userSpaceOnUse" x1="1440" y1="0" x2="0" y2="960"><stop offset="0" stop-color="#A98EF0"/><stop offset="1" stop-color="#C776F2"/></linearGradient>
-<radialGradient id="pulse_r0" cx="0" cy="0" r="10" gradientUnits="userSpaceOnUse" gradientTransform="matrix(50 0 0 40 1270 70)"><stop offset="0" stop-color="#A78BFA" stop-opacity="0.9"/><stop offset="1" stop-color="#A78BFA" stop-opacity="0"/></radialGradient>
-<radialGradient id="pulse_r1" cx="0" cy="0" r="10" gradientUnits="userSpaceOnUse" gradientTransform="matrix(92 0 0 74 380 500)"><stop offset="0" stop-color="#F04BF5" stop-opacity="1"/><stop offset="0.55" stop-color="#F04BF5" stop-opacity="0.75"/><stop offset="1" stop-color="#F04BF5" stop-opacity="0"/></radialGradient>
-<radialGradient id="pulse_r2" cx="0" cy="0" r="10" gradientUnits="userSpaceOnUse" gradientTransform="matrix(52 0 0 52 150 380)"><stop offset="0" stop-color="#FA3DF8" stop-opacity="1"/><stop offset="1" stop-color="#FA3DF8" stop-opacity="0"/></radialGradient>
-<radialGradient id="pulse_r3" cx="0" cy="0" r="10" gradientUnits="userSpaceOnUse" gradientTransform="matrix(44 0 0 44 900 580)"><stop offset="0" stop-color="#FB9BF0" stop-opacity="0.85"/><stop offset="1" stop-color="#FB9BF0" stop-opacity="0"/></radialGradient>
-<radialGradient id="pulse_r4" cx="0" cy="0" r="10" gradientUnits="userSpaceOnUse" gradientTransform="matrix(47 0 0 39 1350 910)"><stop offset="0" stop-color="#FFFDFF" stop-opacity="0.95"/><stop offset="0.5" stop-color="#FFF0FC" stop-opacity="0.55"/><stop offset="1" stop-color="#FFF0FC" stop-opacity="0"/></radialGradient>
+<linearGradient id="pulse_base" gradientUnits="userSpaceOnUse" x1="1440" y1="0" x2="0" y2="960"><stop offset="0" stop-color="#8D9BF3"/><stop offset="1" stop-color="#C878F0"/></linearGradient>
+<radialGradient id="pulse_r0" cx="0" cy="0" r="10" gradientUnits="userSpaceOnUse" gradientTransform="matrix(62 0 0 52 1170 330)"><stop offset="0" stop-color="#6C8FF5" stop-opacity="0.6"/><stop offset="1" stop-color="#6C8FF5" stop-opacity="0"/></radialGradient>
+<radialGradient id="pulse_r1" cx="0" cy="0" r="10" gradientUnits="userSpaceOnUse" gradientTransform="matrix(52 0 0 44 1330 120)"><stop offset="0" stop-color="#7DEFF5" stop-opacity="0.95"/><stop offset="1" stop-color="#7DEFF5" stop-opacity="0"/></radialGradient>
+<radialGradient id="pulse_r2" cx="0" cy="0" r="10" gradientUnits="userSpaceOnUse" gradientTransform="matrix(117.8 -44 35.2 94.2 152 960)"><stop offset="0" stop-color="#F04BF5" stop-opacity="1"/><stop offset="0.43" stop-color="#F04BF5" stop-opacity="0.75"/><stop offset="1" stop-color="#F04BF5" stop-opacity="0"/></radialGradient>
+<radialGradient id="pulse_r3" cx="0" cy="0" r="10" gradientUnits="userSpaceOnUse" gradientTransform="matrix(52 0 0 52 150 380)"><stop offset="0" stop-color="#FA3DF8" stop-opacity="1"/><stop offset="1" stop-color="#FA3DF8" stop-opacity="0"/></radialGradient>
+<radialGradient id="pulse_r4" cx="0" cy="0" r="10" gradientUnits="userSpaceOnUse" gradientTransform="matrix(48 0 0 48 880 600)"><stop offset="0" stop-color="#FB86EC" stop-opacity="0.85"/><stop offset="1" stop-color="#FB86EC" stop-opacity="0"/></radialGradient>
+<radialGradient id="pulse_r5" cx="0" cy="0" r="10" gradientUnits="userSpaceOnUse" gradientTransform="matrix(56 5.25 -4.36 46.5 1325.5 907.5)"><stop offset="0" stop-color="#FFFDFF" stop-opacity="0.95"/><stop offset="0.5" stop-color="#FFF0FC" stop-opacity="0.55"/><stop offset="1" stop-color="#FFF0FC" stop-opacity="0"/></radialGradient>
 </defs>
 <rect width="1440" height="960" fill="url(#pulse_base)"/>
 <rect width="1440" height="960" fill="url(#pulse_r0)"/>
@@ -13,4 +14,5 @@
 <rect width="1440" height="960" fill="url(#pulse_r2)"/>
 <rect width="1440" height="960" fill="url(#pulse_r3)"/>
 <rect width="1440" height="960" fill="url(#pulse_r4)"/>
+<rect width="1440" height="960" fill="url(#pulse_r5)"/>
 </svg>

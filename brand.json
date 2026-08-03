@@ -2,8 +2,8 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "name": "OpenStation",
   "description": "Brand tokens for OpenStation, the open-source WordPress plugin that turns wp-admin into a desktop OS.",
-  "version": "0.5.0",
-  "updated": "2026-08-02",
+  "version": "0.6.0",
+  "updated": "2026-08-03",
   "guidelines": "https://nuriapenya.github.io/open-station-brand/",
   "color": {
     "pulse": {
@@ -23,8 +23,13 @@
     },
     "sirius": {
       "$type": "color",
-      "$value": "#c2f1f1",
-      "$description": "Sirius. Aqua contrast accent. RGB 194, 241, 241. HSL 180, 63, 85."
+      "$value": "#9af2ff",
+      "$description": "Sirius. Cyan contrast accent, brightened from the former #C2F1F1. RGB 154, 242, 255. HSL 188, 100, 80."
+    },
+    "lagoon": {
+      "$type": "color",
+      "$value": "#9f98ff",
+      "$description": "Lagoon. Violet-blue contrast accent. RGB 159, 152, 255. HSL 244, 100, 80."
     },
     "obsidian": {
       "$type": "color",
@@ -96,12 +101,22 @@
     "pulsemesh": {
       "$type": "asset",
       "$value": "assets/pulsemesh.svg",
-      "$description": "Pulsemesh. Pulsar-style mesh gradient (magenta, pink, cyan, white) for hero surfaces, defined in Figma as a vector gradient fill: a violet base linear (#A98EF0 to #C776F2) with five radial glows. Formerly named Pulsarmesh."
+      "$description": "Pulsemesh. Pulsar-style mesh gradient (magenta, pink, cyan, white) for hero surfaces, defined in Figma as a vector gradient fill: a blue-to-violet base linear (#8D9BF3 to #C878F0) with six radial glows. Formerly named Pulsarmesh."
     },
-    "space": {
+    "auromesh": {
       "$type": "asset",
-      "$value": "assets/space.svg",
-      "$description": "Space. Quiet deep-space backdrop: a linear gradient from #010101 through #111114 to #1E1D23. The default dark background behind content."
+      "$value": "assets/auromesh.svg",
+      "$description": "Auromesh. Aurora-style mesh gradient (lavender, mint, cyan): a linear sweep from #D1C6F8 through #CEFADA to #B8FFFF."
+    },
+    "starmesh": {
+      "$type": "asset",
+      "$value": "assets/starmesh.svg",
+      "$description": "Starmesh. Stellar mesh gradient (white, silver): a radial glow from Starlight (#FFFBFF) into Cloud (#CCC8CE), centered near the top edge."
+    },
+    "voidmesh": {
+      "$type": "asset",
+      "$value": "assets/voidmesh.svg",
+      "$description": "Voidmesh. Void mesh gradient (black, obsidian): a linear gradient from #010101 through #111114 to #1E1D23. The default dark background behind content. Formerly named Space."
     },
     "galaxy": {
       "$type": "asset",

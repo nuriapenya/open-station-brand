@@ -1,6 +1,6 @@
 <svg width="1440" height="960" viewBox="0 0 1440 960" xmlns="http://www.w3.org/2000/svg">
-<defs><linearGradient id="space_g" gradientUnits="userSpaceOnUse" x1="298.58" y1="1122.63" x2="1232.48" y2="-301.4">
+<defs><linearGradient id="voidmesh_g" gradientUnits="userSpaceOnUse" x1="298.58" y1="1122.63" x2="1232.48" y2="-301.4">
 <stop offset="0" stop-color="#010101"/><stop offset="0.585" stop-color="#111114"/><stop offset="1" stop-color="#1E1D23"/>
 </linearGradient></defs>
-<rect width="1440" height="960" fill="url(#space_g)"/>
+<rect width="1440" height="960" fill="url(#voidmesh_g)"/>
 </svg>

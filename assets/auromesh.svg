@@ -1,0 +1,6 @@
+<svg width="1440" height="960" viewBox="0 0 1440 960" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="auro_g" gradientUnits="userSpaceOnUse" x1="-59" y1="611.5" x2="1499" y2="348.5"><stop offset="0.095" stop-color="#D1C6F8"/><stop offset="0.5" stop-color="#CEFADA"/><stop offset="0.905" stop-color="#B8FFFF"/></linearGradient>
+</defs>
+<rect width="1440" height="960" fill="url(#auro_g)"/>
+</svg>

@@ -11,7 +11,8 @@ Primary palette:
 - Pulse #F252FC (RGB 242, 82, 252): neon identity accent (formerly named Pulsar)
 - Nebula #EC9BFF (RGB 236, 155, 255): soft identity accent
 - Starlight #FFFBFF (RGB 255, 251, 255): light contrast
-- Sirius #C2F1F1 (RGB 194, 241, 241): aqua contrast accent
+- Sirius #9AF2FF (RGB 154, 242, 255): cyan contrast accent (brightened from the former #C2F1F1)
+- Lagoon #9F98FF (RGB 159, 152, 255): violet-blue contrast accent
 - Obsidian #1A1721 (RGB 26, 23, 33): surface dark (replaces the former Astro #19161E)
 - Void #0C0B0F (RGB 12, 11, 15): darkest color, base background
 
@@ -22,8 +23,10 @@ Shade palette (secondary, a ten-step grays ramp from dark to light; Void, Obsidi
 Named gradient fills and backgrounds (all vector SVGs, defined as gradient recipes in Figma):
 
 - Holomesh (holographic: lavender, pink, cyan, mint): assets/holomesh.svg. For hero surfaces, backgrounds and CTAs; never a background behind the logo.
-- Pulsemesh (pulsar style: magenta, pink, cyan, white): assets/pulsemesh.svg (formerly named Pulsarmesh)
-- Space (deep-space backdrop: #010101 to #111114 to #1E1D23 linear): assets/space.svg. The default dark background behind content.
+- Pulsemesh (pulsar style: magenta, pink, cyan, white; a #8D9BF3-to-#C878F0 base with six radial glows): assets/pulsemesh.svg (formerly named Pulsarmesh)
+- Auromesh (aurora style: lavender, mint, cyan; linear #D1C6F8 to #CEFADA to #B8FFFF): assets/auromesh.svg
+- Starmesh (stellar: white, silver; a radial glow from Starlight #FFFBFF into Cloud #CCC8CE): assets/starmesh.svg
+- Voidmesh (void: #010101 to #111114 to #1E1D23 linear): assets/voidmesh.svg. The default dark background behind content (formerly named Space).
 - Galaxy (Void base, Nebula glows, Starlight starfield): assets/galaxy.svg. Hero background.
 
 ## Typography

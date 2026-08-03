@@ -30,15 +30,16 @@
     --muted: #8f8f8f;       /* secondary text */
     --dim: #5c5c5c;         /* tertiary text */
 
-    /* Brand palette · from the Figma Branding section (node 2265:18557) */
+    /* Brand palette · from the Figma Colors section (node 2260:17299) */
     --pulse: #f252fc;       /* Pulse */
     --nebula: #ec9bff;      /* Nebula */
     --starlight: #fffbff;   /* Starlight */
-    --sirius: #c2f1f1;      /* Sirius */
+    --sirius: #9af2ff;      /* Sirius */
+    --lagoon: #9f98ff;      /* Lagoon */
     --obsidian: #1a1721;    /* Obsidian */
     /* Void (#0c0b0f) is defined above; the full Shade palette (grays) lives in the Color section;
-       meshes and backgrounds: Holomesh (assets/holomesh.svg), Pulsemesh (assets/pulsemesh.svg),
-       Space (assets/space.svg), Galaxy (assets/galaxy.svg) */
+       meshes: Holomesh, Pulsemesh, Auromesh, Starmesh, Voidmesh (assets/*.svg);
+       background: Galaxy (assets/galaxy.svg) */
 
     --pad: clamp(24px, 4vw, 64px);
     --mono: 'Geist Mono', ui-monospace, monospace;
@@ -495,7 +496,7 @@
   /* Primary Color Grid · mirrors the Figma layout (node 2247:15345) */
   .mosaic {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(12, 1fr);
     grid-auto-rows: 230px;
     margin: 0 calc(-1 * var(--pad));
   }
@@ -514,19 +515,24 @@
     text-transform: uppercase;
     opacity: .72;
   }
-  .t-pulse     { grid-column: 1 / span 2; grid-row: 1; background: var(--pulse); color: #4d094e; }
-  .t-nebula    { grid-column: 3 / span 4; grid-row: 1; background: var(--nebula); color: #45184f; }
-  .t-starlight { grid-column: 1 / span 4; grid-row: 2; background: var(--starlight); color: #221a2e; }
-  .t-sirius    { grid-column: 5 / span 2; grid-row: 2; background: var(--sirius); color: #123a3a; }
-  .t-void      { grid-column: 1 / span 4; grid-row: 3; background: var(--void); color: var(--paper); }
-  .t-obsidian  { grid-column: 5 / span 2; grid-row: 3; background: var(--obsidian); color: var(--paper); }
-  .t-holomesh  { grid-column: 1 / span 3; grid-row: 4; color: #3a2a63;
+  .t-pulse     { grid-column: 1 / span 4; grid-row: 1; background: var(--pulse); color: #4d094e; }
+  .t-nebula    { grid-column: 5 / span 8; grid-row: 1; background: var(--nebula); color: #45184f; }
+  .t-starlight { grid-column: 1 / span 6; grid-row: 2; background: var(--starlight); color: #221a2e; }
+  .t-sirius    { grid-column: 7 / span 3; grid-row: 2; background: var(--sirius); color: #0d3a44; }
+  .t-lagoon    { grid-column: 10 / span 3; grid-row: 2; background: var(--lagoon); color: #221c5e; }
+  .t-void      { grid-column: 1 / span 8; grid-row: 3; background: var(--void); color: var(--paper); }
+  .t-obsidian  { grid-column: 9 / span 4; grid-row: 3; background: var(--obsidian); color: var(--paper); }
+  .t-holomesh  { grid-column: 1 / span 4; grid-row: 4; color: #3a2a63;
                  background: url('assets/holomesh.svg') center / cover; }
-  .t-pulsemesh { grid-column: 4 / span 3; grid-row: 4; color: #fff;
+  .t-pulsemesh { grid-column: 5 / span 4; grid-row: 4; color: #fff;
                  background: url('assets/pulsemesh.svg') center / cover; }
-  .t-space     { grid-column: 1 / span 3; grid-row: 5; color: var(--paper);
-                 background: url('assets/space.svg') center / cover; }
-  .t-galaxy    { grid-column: 4 / span 3; grid-row: 5; color: var(--paper);
+  .t-auromesh  { grid-column: 9 / span 4; grid-row: 4; color: #1d4640;
+                 background: url('assets/auromesh.svg') center / cover; }
+  .t-starmesh  { grid-column: 1 / span 6; grid-row: 5; color: #3a3640;
+                 background: url('assets/starmesh.svg') center / cover; }
+  .t-voidmesh  { grid-column: 7 / span 6; grid-row: 5; color: var(--paper);
+                 background: url('assets/voidmesh.svg') center / cover; }
+  .t-galaxy    { grid-column: 1 / span 12; grid-row: 6; color: var(--paper);
                  background: url('assets/galaxy.svg') center / cover; }
 
   /* Shade palette · the secondary grays ramp, kept quieter than the grid above */
@@ -564,7 +570,7 @@
     flex: none;
     width: 62px; height: 62px;
     border-radius: 50%;
-    background: conic-gradient(var(--pulse), var(--nebula), var(--sirius), var(--starlight), var(--obsidian), var(--pulse));
+    background: conic-gradient(var(--pulse), var(--nebula), var(--lagoon), var(--sirius), var(--starlight), var(--obsidian), var(--pulse));
     -webkit-mask: radial-gradient(circle, transparent 42%, #000 43%);
     mask: radial-gradient(circle, transparent 42%, #000 43%);
   }
@@ -748,7 +754,7 @@
     .mio-grid { grid-template-columns: 1fr 1fr; }
     .merch-grid { grid-template-columns: 1fr; }
     .mosaic > div { grid-column: auto / span 1; grid-row: auto; }
-    .t-holomesh, .t-pulsemesh, .t-space, .t-galaxy { grid-column: auto / span 2; }
+    .t-holomesh, .t-pulsemesh, .t-auromesh, .t-starmesh, .t-voidmesh, .t-galaxy { grid-column: auto / span 2; }
     .shades { grid-template-columns: repeat(5, 1fr); }
   }
 </style>
@@ -762,7 +768,7 @@
       <img src="assets/logomark.svg" alt="OpenStation logomark">
       <span>OpenStation</span>
     </div>
-    <span class="label" style="font-size:11px;">Last updated · Aug 2, 2026</span>
+    <span class="label" style="font-size:11px;">Last updated · Aug 3, 2026</span>
   </header>
 
   <!-- ============ MASTHEAD ============ -->
@@ -875,9 +881,15 @@
       </div>
       <div class="ctile t-sirius">
         <b>Sirius</b>
-        <span>HEX #C2F1F1</span>
-        <span>RGB 194, 241, 241</span>
-        <span>HSL 180, 63, 85</span>
+        <span>HEX #9AF2FF</span>
+        <span>RGB 154, 242, 255</span>
+        <span>HSL 188, 100, 80</span>
+      </div>
+      <div class="ctile t-lagoon">
+        <b>Lagoon</b>
+        <span>HEX #9F98FF</span>
+        <span>RGB 159, 152, 255</span>
+        <span>HSL 244, 100, 80</span>
       </div>
       <div class="ctile t-void">
         <b>Void</b>
@@ -906,12 +918,26 @@
         <span>Style Pulsar</span>
         <a class="dl-btn" href="assets/pulsemesh.svg" download aria-label="Download pulsemesh.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
       </div>
-      <div class="ctile t-space">
-        <b>Space</b>
-        <span>Type Linear gradient</span>
-        <span>Colors #010101, #111114, #1E1D23</span>
-        <span>Style Deep-space backdrop</span>
-        <a class="dl-btn" href="assets/space.svg" download aria-label="Download space.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
+      <div class="ctile t-auromesh">
+        <b>Auromesh</b>
+        <span>Type Mesh gradient</span>
+        <span>Colors Lavender, Mint, Cyan</span>
+        <span>Style Aurora</span>
+        <a class="dl-btn" href="assets/auromesh.svg" download aria-label="Download auromesh.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
+      </div>
+      <div class="ctile t-starmesh">
+        <b>Starmesh</b>
+        <span>Type Mesh gradient</span>
+        <span>Colors White, Silver</span>
+        <span>Style Stellar</span>
+        <a class="dl-btn" href="assets/starmesh.svg" download aria-label="Download starmesh.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
+      </div>
+      <div class="ctile t-voidmesh">
+        <b>Voidmesh</b>
+        <span>Type Mesh gradient</span>
+        <span>Colors Black, Obsidian</span>
+        <span>Style Void · formerly Space</span>
+        <a class="dl-btn" href="assets/voidmesh.svg" download aria-label="Download voidmesh.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
       </div>
       <div class="ctile t-galaxy">
         <b>Galaxy</b>
@@ -938,7 +964,7 @@
     </div>
     <div class="usage-row">
       <div class="donut"></div>
-      <div class="tbd">Ratios and rules land here: Void as the base, Obsidian for surfaces, Pulse and Nebula for identity moments, Sirius and Starlight for contrast, the Shade palette for text hierarchy and lines, meshes reserved for hero surfaces.</div>
+      <div class="tbd">Ratios and rules land here: Void as the base, Obsidian for surfaces, Pulse and Nebula for identity moments, Sirius, Lagoon and Starlight for contrast, the Shade palette for text hierarchy and lines, meshes reserved for hero surfaces.</div>
     </div>
   </section>
 
@@ -1132,7 +1158,9 @@
           <li><a href="assets/plugins-icon.svg" download>plugins-icon.svg <span>wordpress.org icon · 192</span></a></li>
           <li><a href="assets/holomesh.svg" download>holomesh.svg <span>mesh</span></a></li>
           <li><a href="assets/pulsemesh.svg" download>pulsemesh.svg <span>mesh</span></a></li>
-          <li><a href="assets/space.svg" download>space.svg <span>background</span></a></li>
+          <li><a href="assets/auromesh.svg" download>auromesh.svg <span>mesh</span></a></li>
+          <li><a href="assets/starmesh.svg" download>starmesh.svg <span>mesh</span></a></li>
+          <li><a href="assets/voidmesh.svg" download>voidmesh.svg <span>mesh · formerly space</span></a></li>
           <li><a href="assets/galaxy.svg" download>galaxy.svg <span>background</span></a></li>
           <li><a href="fonts/Geist-Variable.woff2" download>Geist-Variable.woff2 <span>OFL 1.1</span></a></li>
           <li><a href="fonts/GeistMono-Variable.woff2" download>GeistMono-Variable.woff2 <span>OFL 1.1</span></a></li>

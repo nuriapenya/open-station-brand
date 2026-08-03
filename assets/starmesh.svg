@@ -1,0 +1,7 @@
+<svg width="1440" height="960" viewBox="0 0 1440 960" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<radialGradient id="star_g" cx="0" cy="0" r="10" gradientUnits="userSpaceOnUse" gradientTransform="matrix(104.7 0 0 69.8 720 120)"><stop offset="0" stop-color="#FFFBFF"/><stop offset="0.678" stop-color="#FFFBFF"/><stop offset="1" stop-color="#CCC8CE"/></radialGradient>
+</defs>
+<rect width="1440" height="960" fill="#CCC8CE"/>
+<rect width="1440" height="960" fill="url(#star_g)"/>
+</svg>
