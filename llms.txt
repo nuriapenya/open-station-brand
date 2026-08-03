@@ -27,6 +27,7 @@ Named gradient fills and backgrounds (all vector SVGs, defined as gradient recip
 - Auromesh (aurora style: lavender, mint, cyan; linear #D1C6F8 to #CEFADA to #B8FFFF): assets/auromesh.svg
 - Starmesh (stellar: white, silver; a radial glow from Starlight #FFFBFF into Cloud #CCC8CE): assets/starmesh.svg
 - Voidmesh (void: #010101 to #111114 to #1E1D23 linear): assets/voidmesh.svg. The default dark background behind content (formerly named Space).
+- Miomesh (Mio's gradient: Pulse #F252FC to #AA67FF to #A580FF to #4B3EFF linear): assets/miomesh.svg. Belongs to the mascot; used for Mio's glow and accents.
 - Galaxy (Void base, Nebula glows, Starlight starfield): assets/galaxy.svg. Hero background.
 
 ## Typography
@@ -49,7 +50,7 @@ Named gradient fills and backgrounds (all vector SVGs, defined as gradient recip
 
 ## Mascot
 
-Mio, a small ghost blob that glows in Pulse and drifts between windows. Named explorations: Luna, Cometa, Órbita, Eclipse, Alba, Nube, Asteroide, Gotita (assets/mio/). Final form and usage rules are still open.
+Mio, a small ghost blob that glows in Pulse and drifts between windows. Its own gradient is Miomesh (assets/miomesh.svg): Pulse #F252FC to #AA67FF to #A580FF to #4B3EFF. Named explorations: Luna, Cometa, Órbita, Eclipse, Alba, Nube, Asteroide, Gotita (assets/mio/). Final form and usage rules are still open.
 
 ## Files
 

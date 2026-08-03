@@ -2,7 +2,7 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "name": "OpenStation",
   "description": "Brand tokens for OpenStation, the open-source WordPress plugin that turns wp-admin into a desktop OS.",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "updated": "2026-08-03",
   "guidelines": "https://nuriapenya.github.io/open-station-brand/",
   "color": {
@@ -118,6 +118,11 @@
       "$value": "assets/voidmesh.svg",
       "$description": "Voidmesh. Void mesh gradient (black, obsidian): a linear gradient from #010101 through #111114 to #1E1D23. The default dark background behind content. Formerly named Space."
     },
+    "miomesh": {
+      "$type": "asset",
+      "$value": "assets/miomesh.svg",
+      "$description": "Miomesh. Mio's own gradient: a linear sweep from Pulse (#F252FC) through #AA67FF and #A580FF into #4B3EFF. Belongs to the mascot; used for Mio's glow and accents."
+    },
     "galaxy": {
       "$type": "asset",
       "$value": "assets/galaxy.svg",
@@ -214,6 +219,7 @@
   "mascot": {
     "name": "Mio",
     "description": "A small ghost blob that lives aboard the station: it glows in Pulse, drifts between windows, and shows up where the interface has something to say.",
+    "gradient": "Miomesh (assets/miomesh.svg): Pulse #F252FC through #AA67FF and #A580FF into #4B3EFF.",
     "explorations": "assets/mio/",
     "status": "Final form, expressions, poses and usage rules to be defined."
   },
