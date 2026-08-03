@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Miomesh loading spinners: six explorations</title>
+<style>
+  @font-face {
+    font-family: "Geist";
+    src: url("../fonts/Geist-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Geist Mono";
+    src: url("../fonts/GeistMono-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-display: swap;
+  }
+  :root {
+    --void: #0c0b0f;
+    --obsidian: #1a1721;
+    --astro: #33303a;
+    --starlight: #fffbff;
+    --mist: #e6e2e6;
+    --cloud: #ccc8ce;
+    --osmium: #99969c;
+    /* Miomesh stops, from brand.json */
+    --pulse: #f252fc;
+    --mio-2: #aa67ff;
+    --mio-3: #a580ff;
+    --mio-4: #4b3eff;
+    --stage-bg: var(--void);
+    --stage-ink: var(--starlight);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--void);
+    color: var(--starlight);
+    font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    padding: 48px clamp(20px, 5vw, 64px) 80px;
+  }
+  header { max-width: 1200px; margin: 0 auto 28px; }
+  h1 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.01em; }
+  header p { color: var(--osmium); margin-top: 8px; max-width: 68ch; line-height: 1.5; }
+  header b { color: var(--cloud); font-weight: 500; }
+
+  /* Controls */
+  .controls {
+    max-width: 1200px;
+    margin: 0 auto 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 28px;
+    align-items: center;
+  }
+  .control { display: flex; align-items: center; gap: 10px; }
+  .control .label {
+    font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--osmium);
+  }
+  .seg { display: inline-flex; border: 1px solid rgba(255, 251, 255, 0.14); border-radius: 999px; overflow: hidden; }
+  .seg button {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: var(--cloud);
+    font: inherit;
+    font-size: 0.78rem;
+    padding: 6px 14px;
+    cursor: pointer;
+  }
+  .seg button + button { border-left: 1px solid rgba(255, 251, 255, 0.1); }
+  .seg button[aria-pressed="true"] { background: rgba(255, 251, 255, 0.12); color: var(--starlight); }
+  .seg button:focus-visible { outline: 2px solid var(--pulse); outline-offset: -2px; }
+
+  /* Grid and cards, matching pulsemesh-variants */
+  .grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 28px;
+  }
+  .card {
+    background: var(--obsidian);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 251, 255, 0.07);
+  }
+  .meta { padding: 16px 18px 18px; }
+  .meta h2 { font-size: 0.95rem; font-weight: 600; display: flex; align-items: baseline; gap: 8px; }
+  .meta h2 .tag { color: var(--osmium); font-weight: 400; font-size: 0.8rem; }
+  .meta p { color: var(--osmium); font-size: 0.82rem; line-height: 1.5; margin-top: 6px; }
+
+  /* Stage: where the big spinner floats */
+  .stage {
+    position: relative;
+    height: 200px;
+    display: grid;
+    place-items: center;
+    background: var(--stage-bg);
+    border-bottom: 1px solid rgba(255, 251, 255, 0.06);
+  }
+  /* Barely-there cosmos, same spirit as the landing mockups */
+  .stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(1px 1px at 18% 28%, rgba(255, 251, 255, 0.5), transparent 100%),
+      radial-gradient(1px 1px at 78% 18%, rgba(255, 251, 255, 0.35), transparent 100%),
+      radial-gradient(1.5px 1.5px at 64% 76%, rgba(255, 251, 255, 0.3), transparent 100%),
+      radial-gradient(1px 1px at 30% 82%, rgba(255, 251, 255, 0.28), transparent 100%),
+      radial-gradient(1px 1px at 88% 58%, rgba(255, 251, 255, 0.4), transparent 100%);
+    opacity: 0.6;
+  }
+  .surface-mist .stage::before { opacity: 0; }
+
+  .demo { position: relative; width: 56px; height: 56px; }
+
+  /* Cosmo shadow: a soft nebula pooled under the spinner, plus a glow on the mark itself */
+  .cosmo {
+    position: absolute;
+    left: 50%;
+    top: calc(100% + 8px);
+    width: 76px;
+    height: 22px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(170, 103, 255, 0.55), rgba(75, 62, 255, 0.22) 62%, transparent 100%);
+    filter: blur(9px);
+  }
+  .sp {
+    position: relative;
+    width: 56px;
+    height: 56px;
+    filter: drop-shadow(0 0 12px rgba(242, 82, 252, 0.28)) drop-shadow(0 10px 26px rgba(75, 62, 255, 0.35));
+  }
+  .glow-off .cosmo { display: none; }
+  .glow-off .sp { filter: none; }
+
+  @keyframes spin { to { transform: rotate(1turn); } }
+
+  /* v1 Halo: full Miomesh ring with a comet-fade tail */
+  .sp-halo {
+    border-radius: 50%;
+    background: conic-gradient(from 0deg,
+      rgba(75, 62, 255, 0) 3%,
+      #4b3eff 20%,
+      #a580ff 46%,
+      #aa67ff 66%,
+      #f252fc 97%);
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6.5px));
+    mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6.5px));
+    animation: spin 1s linear infinite;
+  }
+  .sp-halo::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 7px;
+    height: 7px;
+    margin-left: -3.5px;
+    border-radius: 50%;
+    background: var(--pulse);
+  }
+
+  /* v2 Comet: a bright head with a short trail, orbiting */
+  .sp-comet { animation: spin 0.85s linear infinite; }
+  .sp-comet .trail {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg,
+      transparent 0 48%,
+      rgba(75, 62, 255, 0.5) 62%,
+      #a580ff 78%,
+      #aa67ff 88%,
+      #f252fc 97%,
+      transparent 97.5%);
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 4.5px));
+    mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 4.5px));
+  }
+  .sp-comet .head {
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    width: 9px;
+    height: 9px;
+    margin-left: -4.5px;
+    border-radius: 50%;
+    background: var(--pulse);
+    box-shadow: 0 0 10px 2px rgba(242, 82, 252, 0.7);
+  }
+
+  /* v3 Orbit: a Starlight core with two moons on faint orbit lines */
+  .sp-orbit .path {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(165, 128, 255, 0.25);
+  }
+  .sp-orbit .path.p1 { inset: 9px; }
+  .sp-orbit .path.p2 { inset: 0; }
+  .sp-orbit .core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    margin: -4px 0 0 -4px;
+    border-radius: 50%;
+    background: var(--starlight);
+    box-shadow: 0 0 8px 1px rgba(255, 251, 255, 0.55);
+  }
+  .surface-mist .sp-orbit .core { background: var(--obsidian); box-shadow: none; }
+  .sp-orbit .carrier { position: absolute; }
+  .sp-orbit .carrier.c1 { inset: 9px; animation: spin 1.3s linear infinite; }
+  .sp-orbit .carrier.c2 { inset: 0; animation: spin 2.2s linear infinite reverse; }
+  .sp-orbit .moon {
+    position: absolute;
+    top: -3.5px;
+    left: 50%;
+    width: 7px;
+    height: 7px;
+    margin-left: -3.5px;
+    border-radius: 50%;
+  }
+  .sp-orbit .c1 .moon { background: var(--pulse); box-shadow: 0 0 7px 1px rgba(242, 82, 252, 0.6); }
+  .sp-orbit .c2 .moon { background: #8a6cff; box-shadow: 0 0 7px 1px rgba(138, 108, 255, 0.5); }
+
+  /* v4 Mio: the ghost blob breathing, wearing its own gradient */
+  .sp-mio {
+    width: 46px;
+    height: 46px;
+    margin: 5px;
+    background: linear-gradient(135deg, #f252fc 0%, #aa67ff 45%, #a580ff 62%, #4b3eff 100%);
+    border-radius: 52% 48% 55% 45% / 55% 50% 50% 45%;
+    animation: mio-breathe 2.6s ease-in-out infinite;
+  }
+  @keyframes mio-breathe {
+    0%, 100% { border-radius: 52% 48% 55% 45% / 55% 50% 50% 45%; transform: translateY(0) scale(1); }
+    30%      { border-radius: 45% 55% 48% 52% / 48% 55% 45% 55%; }
+    50%      { transform: translateY(-4px) scale(1.04); }
+    70%      { border-radius: 55% 45% 52% 48% / 50% 46% 55% 50%; }
+  }
+
+  /* v5 Docking: twelve ticks chasing around the ring, one Miomesh stop each */
+  .sp-dock .tick { position: absolute; inset: 0; }
+  .sp-dock .bar {
+    position: absolute;
+    top: 2px;
+    left: 50%;
+    width: 4px;
+    height: 13px;
+    margin-left: -2px;
+    border-radius: 2px;
+    opacity: 0.5;
+    animation: dock 1.1s linear infinite;
+  }
+  @keyframes dock {
+    0% { opacity: 1; }
+    55% { opacity: 0.15; }
+    100% { opacity: 0.15; }
+  }
+
+  /* v6 Warp: rings arriving from the center, Pulse cooling into deep blue */
+  .sp-warp .ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid var(--pulse);
+    opacity: 0;
+    animation: warp 1.8s cubic-bezier(0.2, 0.6, 0.35, 1) infinite;
+  }
+  .sp-warp .r2 { animation-delay: 0.6s; }
+  .sp-warp .r3 { animation-delay: 1.2s; }
+  @keyframes warp {
+    0%   { transform: scale(0.2); opacity: 0; border-color: #f252fc; }
+    14%  { opacity: 1; }
+    60%  { border-color: #a580ff; }
+    100% { transform: scale(1); opacity: 0; border-color: #4b3eff; }
+  }
+  .sp-warp .dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    margin: -3px 0 0 -3px;
+    border-radius: 50%;
+    background: var(--starlight);
+    box-shadow: 0 0 8px 1px rgba(255, 251, 255, 0.5);
+  }
+  .surface-mist .sp-warp .dot { background: var(--obsidian); box-shadow: none; }
+
+  /* Inline size demo in each card footer */
+  .mini { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
+  .mini-stage {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    flex: none;
+  }
+  /* Scale a non-animated wrapper: the spinners' keyframes own their transform */
+  .mini-stage .shrink {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: 56px;
+    height: 56px;
+    transform: translate(-50%, -50%) scale(0.42);
+  }
+  .mini-stage .sp { display: block; filter: none; }
+  .mini-label {
+    font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cloud);
+  }
+
+  footer {
+    max-width: 1200px;
+    margin: 36px auto 0;
+    color: var(--osmium);
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+  footer code {
+    font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.95em;
+    color: var(--cloud);
+  }
+
+  /* Reduced motion: stop the spinning, keep a gentle activity pulse */
+  @media (prefers-reduced-motion: reduce) {
+    .sp, .sp * { animation: none !important; }
+    .sp { animation: rm-pulse 2.4s ease-in-out infinite !important; }
+    .sp-warp .ring { opacity: 0.4; }
+    .sp-warp .r1 { transform: scale(0.45); }
+    .sp-warp .r2 { transform: scale(0.7); }
+    .sp-warp .r3 { transform: scale(0.95); }
+  }
+  @keyframes rm-pulse { 50% { opacity: 0.4; } }
+</style>
+</head>
+<body class="surface-void">
+<header>
+  <h1>Miomesh loading spinners</h1>
+  <p>Six spinner explorations built on the Miomesh gradient (Pulse <b>#F252FC</b> through <b>#AA67FF</b> and <b>#A580FF</b> into <b>#4B3EFF</b>), for transitions between screens and for loading content. Each one floats over a <b>cosmo shadow</b>: a soft nebula glow pooled beneath the mark. Toggle it off to compare, and switch the stage surface to check contrast.</p>
+</header>
+
+<div class="controls">
+  <div class="control">
+    <span class="label">Surface</span>
+    <div class="seg" role="group" aria-label="Stage surface">
+      <button type="button" data-surface="void" aria-pressed="true">Void</button>
+      <button type="button" data-surface="obsidian" aria-pressed="false">Obsidian</button>
+      <button type="button" data-surface="mist" aria-pressed="false">Mist</button>
+    </div>
+  </div>
+  <div class="control">
+    <span class="label">Cosmo shadow</span>
+    <div class="seg" role="group" aria-label="Cosmo shadow">
+      <button type="button" data-glow="on" aria-pressed="true">On</button>
+      <button type="button" data-glow="off" aria-pressed="false">Off</button>
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+
+  <div class="card">
+    <div class="stage">
+      <div class="demo">
+        <i class="cosmo" aria-hidden="true"></i>
+        <div class="sp sp-halo" aria-hidden="true"></div>
+      </div>
+    </div>
+    <div class="meta">
+      <h2>v1 Halo <span class="tag">quiet default</span></h2>
+      <p>The full Miomesh sweep as a ring, with a Pulse head and a tail that fades into deep blue. The workhorse: content loading anywhere in the shell.</p>
+      <div class="mini">
+        <span class="mini-stage"><span class="shrink"><span class="sp sp-halo" aria-hidden="true"></span></span></span>
+        <span class="mini-label">Loading widgets</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="stage">
+      <div class="demo">
+        <i class="cosmo" aria-hidden="true"></i>
+        <div class="sp sp-comet" aria-hidden="true"><i class="trail"></i><i class="head"></i></div>
+      </div>
+    </div>
+    <div class="meta">
+      <h2>v2 Comet <span class="tag">nods to the Mio comet</span></h2>
+      <p>A bright Pulse head with a short trail, circling fast. More playful than Halo; suits opening a window or fetching a screen.</p>
+      <div class="mini">
+        <span class="mini-stage"><span class="shrink"><span class="sp sp-comet" aria-hidden="true"><i class="trail"></i><i class="head"></i></span></span></span>
+        <span class="mini-label">Opening window</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="stage">
+      <div class="demo">
+        <i class="cosmo" aria-hidden="true"></i>
+        <div class="sp sp-orbit" aria-hidden="true">
+          <i class="path p1"></i><i class="path p2"></i><i class="core"></i>
+          <span class="carrier c1"><i class="moon"></i></span>
+          <span class="carrier c2"><i class="moon"></i></span>
+        </div>
+      </div>
+    </div>
+    <div class="meta">
+      <h2>v3 Orbit <span class="tag">the station itself</span></h2>
+      <p>A Starlight core with two moons counter-rotating on faint orbit lines. The most literal take on the space territory; fits bigger moments like first boot of the desktop.</p>
+      <div class="mini">
+        <span class="mini-stage"><span class="shrink"><span class="sp sp-orbit" aria-hidden="true"><i class="path p1"></i><i class="path p2"></i><i class="core"></i><span class="carrier c1"><i class="moon"></i></span><span class="carrier c2"><i class="moon"></i></span></span></span></span>
+        <span class="mini-label">Starting station</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="stage">
+      <div class="demo">
+        <i class="cosmo" aria-hidden="true"></i>
+        <div class="sp sp-mio" aria-hidden="true"></div>
+      </div>
+    </div>
+    <div class="meta">
+      <h2>v4 Mio <span class="tag">mascot territory</span></h2>
+      <p>A ghost blob breathing in Miomesh, drifting the way Mio does between windows. Kept abstract since Mio's final form is still open; made for AI assistant thinking states.</p>
+      <div class="mini">
+        <span class="mini-stage"><span class="shrink"><span class="sp sp-mio" aria-hidden="true"></span></span></span>
+        <span class="mini-label">Mio is thinking</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="stage">
+      <div class="demo">
+        <i class="cosmo" aria-hidden="true"></i>
+        <div class="sp sp-dock" aria-hidden="true" data-dock></div>
+      </div>
+    </div>
+    <div class="meta">
+      <h2>v5 Docking <span class="tag">instrument voice</span></h2>
+      <p>Twelve ticks chasing around the ring, each holding its own stop of the gradient. Reads as a docking sequence; pairs with the mono voice in the palette and system operations.</p>
+      <div class="mini">
+        <span class="mini-stage"><span class="shrink"><span class="sp sp-dock" aria-hidden="true" data-dock></span></span></span>
+        <span class="mini-label">Indexing content</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="stage">
+      <div class="demo">
+        <i class="cosmo" aria-hidden="true"></i>
+        <div class="sp sp-warp" aria-hidden="true"><i class="ring r1"></i><i class="ring r2"></i><i class="ring r3"></i><i class="dot"></i></div>
+      </div>
+    </div>
+    <div class="meta">
+      <h2>v6 Warp <span class="tag">for Spaces transitions</span></h2>
+      <p>Rings arriving from the center, cooling from Pulse into deep blue as they expand. An arrival pulse: made for switching Spaces or landing on a new screen.</p>
+      <div class="mini">
+        <span class="mini-stage"><span class="shrink"><span class="sp sp-warp" aria-hidden="true"><i class="ring r1"></i><i class="ring r2"></i><i class="ring r3"></i><i class="dot"></i></span></span></span>
+        <span class="mini-label">Entering space</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>All variants are CSS-only except the Docking ticks, which are generated in a few lines of JS; everything animates transform and opacity, so it stays cheap. Shown at 56px (stage) and roughly 24px (inline). In the plugin, the live element should carry <code>role="status"</code> and an <code>aria-label</code> such as "Loading", with the spinner itself <code>aria-hidden</code>. Under <code>prefers-reduced-motion</code> the spinning stops and the mark pulses gently instead.</p>
+</footer>
+
+<script>
+  // Twelve Miomesh stops, interpolated Pulse to deep blue, one per docking tick
+  var DOCK_COLORS = [
+    "#F252FC", "#E456FD", "#D75AFD", "#C95EFE", "#BB62FE", "#AE66FF",
+    "#A96DFF", "#A776FF", "#A57FFF", "#8A6CFF", "#6B55FF", "#4B3EFF"
+  ];
+  document.querySelectorAll("[data-dock]").forEach(function (dock) {
+    DOCK_COLORS.forEach(function (hex, i) {
+      var tick = document.createElement("span");
+      tick.className = "tick";
+      tick.style.transform = "rotate(" + i * 30 + "deg)";
+      var bar = document.createElement("i");
+      bar.className = "bar";
+      bar.style.background = hex;
+      bar.style.animationDelay = (i * (1.1 / 12) - 1.1).toFixed(3) + "s";
+      tick.appendChild(bar);
+      dock.appendChild(tick);
+    });
+  });
+
+  var surfaces = { void: "#0c0b0f", obsidian: "#1a1721", mist: "#e6e2e6" };
+  document.querySelectorAll("[data-surface]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll("[data-surface]").forEach(function (b) {
+        b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+      });
+      document.body.classList.remove("surface-void", "surface-obsidian", "surface-mist");
+      document.body.classList.add("surface-" + btn.dataset.surface);
+      document.documentElement.style.setProperty("--stage-bg", surfaces[btn.dataset.surface]);
+    });
+  });
+
+  document.querySelectorAll("[data-glow]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll("[data-glow]").forEach(function (b) {
+        b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+      });
+      document.body.classList.toggle("glow-off", btn.dataset.glow === "off");
+    });
+  });
+</script>
+</body>
+</html>
