@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OpenStation · Brand Guidelines</title>
+<!-- Favicon: the round chip. SVG for modern browsers, PNG for the rest and for iOS. -->
+<link rel="icon" type="image/svg+xml" href="assets/logomark-app-circle.svg">
+<link rel="icon" type="image/png" sizes="180x180" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
 <style>
   /* ---------- Fonts (self-hosted, SIL OFL 1.1, see fonts/OFL.txt) ---------- */
   @font-face {
@@ -286,7 +290,8 @@
   .logo-guides {
     display: flex;
     align-items: flex-start;
-    gap: 28px;
+    gap: 14px;
+    max-width: 50%;   /* half scale: the gap halves with it, so the study shrinks evenly */
     margin-bottom: 44px;
   }
   .logo-guides .guides--lockup { flex: 4.25 1 0; min-width: 0; }
@@ -351,6 +356,7 @@
   @media (max-width: 760px) {
     .logo-row { grid-template-columns: 1fr; }
     .chips-row { grid-template-columns: repeat(2, 1fr); }
+    .logo-guides { max-width: 100%; }   /* half scale would be unreadable on a phone */
   }
 
   /* Wordmark and Icon subsections: label + intro copy, then the card grid */
