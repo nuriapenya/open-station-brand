@@ -2,14 +2,14 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "name": "OpenStation",
   "description": "Brand tokens for OpenStation, the open-source WordPress plugin that turns wp-admin into a desktop OS.",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "updated": "2026-08-04",
   "guidelines": "https://nuriapenya.github.io/open-station-brand/",
   "color": {
     "pulse": {
       "$type": "color",
-      "$value": "#f252fc",
-      "$description": "Pulse. Neon identity accent, formerly named Pulsar. RGB 242, 82, 252. HSL 296, 97, 65."
+      "$value": "#e94ff3",
+      "$description": "Pulse. Neon identity accent, formerly named Pulsar. RGB 233, 79, 243. HSL 296, 87, 63. Darkened from #E94FF3 in August 2026 for contrast: 3.05:1 on pure white (clears the 3:1 minimum for non-text) and 2.98:1 on Starlight, against 2.84:1 and 2.77:1 before. On Void it reads 6.4:1, still AA for text."
     },
     "nebula": {
       "$type": "color",
@@ -121,7 +121,7 @@
     "miomesh": {
       "$type": "asset",
       "$value": "assets/miomesh.svg",
-      "$description": "Miomesh. Mio's own gradient: a linear sweep from Pulse (#F252FC) through #AA67FF and #A580FF into #4B3EFF. Belongs to the mascot; used for Mio's glow and accents."
+      "$description": "Miomesh. Mio's own gradient: a linear sweep from Pulse (#E94FF3) through #AA67FF and #A580FF into #4B3EFF. Belongs to the mascot; used for Mio's glow and accents."
     },
     "galaxy": {
       "$type": "asset",
@@ -219,7 +219,7 @@
   "mascot": {
     "name": "Mio",
     "description": "A small ghost blob that lives aboard the station: it glows in Pulse, drifts between windows, and shows up where the interface has something to say.",
-    "gradient": "Miomesh (assets/miomesh.svg): Pulse #F252FC through #AA67FF and #A580FF into #4B3EFF.",
+    "gradient": "Miomesh (assets/miomesh.svg): Pulse #E94FF3 through #AA67FF and #A580FF into #4B3EFF.",
     "explorations": "assets/mio/",
     "status": "Final form, expressions, poses and usage rules to be defined."
   },

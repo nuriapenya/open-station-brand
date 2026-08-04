@@ -8,7 +8,7 @@ The name works on three levels: the space and cosmos territory, the initials hin
 
 Primary palette:
 
-- Pulse #F252FC (RGB 242, 82, 252): neon identity accent (formerly named Pulsar)
+- Pulse #E94FF3 (RGB 233, 79, 243): neon identity accent (formerly named Pulsar)
 - Nebula #EC9BFF (RGB 236, 155, 255): soft identity accent
 - Starlight #FFFBFF (RGB 255, 251, 255): light contrast
 - Sirius #9AF2FF (RGB 154, 242, 255): cyan contrast accent (brightened from the former #C2F1F1)
@@ -27,7 +27,7 @@ Named gradient fills and backgrounds (all vector SVGs, defined as gradient recip
 - Auromesh (aurora style: lavender, mint, cyan; linear #D1C6F8 to #CEFADA to #B8FFFF): assets/auromesh.svg
 - Starmesh (stellar: white, silver; a radial glow from Starlight #FFFBFF into Cloud #CCC8CE): assets/starmesh.svg
 - Voidmesh (void: #010101 to #111114 to #1E1D23 linear): assets/voidmesh.svg. The default dark background behind content (formerly named Space).
-- Miomesh (Mio's gradient: Pulse #F252FC to #AA67FF to #A580FF to #4B3EFF linear): assets/miomesh.svg. Belongs to the mascot; used for Mio's glow and accents.
+- Miomesh (Mio's gradient: Pulse #E94FF3 to #AA67FF to #A580FF to #4B3EFF linear): assets/miomesh.svg. Belongs to the mascot; used for Mio's glow and accents.
 - Galaxy (Void base, Nebula glows, Starlight starfield): assets/galaxy.svg. Hero background.
 
 ## Typography
@@ -51,7 +51,7 @@ Named gradient fills and backgrounds (all vector SVGs, defined as gradient recip
 
 ## Mascot
 
-Mio, a small ghost blob that glows in Pulse and drifts between windows. Its own gradient is Miomesh (assets/miomesh.svg): Pulse #F252FC to #AA67FF to #A580FF to #4B3EFF. Named explorations: Luna, Cometa, Órbita, Eclipse, Alba, Nube, Asteroide, Gotita (assets/mio/). Final form and usage rules are still open.
+Mio, a small ghost blob that glows in Pulse and drifts between windows. Its own gradient is Miomesh (assets/miomesh.svg): Pulse #E94FF3 to #AA67FF to #A580FF to #4B3EFF. Named explorations: Luna, Cometa, Órbita, Eclipse, Alba, Nube, Asteroide, Gotita (assets/mio/). Final form and usage rules are still open.
 
 ## Files
 

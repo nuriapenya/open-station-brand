@@ -31,7 +31,7 @@
     --dim: #5c5c5c;         /* tertiary text */
 
     /* Brand palette · from the Figma Colors section (node 2260:17299) */
-    --pulse: #f252fc;       /* Pulse */
+    --pulse: #e94ff3;       /* Pulse */
     --nebula: #ec9bff;      /* Nebula */
     --starlight: #fffbff;   /* Starlight */
     --sirius: #9af2ff;      /* Sirius */
@@ -98,7 +98,7 @@
     z-index: -1;
     pointer-events: none;
     background-image:
-      radial-gradient(52% 28% at 85% 0%, rgba(242,82,252,.05), transparent 70%),
+      radial-gradient(52% 28% at 85% 0%, rgba(233, 79, 243,.05), transparent 70%),
       radial-gradient(45% 22% at 8% 0%, rgba(236,155,255,.045), transparent 70%),
       radial-gradient(circle at 44px 58px, rgba(255,251,255,.22) 0 1px, transparent 1.7px),
       radial-gradient(circle at 205px 170px, rgba(255,251,255,.14) 0 1px, transparent 1.6px),
@@ -176,8 +176,8 @@
     width: 130px;
     height: 130px;
     filter:
-      drop-shadow(0 0 6px rgba(242, 82, 252, .7))
-      drop-shadow(0 0 22px rgba(242, 82, 252, .35));
+      drop-shadow(0 0 6px rgba(233, 79, 243, .7))
+      drop-shadow(0 0 22px rgba(233, 79, 243, .35));
     animation: mio-float 8.5s ease-in-out 2.7s infinite;
   }
   .mio-eyes { animation: mio-blink 5.5s 3s infinite; transform-origin: 60px 61px; }
@@ -472,7 +472,7 @@
   .mio-mesh-bar {
     height: 14px;
     border-radius: 999px;
-    background: linear-gradient(90deg, #f252fc 7%, #aa67ff 48%, #a580ff 71%, #4b3eff 93%);
+    background: linear-gradient(90deg, #e94ff3 7%, #aa67ff 48%, #a580ff 71%, #4b3eff 93%);
   }
   .mio-mesh-meta {
     display: flex;
@@ -742,7 +742,7 @@
   }
   .tile.shell {
     background:
-      radial-gradient(70% 80% at 70% 15%, rgba(242,82,252,.14), transparent 60%),
+      radial-gradient(70% 80% at 70% 15%, rgba(233, 79, 243,.14), transparent 60%),
       radial-gradient(50% 70% at 15% 85%, rgba(236,155,255,.10), transparent 60%),
       var(--obsidian);
   }
@@ -760,7 +760,7 @@
     align-items: center;
     justify-content: center;
     background:
-      radial-gradient(70% 90% at 75% 15%, rgba(242,82,252,.20), transparent 60%),
+      radial-gradient(70% 90% at 75% 15%, rgba(233, 79, 243,.20), transparent 60%),
       radial-gradient(60% 80% at 15% 85%, rgba(236,155,255,.14), transparent 60%),
       var(--obsidian);
   }
@@ -805,7 +805,7 @@
     box-shadow: inset 0 1px 0 rgba(255,255,255,.2);
   }
   .mini-dock i { width: 14px; height: 14px; border-radius: 4px; background: rgba(255,255,255,.14); }
-  .mini-dock i:first-child { background: rgba(242,82,252,.55); }
+  .mini-dock i:first-child { background: rgba(233, 79, 243,.55); }
 
   footer {
     padding-top: 18px;
@@ -858,7 +858,7 @@
         <defs>
           <!-- Miomesh (assets/miomesh.svg): Mio's own gradient -->
           <linearGradient id="mioGrad" x1="0%" y1="10%" x2="90%" y2="100%">
-            <stop offset="0%" stop-color="#f252fc"/>
+            <stop offset="0%" stop-color="#e94ff3"/>
             <stop offset="48%" stop-color="#aa67ff"/>
             <stop offset="71%" stop-color="#a580ff"/>
             <stop offset="100%" stop-color="#4b3eff"/>
@@ -977,9 +977,9 @@
     <div class="mosaic">
       <div class="ctile t-pulse">
         <b>Pulse</b>
-        <span>HEX #F252FC</span>
-        <span>RGB 242, 82, 252</span>
-        <span>HSL 296, 97, 65</span>
+        <span>HEX #E94FF3</span>
+        <span>RGB 233, 79, 243</span>
+        <span>HSL 296, 87, 63</span>
       </div>
       <div class="ctile t-nebula">
         <b>Nebula</b>
@@ -1155,7 +1155,7 @@
       <span class="label">Miomesh · Mio's gradient</span>
       <div class="mio-mesh-bar" role="img" aria-label="Miomesh: a gradient strip from Pulse magenta into deep blue"></div>
       <div class="mio-mesh-meta">
-        <span>Pulse #F252FC · #AA67FF · #A580FF · #4B3EFF</span>
+        <span>Pulse #E94FF3 · #AA67FF · #A580FF · #4B3EFF</span>
         <a class="dl-btn" href="assets/miomesh.svg" download aria-label="Download miomesh.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
       </div>
     </div>

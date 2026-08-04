@@ -25,7 +25,7 @@
     --cloud: #ccc8ce;
     --osmium: #99969c;
     /* Miomesh, stop by stop (brand.json) */
-    --mio-1: #f252fc;
+    --mio-1: #e94ff3;
     --mio-2: #aa67ff;
     --mio-3: #a580ff;
     --mio-4: #4b3eff;
@@ -149,7 +149,7 @@
     position: absolute;
     inset: -14px;
     border-radius: 50%;
-    background: radial-gradient(50% 50% at 50% 50%, rgba(242, 82, 252, 0.24), rgba(170, 103, 255, 0.1) 55%, transparent 72%);
+    background: radial-gradient(50% 50% at 50% 50%, rgba(233, 79, 243, 0.24), rgba(170, 103, 255, 0.1) 55%, transparent 72%);
     filter: blur(8px);
     pointer-events: none;
   }
@@ -225,7 +225,7 @@
     margin-left: -4.5px;
     border-radius: 50%;
     background: var(--mio-1);
-    box-shadow: 0 0 10px 2px rgba(242, 82, 252, 0.7);
+    box-shadow: 0 0 10px 2px rgba(233, 79, 243, 0.7);
   }
 
   /* 3. Orbit: a core with two moons on faint orbit lines */
@@ -259,7 +259,7 @@
     margin-left: -3.5px;
     border-radius: 50%;
   }
-  .sp-orbit .c1 .moon { background: var(--mio-1); box-shadow: 0 0 7px 1px rgba(242, 82, 252, 0.6); }
+  .sp-orbit .c1 .moon { background: var(--mio-1); box-shadow: 0 0 7px 1px rgba(233, 79, 243, 0.6); }
   .sp-orbit .c2 .moon { background: #8a6cff; box-shadow: 0 0 7px 1px rgba(138, 108, 255, 0.5); }
 
   /* 4. Corona: Halo at hairline weight, no head, turning slower */
@@ -379,7 +379,7 @@
 <body>
 <header>
   <h1>Miomesh loading spinners</h1>
-  <p>Six spinner explorations built on the Miomesh gradient (Pulse <b>#F252FC</b> through <b>#AA67FF</b> and <b>#A580FF</b> into <b>#4B3EFF</b>), for transitions between screens and for loading content. Each one floats over a <b>cosmo shadow</b>: a soft nebula glow pooled beneath the mark. Toggle it off to compare, and switch the stage surface to check contrast.</p>
+  <p>Six spinner explorations built on the Miomesh gradient (Pulse <b>#E94FF3</b> through <b>#AA67FF</b> and <b>#A580FF</b> into <b>#4B3EFF</b>), for transitions between screens and for loading content. Each one floats over a <b>cosmo shadow</b>: a soft nebula glow pooled beneath the mark. Toggle it off to compare, and switch the stage surface to check contrast.</p>
 </header>
 
 <div class="controls">
@@ -525,7 +525,7 @@
   <p><b>All CSS, no JavaScript.</b> Every spinner is markup plus a keyframe, and the two toggles above are radio inputs read with <code>:has()</code>, so this page ships no script at all. Shown at 56px on the stage and 24px inline.</p>
   <p><b>Only transform and opacity animate</b>, which keeps each spinner on the compositor and off the main thread: no animated colors, shadows, or filters anywhere. The cosmo shadow is two static blurred layers behind the mark, rasterized once, so the glow costs nothing per frame.</p>
   <p><b>Accessibility.</b> Each stage is a <code>role="status"</code> region labelled with what is loading ("Loading widgets", not "spinner"), and every shape inside is <code>aria-hidden</code>, so a screen reader hears the state and none of the decoration. Under <code>prefers-reduced-motion</code> nothing rotates or travels; the mark fades slowly in place instead. Nothing blinks faster than once a second, well inside the flash threshold.</p>
-  <p><b>Contrast.</b> On Void and Obsidian the whole ramp clears 3:1 against the surface (Pulse 6.9:1, deep blue 3.2:1). On Mist the cool end still passes at 4.8:1 but Pulse drops to 2.2:1, so on light surfaces the spinner should lead with the blue half of the ramp rather than the pink.</p>
+  <p><b>Contrast.</b> On Void and Obsidian the whole ramp clears 3:1 against the surface (Pulse 6.4:1, deep blue 3.2:1). On Mist the cool end still passes at 4.8:1 but Pulse drops to 2.4:1, so on light surfaces the spinner should lead with the blue half of the ramp rather than the pink.</p>
 </footer>
 </body>
 </html>
