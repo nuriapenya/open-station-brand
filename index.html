@@ -277,7 +277,20 @@
   .label + .logo-row,
   .label + .chips-row,
   .label + .logo-panel,
+  .label + .logo-guides,
   .logo-row + .logo-row { margin-top: 28px; }
+
+  /* Construction study, floating on the page background rather than on a card.
+     The lockup box is 4.25 times as wide as it is tall and the icon box is
+     square, so growing them 4.25 : 1 lands both on exactly the same height. */
+  .logo-guides {
+    display: flex;
+    align-items: flex-start;
+    gap: 28px;
+    margin-bottom: 44px;
+  }
+  .logo-guides .guides--lockup { flex: 4.25 1 0; min-width: 0; }
+  .logo-guides .guides--icon { flex: 1 1 0; min-width: 0; }
 
   /* The plain marks and their construction guides share one panel */
   .logo-panel {
@@ -888,6 +901,31 @@
   <!-- ============ LOGO: WORDMARK, ICON, CONSTRUCTION, HOLO, CHIPS ============ -->
   <section>
     <span class="label">Logo</span>
+
+    <!-- The construction study floats on the page background, outside the panel.
+         flex 4.25 against flex 1, with each figure's own aspect ratio, makes both
+         boxes come out exactly the same height. -->
+    <div class="logo-guides">
+      <div class="guides guides--lockup" role="img" aria-label="Construction of the wordmark lockup: clear space of 32.5% of the mark height at the left and right and the same measure between mark and wordmark, with 25% above and below">
+        <img class="art" src="assets/logoword.svg" alt="">
+        <span class="frame" aria-hidden="true"></span>
+        <span class="v v1" aria-hidden="true"></span>
+        <span class="v v2" aria-hidden="true"></span>
+        <span class="v v3" aria-hidden="true"></span>
+        <span class="v v4" aria-hidden="true"></span>
+        <span class="h h1" aria-hidden="true"></span>
+        <span class="h h2" aria-hidden="true"></span>
+      </div>
+      <div class="guides guides--icon" role="img" aria-label="Construction of the icon: clear space of 25% of the icon height on all four sides">
+        <img class="art" src="assets/logomark.svg" alt="">
+        <span class="frame" aria-hidden="true"></span>
+        <span class="v v1" aria-hidden="true"></span>
+        <span class="v v2" aria-hidden="true"></span>
+        <span class="h h1" aria-hidden="true"></span>
+        <span class="h h2" aria-hidden="true"></span>
+      </div>
+    </div>
+
     <div class="logo-panel">
     <div class="logo-row">
       <div>
@@ -904,34 +942,6 @@
       </div>
     </div>
 
-    <div class="logo-row">
-      <div>
-        <div class="lockup">
-          <div class="guides guides--lockup" role="img" aria-label="Construction of the wordmark lockup: clear space of 32.5% of the mark height at the left and right and the same measure between mark and wordmark, with 25% above and below">
-            <img class="art" src="assets/logoword.svg" alt="">
-            <span class="frame" aria-hidden="true"></span>
-            <span class="v v1" aria-hidden="true"></span>
-            <span class="v v2" aria-hidden="true"></span>
-            <span class="v v3" aria-hidden="true"></span>
-            <span class="v v4" aria-hidden="true"></span>
-            <span class="h h1" aria-hidden="true"></span>
-            <span class="h h2" aria-hidden="true"></span>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div class="lockup">
-          <div class="guides guides--icon" role="img" aria-label="Construction of the icon: clear space of 25% of the icon height on all four sides">
-            <img class="art" src="assets/logomark.svg" alt="">
-            <span class="frame" aria-hidden="true"></span>
-            <span class="v v1" aria-hidden="true"></span>
-            <span class="v v2" aria-hidden="true"></span>
-            <span class="h h1" aria-hidden="true"></span>
-            <span class="h h2" aria-hidden="true"></span>
-          </div>
-        </div>
-      </div>
-    </div>
     </div>
 
     <span class="label logo-head">Holoversion</span>
