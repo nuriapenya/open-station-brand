@@ -37,6 +37,7 @@
     --sirius: #9af2ff;      /* Sirius */
     --lagoon: #9f98ff;      /* Lagoon */
     --obsidian: #1a1721;    /* Obsidian */
+    --osmium: #99969c;      /* Osmium · from the Shade palette, used for the construction guides */
     /* Void (#0c0b0f) is defined above; the full Shade palette (grays) lives in the Color section;
        meshes: Holomesh, Pulsemesh, Auromesh, Starmesh, Voidmesh (assets/*.svg);
        background: Galaxy (assets/galaxy.svg) */
@@ -275,22 +276,55 @@
   }
   .label + .logo-row,
   .label + .chips-row,
+  .label + .logo-panel,
   .logo-row + .logo-row { margin-top: 28px; }
+
+  /* The plain marks and their construction guides share one panel */
+  .logo-panel {
+    border: 1px solid var(--line-soft);
+    border-radius: 10px;
+    background: rgba(23, 22, 27, .92);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05);
+    padding: clamp(20px, 2.5vw, 36px);
+  }
+  .logo-panel .lockup {
+    border: 0;
+    background: none;
+    box-shadow: none;
+    min-height: 0;
+    padding: 20px;
+  }
 
   /* Construction guides: the clear-space frame plus the lines that mark the
      mark, the gap and the wordmark. Every measure is a share of the mark
      height (M), so the percentages hold at any size: clear space is 0.325 M at
      the sides (the same measure as the gap between mark and wordmark) and
      0.25 M above and below; the icon gets 0.25 M on all four sides. */
-  .guides { position: relative; width: 100%; --guide: rgba(255, 251, 255, .32); }
+  /* Guide lines are drawn as repeating gradients rather than dashed borders,
+     so the dash and the gap between dashes can be set: 4px on, 8px off. */
+  .guides {
+    position: relative;
+    width: 100%;
+    --guide: var(--osmium);
+    --dash-x: repeating-linear-gradient(to right, var(--guide) 0 4px, transparent 4px 12px);
+    --dash-y: repeating-linear-gradient(to bottom, var(--guide) 0 4px, transparent 4px 12px);
+  }
   .guides--lockup { aspect-ratio: 969 / 228; }   /* 6.375 M wide, 1.5 M tall */
   .guides--icon   { aspect-ratio: 1 / 1; }       /* 1.5 M square */
   .guides .art { position: absolute; display: block; }
   .guides--lockup .art { left: 5.098%; top: 16.667%; width: 89.804%; height: 66.667%; }
   .guides--icon .art   { left: 16.667%; top: 16.667%; width: 66.667%; height: 66.667%; }
-  .guides .frame { position: absolute; inset: 0; border: 1px dashed var(--guide); }
-  .guides .v { position: absolute; top: 0; bottom: 0; border-left: 1px dashed var(--guide); }
-  .guides .h { position: absolute; left: 0; right: 0; border-top: 1px dashed var(--guide); }
+  .guides .frame {
+    position: absolute;
+    inset: 0;
+    background:
+      var(--dash-x) top left / 100% 1px no-repeat,
+      var(--dash-x) bottom left / 100% 1px no-repeat,
+      var(--dash-y) top left / 1px 100% no-repeat,
+      var(--dash-y) top right / 1px 100% no-repeat;
+  }
+  .guides .v { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--dash-y); }
+  .guides .h { position: absolute; left: 0; right: 0; height: 1px; background: var(--dash-x); }
   .guides--lockup .v1 { left: 5.098%; }   /* mark starts */
   .guides--lockup .v2 { left: 20.784%; }  /* mark ends, gap starts */
   .guides--lockup .v3 { left: 25.882%; }  /* gap ends, wordmark starts */
@@ -854,6 +888,7 @@
   <!-- ============ LOGO: WORDMARK, ICON, CONSTRUCTION, HOLO, CHIPS ============ -->
   <section>
     <span class="label">Logo</span>
+    <div class="logo-panel">
     <div class="logo-row">
       <div>
         <div class="lockup">
@@ -896,6 +931,7 @@
           </div>
         </div>
       </div>
+    </div>
     </div>
 
     <span class="label logo-head">Holoversion</span>
