@@ -147,11 +147,11 @@
     justify-content: space-between;
     gap: 16px;
   }
-  /* Lockup proportions (from Figma): mark height = 5/3 of the type size,
-     gap = half the type size, both centered on the same axis */
-  .lockup-head { display: inline-flex; align-items: center; gap: 9.5px; }
+  /* Live-text lockup (proportions from Figma, updated August 2026):
+     type at 0.742 and gap at 0.325 of the mark height */
+  .lockup-head { display: inline-flex; align-items: center; gap: 10.4px; }
   .lockup-head img { width: 32px; height: 32px; }
-  .lockup-head span { font-size: 19px; font-weight: 600; letter-spacing: 0; }
+  .lockup-head span { font-size: 23.7px; font-weight: 600; letter-spacing: 0; }
 
   /* ---------- Masthead ---------- */
   .masthead {
@@ -278,9 +278,52 @@
   }
   .lockup.grid-bg::before { left: 0; right: 0; top: 50%; height: 1px; }
   .lockup.grid-bg::after { top: 0; bottom: 0; left: 50%; width: 1px; }
-  .lockup.construction { min-height: 320px; background-size: 56px 56px; }
-  .construction-svg { width: 280px; height: 280px; flex: none; position: relative; z-index: 1; }
   .lockup-note { margin-top: 14px; }
+
+  /* Logo board · mirrors the Logo section in Figma: wordmark and icon, the same
+     pair with construction guides, the holo version, then the chips. The lockup
+     column is wider than the icon column, as on the board. */
+  .logo-row {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+    gap: 28px;
+    align-items: start;
+  }
+  .cell-label { display: block; margin-bottom: 12px; }
+
+  /* Construction guides. Every measure is a share of the mark height (M), so the
+     percentages below hold at any size: clear space is 0.325 M at the sides
+     (the same measure as the gap between mark and wordmark) and 0.25 M above and
+     below; the icon gets 0.25 M on all four sides. */
+  .guides { position: relative; width: 100%; }
+  .guides--lockup { aspect-ratio: 969 / 228; }   /* 6.375 M wide, 1.5 M tall */
+  .guides--icon   { aspect-ratio: 1 / 1; }       /* 1.5 M square */
+  .guides .band {
+    position: absolute;
+    border: 1px dashed rgba(255, 251, 255, .3);
+    background: rgba(255, 251, 255, .035);
+  }
+  .guides .art { position: absolute; display: block; }
+  .guides--lockup .art { left: 5.098%; top: 16.667%; width: 89.804%; height: 66.667%; }
+  .guides--icon .art   { left: 16.667%; top: 16.667%; width: 66.667%; height: 66.667%; }
+  .guides .b-top    { left: 0; right: 0; top: 0; height: 16.667%; }
+  .guides .b-bottom { left: 0; right: 0; bottom: 0; height: 16.667%; }
+  .guides--lockup .b-left  { left: 0; top: 0; bottom: 0; width: 5.098%; }
+  .guides--lockup .b-gap   { left: 20.784%; top: 0; bottom: 0; width: 5.098%; }
+  .guides--lockup .b-right { right: 0; top: 0; bottom: 0; width: 5.098%; }
+  .guides--icon .b-left  { left: 0; top: 0; bottom: 0; width: 16.667%; }
+  .guides--icon .b-right { right: 0; top: 0; bottom: 0; width: 16.667%; }
+  .guide-caption {
+    margin-top: 14px;
+    font: 400 13px/1.6 var(--mono);
+    color: var(--dim);
+  }
+  .chips-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+  .chips-row .lockup { min-height: 200px; padding: 24px; }
+  @media (max-width: 760px) {
+    .logo-row { grid-template-columns: 1fr; }
+    .chips-row { grid-template-columns: repeat(2, 1fr); }
+  }
 
   /* Wordmark and Icon subsections: label + intro copy, then the card grid */
   .logo-copy {
@@ -290,7 +333,7 @@
     color: var(--paper);
     max-width: 62ch;
   }
-  .icon-head { display: block; margin-top: 72px; }
+  .logo-head { display: block; margin-top: 72px; }
 
   /* Contextual download buttons: a small pill next to each asset.
      Gentle on hover: the pill lifts a touch and the arrow dips. */
@@ -706,9 +749,9 @@
       radial-gradient(60% 80% at 15% 85%, rgba(236,155,255,.14), transparent 60%),
       var(--obsidian);
   }
-  .tile.wallpaper .lockup-mini { display: flex; align-items: center; gap: 8.5px; }
+  .tile.wallpaper .lockup-mini { display: flex; align-items: center; gap: 9.1px; }
   .tile.wallpaper .lockup-mini img { width: 28px; height: 28px; }
-  .tile.wallpaper .lockup-mini span { font-size: 17px; font-weight: 600; letter-spacing: 0; }
+  .tile.wallpaper .lockup-mini span { font-size: 20.8px; font-weight: 600; letter-spacing: 0; }
 
   .mini-window {
     position: absolute;
@@ -790,7 +833,7 @@
       <img src="assets/logomark.svg" alt="OpenStation logomark">
       <span>OpenStation</span>
     </div>
-    <span class="label" style="font-size:11px;">Last updated · Aug 3, 2026</span>
+    <span class="label" style="font-size:11px;">Last updated · Aug 4, 2026</span>
   </header>
 
   <!-- ============ MASTHEAD ============ -->
@@ -827,56 +870,92 @@
     </div>
   </div>
 
-  <!-- ============ WORDMARK + ICON ============ -->
+  <!-- ============ LOGO: WORDMARK, ICON, CONSTRUCTION, HOLO, CHIPS ============ -->
   <section>
-    <span class="label">Wordmark</span>
+    <span class="label">Logo</span>
     <p class="logo-copy">The OpenStation wordmark should be used in all references to the product as space allows. Monochrome usage is preferred, with the brand colors below.</p>
-    <div class="lockups">
+    <div class="logo-row">
       <div>
-        <div class="lockup">
-          <img src="assets/logomark.svg" alt="OpenStation logomark in Starlight">
-          <a class="dl-btn" href="assets/logomark.svg" download aria-label="Download logomark.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
-        </div>
-        <div class="lockup">
-          <img src="assets/logomark-holo.svg" alt="OpenStation logomark with Holomesh fill">
-          <a class="dl-btn" href="assets/logomark-holo.svg" download aria-label="Download logomark-holo.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
-        </div>
-      </div>
-      <div>
+        <span class="label cell-label">Wordmark</span>
         <div class="lockup">
           <img class="wordmark-img" src="assets/logoword.svg" alt="OpenStation wordmark in Starlight">
           <a class="dl-btn" href="assets/logoword.svg" download aria-label="Download logoword.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
         </div>
+      </div>
+      <div>
+        <span class="label cell-label">Icon</span>
+        <div class="lockup">
+          <img src="assets/logomark.svg" alt="OpenStation logomark in Starlight">
+          <a class="dl-btn" href="assets/logomark.svg" download aria-label="Download logomark.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
+        </div>
+      </div>
+    </div>
+
+    <span class="label logo-head">Construction &amp; clear space</span>
+    <p class="logo-copy">Everything is measured against the height of the mark. The wordmark's cap-to-descender height is <b>65%</b> of it, the gap between them is half that (<b>32.5%</b>), and the same 32.5% repeats as clear space to the left and right. Above and below, clear space is <b>25%</b> of the mark height; the standalone icon keeps that 25% on all four sides.</p>
+    <div class="logo-row">
+      <div>
+        <div class="lockup grid-bg">
+          <div class="guides guides--lockup" role="img" aria-label="Construction of the wordmark lockup: clear space of 32.5% of the mark height at the left and right and the same measure between mark and wordmark, with 25% above and below">
+            <img class="art" src="assets/logoword.svg" alt="">
+            <span class="band b-top" aria-hidden="true"></span>
+            <span class="band b-bottom" aria-hidden="true"></span>
+            <span class="band b-left" aria-hidden="true"></span>
+            <span class="band b-gap" aria-hidden="true"></span>
+            <span class="band b-right" aria-hidden="true"></span>
+          </div>
+        </div>
+        <p class="guide-caption">Lockup · 5.725 × the mark height wide</p>
+      </div>
+      <div>
+        <div class="lockup grid-bg">
+          <div class="guides guides--icon" role="img" aria-label="Construction of the icon: clear space of 25% of the icon height on all four sides">
+            <img class="art" src="assets/logomark.svg" alt="">
+            <span class="band b-top" aria-hidden="true"></span>
+            <span class="band b-bottom" aria-hidden="true"></span>
+            <span class="band b-left" aria-hidden="true"></span>
+            <span class="band b-right" aria-hidden="true"></span>
+          </div>
+        </div>
+        <p class="guide-caption">Icon · 1.5 × the mark height square</p>
+      </div>
+    </div>
+
+    <span class="label logo-head">Holoversion</span>
+    <p class="logo-copy">The holographic version fills the mark with Holomesh and leaves the wordmark in Starlight. Holomesh never sits behind the logo.</p>
+    <div class="logo-row">
+      <div>
         <div class="lockup">
           <img class="wordmark-img" src="assets/logoword-holo.svg" alt="OpenStation wordmark with the Holomesh mark">
           <a class="dl-btn" href="assets/logoword-holo.svg" download aria-label="Download logoword-holo.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
         </div>
       </div>
-    </div>
-
-    <span class="label icon-head">Icon</span>
-    <p class="logo-copy">When referring to OpenStation as a product, such as on social media or the plugins page, always add the chip.</p>
-    <div class="lockups">
       <div>
         <div class="lockup">
-          <img class="app-icon" src="assets/logomark-app.svg" alt="Icon: Pearl mark on the Void chip">
-          <a class="dl-btn" href="assets/logomark-app.svg" download aria-label="Download logomark-app.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
-        </div>
-        <div class="lockup">
-          <img class="app-icon" src="assets/logomark-app-holo.svg" alt="Icon: Holomesh mark on the Void chip">
-          <a class="dl-btn" href="assets/logomark-app-holo.svg" download aria-label="Download logomark-app-holo.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
+          <img src="assets/logomark-holo.svg" alt="OpenStation logomark with Holomesh fill">
+          <a class="dl-btn" href="assets/logomark-holo.svg" download aria-label="Download logomark-holo.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
         </div>
       </div>
-      <div>
-        <div class="lockup grid-bg construction">
-          <svg class="construction-svg" viewBox="0 0 480 480" role="img" aria-label="Icon construction: the mark outlined inside its chip">
-            <rect x="70" y="70" width="340" height="340" rx="70.8" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/>
-            <circle cx="240" cy="240" r="102" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1" stroke-dasharray="2 7"/>
-            <g transform="translate(138,138) scale(2.55)">
-              <path d="M38.792 0.0186131C60.8846 -0.649069 79.3313 16.7291 79.9824 38.8223C80.6326 60.8921 63.2773 79.3149 41.208 79.9815C19.1385 80.6488 0.702853 63.3074 0.0195305 41.2383C-0.66441 19.1462 16.6995 0.686396 38.792 0.0186131ZM38.71 9.36236C35.8339 7.89166 32.7628 8.23954 29.8555 9.28033C12.6582 14.7114 3.37017 33.8997 9.45508 50.8067C11.0384 55.2047 13.565 59.4989 16.9609 62.7842C21.6294 67.5336 27.6536 70.7223 34.2061 71.9112C37.0214 72.4165 41.0083 73.0707 43.2295 70.7891C46.4143 67.5174 44.115 64.4383 43.1133 60.8419C42.137 57.2757 41.6165 53.6009 41.5635 49.9044C41.5398 46.776 42.201 42.473 42.8252 39.3565C44.2979 32.0039 46.892 24.7246 44.5537 17.2452C43.5137 14.0551 41.8086 10.9469 38.71 9.36236Z" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
-            </g>
-          </svg>
-        </div>
+    </div>
+
+    <span class="label logo-head">Chip</span>
+    <p class="logo-copy">When referring to OpenStation as a product, such as on social media or the plugins page, always add the chip: the mark sits on its Void tile, never bare. Rounded square or circle, in the flat or the holographic fill.</p>
+    <div class="chips-row">
+      <div class="lockup">
+        <img class="app-icon" src="assets/logomark-app.svg" alt="Chip: Pearl mark on the Void rounded square">
+        <a class="dl-btn" href="assets/logomark-app.svg" download aria-label="Download logomark-app.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
+      </div>
+      <div class="lockup">
+        <img class="app-icon" src="assets/logomark-app-circle.svg" alt="Chip: Pearl mark on the Void circle">
+        <a class="dl-btn" href="assets/logomark-app-circle.svg" download aria-label="Download logomark-app-circle.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
+      </div>
+      <div class="lockup">
+        <img class="app-icon" src="assets/logomark-app-holo.svg" alt="Chip: Holomesh mark on the Void rounded square">
+        <a class="dl-btn" href="assets/logomark-app-holo.svg" download aria-label="Download logomark-app-holo.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
+      </div>
+      <div class="lockup">
+        <img class="app-icon" src="assets/logomark-app-circle-holo.svg" alt="Chip: Holomesh mark on the Void circle">
+        <a class="dl-btn" href="assets/logomark-app-circle-holo.svg" download aria-label="Download logomark-app-circle-holo.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
       </div>
     </div>
   </section>

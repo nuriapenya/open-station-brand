@@ -45,8 +45,8 @@ Named gradient fills and backgrounds (all vector SVGs, defined as gradient recip
 - Wordmark rule: the wordmark is used in all references to the product as space allows; monochrome usage is preferred, with the brand colors as accents.
 - Chip rule: when referring to OpenStation as a product (social media, the plugins page, app listings), always add the chip: the mark sits on its Void app tile, never bare.
 - Rule: Holomesh may fill the mark, and may be used on backgrounds and CTAs elsewhere, but never sits behind the logo; the knocked-out (negative) logo on Holomesh is not part of the system.
-- Lockup proportions: the mark's height is 5/3 of the logoword's font size (40px mark with 24px type), the gap is half the font size, both centered on the same axis.
-- Clear-space ratios are provisional.
+- Lockup proportions (updated August 2026, the wordmark grew about 24% against the mark): the wordmark's cap-to-descender height is 65% of the mark's height, the gap is half that (32.5% of the mark), and the wordmark block sits 20% of the mark height below the top edge and 15% above the bottom. In live text: Geist SemiBold at 0.742 times the mark height. The asset ships at an 80px mark: 59.4px type, 26px gap, 458px wide (5.725 times the mark height).
+- Clear space: 32.5% of the mark height left and right of the lockup (the same measure as the gap), 25% above and below; 25% on all four sides of the standalone icon.
 
 ## Mascot
 
