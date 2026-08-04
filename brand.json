@@ -211,9 +211,9 @@
       "The wordmark is used in all references to the product as space allows; monochrome usage is preferred, with the brand colors as accents.",
       "When referring to OpenStation as a product (social media, the plugins page, app listings), always add the chip: the mark sits on its Void app tile, never bare.",
       "The standalone mark has two flat fills: Starlight, or the Holomesh holographic gradient (a vector gradient stack baked into the holo SVGs). No shadows or effects outside the app icons.",
-      "Holomesh is for backgrounds, CTAs and surfaces, never a background behind the logo: the knocked-out (negative) logo on Holomesh is not part of the system.",
+      "Holoversion: the holographic version fills the mark with Holomesh and leaves the wordmark in Starlight. Holomesh is for backgrounds, CTAs and surfaces elsewhere, never a background behind the logo: the knocked-out (negative) logo on Holomesh is not part of the system.",
       "App icon: Void (#0C0B0F) tile, rounded square (radius 25/120 of the icon size) or circle, with a soft white inner shadow; the mark fills the central 3/5 of the tile (1/5 margin on each side). Inside the icon the mark gets the dimensional treatment: the Pearl radial fill (Starlight to Cloud) or Holomesh, a Mist edge stroke, a soft halo ring, stacked drop shadows and an inner highlight, all baked into the SVGs. Always on Void; there is no inverted or holo-background app icon.",
-      "Clear space: around the lockup, 32.5% of the mark height at the left and right (the same measure as the gap between mark and wordmark) and 25% above and below. Around the standalone icon, 25% of its height on all four sides. Measured from the construction guides in Figma."
+      "Clear space: around the lockup, 32.5% of the mark height at the left and right (the same measure as the gap between mark and wordmark) and 25% above and below. Around the standalone icon, 25% of its height on all four sides. Measured from the construction guides in Figma. That makes the construction box 6.375 by 1.5 mark heights around the lockup, and 1.5 mark heights square around the icon."
     ]
   },
   "mascot": {

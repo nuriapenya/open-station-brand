@@ -262,22 +262,6 @@
   .lockup img { width: 88px; height: 88px; }
   .lockup .wordmark-img { width: min(380px, 76%); height: auto; }
   .lockup .app-icon { width: 96px; height: 96px; }
-  .lockup.grid-bg {
-    background:
-      linear-gradient(var(--line-soft) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
-    background-size: 24px 24px;
-    background-color: rgba(23, 22, 27, .92);
-    border: 1px solid var(--line-soft);
-    overflow: hidden;
-  }
-  .lockup.grid-bg::before, .lockup.grid-bg::after {
-    content: '';
-    position: absolute;
-    background: rgba(255,255,255,.16);
-  }
-  .lockup.grid-bg::before { left: 0; right: 0; top: 50%; height: 1px; }
-  .lockup.grid-bg::after { top: 0; bottom: 0; left: 50%; width: 1px; }
   .lockup-note { margin-top: 14px; }
 
   /* Logo board · mirrors the Logo section in Figma: wordmark and icon, the same
@@ -289,35 +273,32 @@
     gap: 28px;
     align-items: start;
   }
-  .cell-label { display: block; margin-bottom: 12px; }
+  .label + .logo-row,
+  .label + .chips-row,
+  .logo-row + .logo-row { margin-top: 28px; }
 
-  /* Construction guides. Every measure is a share of the mark height (M), so the
-     percentages below hold at any size: clear space is 0.325 M at the sides
-     (the same measure as the gap between mark and wordmark) and 0.25 M above and
-     below; the icon gets 0.25 M on all four sides. */
-  .guides { position: relative; width: 100%; }
+  /* Construction guides: the clear-space frame plus the lines that mark the
+     mark, the gap and the wordmark. Every measure is a share of the mark
+     height (M), so the percentages hold at any size: clear space is 0.325 M at
+     the sides (the same measure as the gap between mark and wordmark) and
+     0.25 M above and below; the icon gets 0.25 M on all four sides. */
+  .guides { position: relative; width: 100%; --guide: rgba(255, 251, 255, .32); }
   .guides--lockup { aspect-ratio: 969 / 228; }   /* 6.375 M wide, 1.5 M tall */
   .guides--icon   { aspect-ratio: 1 / 1; }       /* 1.5 M square */
-  .guides .band {
-    position: absolute;
-    border: 1px dashed rgba(255, 251, 255, .3);
-    background: rgba(255, 251, 255, .035);
-  }
   .guides .art { position: absolute; display: block; }
   .guides--lockup .art { left: 5.098%; top: 16.667%; width: 89.804%; height: 66.667%; }
   .guides--icon .art   { left: 16.667%; top: 16.667%; width: 66.667%; height: 66.667%; }
-  .guides .b-top    { left: 0; right: 0; top: 0; height: 16.667%; }
-  .guides .b-bottom { left: 0; right: 0; bottom: 0; height: 16.667%; }
-  .guides--lockup .b-left  { left: 0; top: 0; bottom: 0; width: 5.098%; }
-  .guides--lockup .b-gap   { left: 20.784%; top: 0; bottom: 0; width: 5.098%; }
-  .guides--lockup .b-right { right: 0; top: 0; bottom: 0; width: 5.098%; }
-  .guides--icon .b-left  { left: 0; top: 0; bottom: 0; width: 16.667%; }
-  .guides--icon .b-right { right: 0; top: 0; bottom: 0; width: 16.667%; }
-  .guide-caption {
-    margin-top: 14px;
-    font: 400 13px/1.6 var(--mono);
-    color: var(--dim);
-  }
+  .guides .frame { position: absolute; inset: 0; border: 1px dashed var(--guide); }
+  .guides .v { position: absolute; top: 0; bottom: 0; border-left: 1px dashed var(--guide); }
+  .guides .h { position: absolute; left: 0; right: 0; border-top: 1px dashed var(--guide); }
+  .guides--lockup .v1 { left: 5.098%; }   /* mark starts */
+  .guides--lockup .v2 { left: 20.784%; }  /* mark ends, gap starts */
+  .guides--lockup .v3 { left: 25.882%; }  /* gap ends, wordmark starts */
+  .guides--lockup .v4 { left: 94.902%; }  /* wordmark ends */
+  .guides--icon .v1 { left: 16.667%; }
+  .guides--icon .v2 { left: 83.333%; }
+  .guides .h1 { top: 16.667%; }
+  .guides .h2 { top: 83.333%; }
   .chips-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
   .chips-row .lockup { min-height: 200px; padding: 24px; }
   @media (max-width: 760px) {
@@ -873,17 +854,14 @@
   <!-- ============ LOGO: WORDMARK, ICON, CONSTRUCTION, HOLO, CHIPS ============ -->
   <section>
     <span class="label">Logo</span>
-    <p class="logo-copy">The OpenStation wordmark should be used in all references to the product as space allows. Monochrome usage is preferred, with the brand colors below.</p>
     <div class="logo-row">
       <div>
-        <span class="label cell-label">Wordmark</span>
         <div class="lockup">
           <img class="wordmark-img" src="assets/logoword.svg" alt="OpenStation wordmark in Starlight">
           <a class="dl-btn" href="assets/logoword.svg" download aria-label="Download logoword.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
         </div>
       </div>
       <div>
-        <span class="label cell-label">Icon</span>
         <div class="lockup">
           <img src="assets/logomark.svg" alt="OpenStation logomark in Starlight">
           <a class="dl-btn" href="assets/logomark.svg" download aria-label="Download logomark.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
@@ -891,38 +869,36 @@
       </div>
     </div>
 
-    <span class="label logo-head">Construction &amp; clear space</span>
-    <p class="logo-copy">Everything is measured against the height of the mark. The wordmark's cap-to-descender height is <b>65%</b> of it, the gap between them is half that (<b>32.5%</b>), and the same 32.5% repeats as clear space to the left and right. Above and below, clear space is <b>25%</b> of the mark height; the standalone icon keeps that 25% on all four sides.</p>
     <div class="logo-row">
       <div>
-        <div class="lockup grid-bg">
+        <div class="lockup">
           <div class="guides guides--lockup" role="img" aria-label="Construction of the wordmark lockup: clear space of 32.5% of the mark height at the left and right and the same measure between mark and wordmark, with 25% above and below">
             <img class="art" src="assets/logoword.svg" alt="">
-            <span class="band b-top" aria-hidden="true"></span>
-            <span class="band b-bottom" aria-hidden="true"></span>
-            <span class="band b-left" aria-hidden="true"></span>
-            <span class="band b-gap" aria-hidden="true"></span>
-            <span class="band b-right" aria-hidden="true"></span>
+            <span class="frame" aria-hidden="true"></span>
+            <span class="v v1" aria-hidden="true"></span>
+            <span class="v v2" aria-hidden="true"></span>
+            <span class="v v3" aria-hidden="true"></span>
+            <span class="v v4" aria-hidden="true"></span>
+            <span class="h h1" aria-hidden="true"></span>
+            <span class="h h2" aria-hidden="true"></span>
           </div>
         </div>
-        <p class="guide-caption">Lockup · 5.725 × the mark height wide</p>
       </div>
       <div>
-        <div class="lockup grid-bg">
+        <div class="lockup">
           <div class="guides guides--icon" role="img" aria-label="Construction of the icon: clear space of 25% of the icon height on all four sides">
             <img class="art" src="assets/logomark.svg" alt="">
-            <span class="band b-top" aria-hidden="true"></span>
-            <span class="band b-bottom" aria-hidden="true"></span>
-            <span class="band b-left" aria-hidden="true"></span>
-            <span class="band b-right" aria-hidden="true"></span>
+            <span class="frame" aria-hidden="true"></span>
+            <span class="v v1" aria-hidden="true"></span>
+            <span class="v v2" aria-hidden="true"></span>
+            <span class="h h1" aria-hidden="true"></span>
+            <span class="h h2" aria-hidden="true"></span>
           </div>
         </div>
-        <p class="guide-caption">Icon · 1.5 × the mark height square</p>
       </div>
     </div>
 
     <span class="label logo-head">Holoversion</span>
-    <p class="logo-copy">The holographic version fills the mark with Holomesh and leaves the wordmark in Starlight. Holomesh never sits behind the logo.</p>
     <div class="logo-row">
       <div>
         <div class="lockup">
@@ -939,7 +915,6 @@
     </div>
 
     <span class="label logo-head">Chip</span>
-    <p class="logo-copy">When referring to OpenStation as a product, such as on social media or the plugins page, always add the chip: the mark sits on its Void tile, never bare. Rounded square or circle, in the flat or the holographic fill.</p>
     <div class="chips-row">
       <div class="lockup">
         <img class="app-icon" src="assets/logomark-app.svg" alt="Chip: Pearl mark on the Void rounded square">
