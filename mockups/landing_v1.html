@@ -278,16 +278,75 @@
   .cta-row .btn { height: 48px; padding-inline: 26px; font-size: 17px; }
   .cta-note { margin-top: 14px; font-size: 12px; color: var(--ink-3); }
 
-  /* Mio's own section */
-  .mio-sect { padding-block: 80px; }
-  .mio-wrap { display: flex; align-items: center; gap: 48px; flex-wrap: wrap; }
-  .mio-copy { flex: 1 1 320px; max-width: 520px; }
-  .mio-copy .label { display: block; margin-bottom: 14px; }
-  .mio-copy p { color: var(--ink-2); }
-  .mio-stage { flex: 1 1 260px; display: flex; justify-content: center; }
+  /* Mission: open source + Mio, the station resident */
+  .mission { padding-block: 96px; }
+  .mission-wrap { display: flex; align-items: center; gap: 64px; }
+  .mission-copy { flex: 1.35; min-width: 0; }
+  .mission-copy .label { display: block; margin-bottom: 16px; }
+  .mission h2 {
+    font-size: clamp(34px, 4.5vw, 56px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    margin-bottom: 22px;
+  }
+  .mission-copy > p { color: var(--ink-2); max-width: 560px; }
+  .chip {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 0.82em;
+    border: 1px solid rgba(233, 79, 243, 0.45);
+    border-radius: 6px;
+    padding: 1px 7px;
+    color: var(--nebula);
+    white-space: nowrap;
+  }
+  .chip.blue { border-color: rgba(159, 152, 255, 0.5); color: var(--lagoon); }
+  .m-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 40px;
+  }
+  .m-stat {
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    padding: 22px;
+  }
+  .m-stat b {
+    display: block;
+    font: 600 32px 'Geist', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .m-stat b.hl { display: block; }
+  .m-stat span {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .mio-col { flex: 1; text-align: center; }
   .mio-stage svg {
-    width: 180px;
+    width: min(280px, 70%);
     animation: floaty 9s ease-in-out infinite;
+  }
+  .mio-name {
+    display: block;
+    margin-top: 18px;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--pulse);
+  }
+  .mio-col p {
+    margin: 12px auto 0;
+    max-width: 300px;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink-3);
   }
   @keyframes floaty {
     0%, 100% { transform: translateY(0) rotate(-3deg); }
@@ -577,7 +636,7 @@
 
   /* ============ Features (Blueprint hairline grid) ============ */
   .features { padding-block: 64px 80px; }
-  .features h2, .cta-final h2, .mio-sect h2 {
+  .features h2, .cta-final h2 {
     font-size: clamp(28px, 4vw, 40px);
     font-weight: 600;
     letter-spacing: -0.02em;
@@ -661,8 +720,13 @@
   footer .gpl { margin-left: auto; }
 
   /* ============ Responsive + motion ============ */
+  @media (max-width: 1000px) {
+    .mission-wrap { flex-direction: column; gap: 48px; }
+    .mio-col { width: 100%; }
+  }
   @media (max-width: 860px) {
     .grid { grid-template-columns: 1fr 1fr; }
+    .m-stats { grid-template-columns: 1fr 1fr; }
     .stats { grid-template-columns: repeat(2, 1fr); }
     .desktop { aspect-ratio: auto; height: 440px; }
     .win.left { width: 55%; }
@@ -887,8 +951,8 @@
     <div class="stats">
       <div class="stat"><b>2,000+</b><span>active installs</span></div>
       <div class="stat"><b>5.0</b><span>plugin rating</span></div>
-      <div class="stat"><b>0</b><span>core files touched</span></div>
-      <div class="stat"><b>100%</b><span>GPL, forever</span></div>
+      <div class="stat"><b>v0.9.6</b><span>latest release</span></div>
+      <div class="stat"><b>6.0+</b><span>works on WordPress</span></div>
     </div>
   </section>
 
@@ -936,34 +1000,53 @@
     </div>
   </section>
 
-  <!-- ============ Mio ============ -->
-  <section class="frame mio-sect">
+  <!-- ============ Mission: open source + Mio ============ -->
+  <section class="frame mission">
     <i class="x tl" aria-hidden="true"></i>
     <i class="x tr" aria-hidden="true"></i>
-    <div class="mio-wrap">
-      <div class="mio-copy">
-        <span class="label">Resident ghost</span>
-        <h2>Meet Mio.</h2>
-        <p>A small ghost blob that lives aboard the station. It glows in Pulse,
-        drifts between windows, and shows up where the interface has something
-        to say. Final form: still in peer review.</p>
+    <div class="mission-wrap">
+      <div class="mission-copy">
+        <span class="label">/// Built_in_the_open</span>
+        <h2>Free. GPL.<br><span class="hl">Yours to extend.</span></h2>
+        <p>OpenStation is an open-source WordPress plugin built entirely on
+        public hooks. The community is already building on the
+        <span class="chip">wp.desktop.*</span> APIs and the
+        <span class="chip blue">&lt;wpd-*&gt;</span> component kit: app stores,
+        extensions, new apps for the shell. Fork it, extend it, make it yours.</p>
+        <div class="m-stats">
+          <div class="m-stat"><b>0</b><span>Core patches</span></div>
+          <div class="m-stat"><b>25+</b><span>Shell components</span></div>
+          <div class="m-stat"><b class="hl">100%</b><span>GPL, forever</span></div>
+          <div class="m-stat"><b>&#8734;</b><span>Extendable</span></div>
+        </div>
       </div>
-      <div class="mio-stage" aria-hidden="true">
-        <svg viewBox="0 0 120 120">
-          <defs>
-            <linearGradient id="mioGrad" x1="0%" y1="10%" x2="90%" y2="100%">
-              <stop offset="0%" stop-color="#e94ff3"/>
-              <stop offset="48%" stop-color="#aa67ff"/>
-              <stop offset="71%" stop-color="#a580ff"/>
-              <stop offset="100%" stop-color="#4b3eff"/>
-            </linearGradient>
-          </defs>
-          <path d="M60 22C78 20 95 34 97 55C99 74 90 92 72 98C63 101 54 101 46 98C29 93 22 80 23 62C24 42 42 24 60 22Z" fill="#0c0b0f" stroke="url(#mioGrad)" stroke-width="5" stroke-linecap="round"/>
-          <g class="mio-eyes">
-            <rect x="46" y="52" width="8" height="18" rx="4" fill="#fffbff"/>
-            <rect x="66" y="52" width="8" height="18" rx="4" fill="#fffbff"/>
-          </g>
-        </svg>
+      <div class="mio-col">
+        <div class="mio-stage" aria-hidden="true">
+          <svg viewBox="0 0 120 120">
+            <defs>
+              <linearGradient id="mioGrad" x1="0%" y1="10%" x2="90%" y2="100%">
+                <stop offset="0%" stop-color="#e94ff3"/>
+                <stop offset="48%" stop-color="#aa67ff"/>
+                <stop offset="71%" stop-color="#a580ff"/>
+                <stop offset="100%" stop-color="#4b3eff"/>
+              </linearGradient>
+              <radialGradient id="mioHalo">
+                <stop offset="55%" stop-color="#e94ff3" stop-opacity="0"/>
+                <stop offset="78%" stop-color="#e94ff3" stop-opacity="0.28"/>
+                <stop offset="100%" stop-color="#e94ff3" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <circle cx="60" cy="60" r="60" fill="url(#mioHalo)"/>
+            <path d="M60 22C78 20 95 34 97 55C99 74 90 92 72 98C63 101 54 101 46 98C29 93 22 80 23 62C24 42 42 24 60 22Z" fill="#0c0b0f" stroke="url(#mioGrad)" stroke-width="5" stroke-linecap="round"/>
+            <g class="mio-eyes">
+              <rect x="46" y="52" width="8" height="18" rx="4" fill="#fffbff"/>
+              <rect x="66" y="52" width="8" height="18" rx="4" fill="#fffbff"/>
+            </g>
+          </svg>
+        </div>
+        <span class="mio-name">Mio / Station resident</span>
+        <p>A small ghost blob that lives aboard the station and glows when
+        there is something to say.</p>
       </div>
     </div>
   </section>
