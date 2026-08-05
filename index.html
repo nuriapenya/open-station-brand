@@ -41,7 +41,7 @@
     --sirius: #9af2ff;      /* Sirius */
     --lagoon: #9f98ff;      /* Lagoon */
     --obsidian: #1a1721;    /* Obsidian */
-    --osmium: #99969c;      /* Osmium · from the Shade palette, used for the construction guides */
+    --osmium: #99969c;      /* Osmium · from the Shade palette */
     /* Void (#0c0b0f) is defined above; the full Shade palette (grays) lives in the Color section;
        meshes: Holomesh, Pulsemesh, Auromesh, Starmesh, Voidmesh (assets/*.svg);
        background: Galaxy (assets/galaxy.svg) */
@@ -269,9 +269,9 @@
   .lockup .app-icon { width: 96px; height: 96px; }
   .lockup-note { margin-top: 14px; }
 
-  /* Logo board · mirrors the Logo section in Figma: wordmark and icon, the same
-     pair with construction guides, the holo version, then the chips. The lockup
-     column is wider than the icon column, as on the board. */
+  /* Logo board · mirrors the Logo section in Figma: wordmark and icon, then the
+     holo version of the same pair, then the chips. The wordmark column is wider
+     than the icon column, as on the board. */
   .logo-row {
     display: grid;
     grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
@@ -280,83 +280,23 @@
   }
   .label + .logo-row,
   .label + .chips-row,
-  .label + .logo-panel,
-  .label + .logo-guides,
   .logo-row + .logo-row { margin-top: 28px; }
 
-  /* Construction study, floating on the page background rather than on a card.
-     The lockup box is 4.25 times as wide as it is tall and the icon box is
-     square, so growing them 4.25 : 1 lands both on exactly the same height. */
-  .logo-guides {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    max-width: 50%;   /* half scale: the gap halves with it, so the study shrinks evenly */
-    margin-bottom: 44px;
-  }
-  .logo-guides .guides--lockup { flex: 4.25 1 0; min-width: 0; }
-  .logo-guides .guides--icon { flex: 1 1 0; min-width: 0; }
-
-  /* The plain marks and their construction guides share one panel */
-  .logo-panel {
-    border: 1px solid var(--line-soft);
-    border-radius: 10px;
-    background: rgba(23, 22, 27, .92);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05);
-    padding: clamp(20px, 2.5vw, 36px);
-  }
-  .logo-panel .lockup {
-    border: 0;
-    background: none;
-    box-shadow: none;
-    min-height: 0;
-    padding: 20px;
+  /* Name above each card in the first row, so wordmark and icon read as two
+     named assets rather than one lockup. A step down from the section labels
+     (smaller, dimmer) so Logo · Holoversion · Chip keep the section rhythm. */
+  .mark-label {
+    display: block;
+    margin-bottom: 14px;
+    font-size: 11px;
+    color: var(--dim);
   }
 
-  /* Construction guides: the clear-space frame plus the lines that mark the
-     mark, the gap and the wordmark. Every measure is a share of the mark
-     height (M), so the percentages hold at any size: clear space is 0.325 M at
-     the sides (the same measure as the gap between mark and wordmark) and
-     0.25 M above and below; the icon gets 0.25 M on all four sides. */
-  /* Guide lines are drawn as repeating gradients rather than dashed borders,
-     so the dash and the gap between dashes can be set: 4px on, 8px off. */
-  .guides {
-    position: relative;
-    width: 100%;
-    --guide: var(--osmium);
-    --dash-x: repeating-linear-gradient(to right, var(--guide) 0 4px, transparent 4px 12px);
-    --dash-y: repeating-linear-gradient(to bottom, var(--guide) 0 4px, transparent 4px 12px);
-  }
-  .guides--lockup { aspect-ratio: 969 / 228; }   /* 6.375 M wide, 1.5 M tall */
-  .guides--icon   { aspect-ratio: 1 / 1; }       /* 1.5 M square */
-  .guides .art { position: absolute; display: block; }
-  .guides--lockup .art { left: 5.098%; top: 16.667%; width: 89.804%; height: 66.667%; }
-  .guides--icon .art   { left: 16.667%; top: 16.667%; width: 66.667%; height: 66.667%; }
-  .guides .frame {
-    position: absolute;
-    inset: 0;
-    background:
-      var(--dash-x) top left / 100% 1px no-repeat,
-      var(--dash-x) bottom left / 100% 1px no-repeat,
-      var(--dash-y) top left / 1px 100% no-repeat,
-      var(--dash-y) top right / 1px 100% no-repeat;
-  }
-  .guides .v { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--dash-y); }
-  .guides .h { position: absolute; left: 0; right: 0; height: 1px; background: var(--dash-x); }
-  .guides--lockup .v1 { left: 5.098%; }   /* mark starts */
-  .guides--lockup .v2 { left: 20.784%; }  /* mark ends, gap starts */
-  .guides--lockup .v3 { left: 25.882%; }  /* gap ends, wordmark starts */
-  .guides--lockup .v4 { left: 94.902%; }  /* wordmark ends */
-  .guides--icon .v1 { left: 16.667%; }
-  .guides--icon .v2 { left: 83.333%; }
-  .guides .h1 { top: 16.667%; }
-  .guides .h2 { top: 83.333%; }
   .chips-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
   .chips-row .lockup { min-height: 200px; padding: 24px; }
   @media (max-width: 760px) {
     .logo-row { grid-template-columns: 1fr; }
     .chips-row { grid-template-columns: repeat(2, 1fr); }
-    .logo-guides { max-width: 100%; }   /* half scale would be unreadable on a phone */
   }
 
   /* Wordmark and Icon subsections: label + intro copy, then the card grid */
@@ -448,7 +388,35 @@
 
   /* ---------- Use this brand ---------- */
   .use-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 72px); }
+  .use-grid .legal { columns: 1; }
   .use-head { font-size: 15px; font-weight: 500; color: var(--paper); margin-bottom: 18px; }
+
+  /* Changelog: a plain table of recent changes */
+  html { scroll-behavior: smooth; }
+  .changelog { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .changelog th {
+    text-align: left;
+    font: 500 11px/1 var(--mono);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0 24px 14px 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .changelog td {
+    vertical-align: top;
+    padding: 14px 24px 14px 0;
+    border-bottom: 1px dashed var(--line-soft);
+    color: var(--paper);
+    line-height: 1.55;
+  }
+  .changelog td:first-child {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+    width: 1%;
+  }
   .use-copy { font-size: 13px; line-height: 1.6; color: var(--muted); margin-bottom: 16px; max-width: 52ch; }
   .dl-list { list-style: none; margin-bottom: 18px; }
   .dl-list li { border-bottom: 1px solid var(--line-soft); }
@@ -867,7 +835,7 @@
       <img src="assets/logomark.svg" alt="OpenStation logomark">
       <span>OpenStation</span>
     </div>
-    <span class="label" style="font-size:11px;">Last updated · Aug 4, 2026</span>
+    <a class="dl-btn" href="#changelog">Changelog</a>
   </header>
 
   <!-- ============ MASTHEAD ============ -->
@@ -897,57 +865,36 @@
     <div class="contact">
       <span class="label">Links</span>
       <p>
-        <a href="https://wordpress.org/plugins/desktop-mode/">wordpress.org/plugins/desktop-mode</a><br>
-        <a href="https://github.com/WordPress/desktop-mode">github.com/WordPress/desktop-mode</a><br>
-        <a href="https://next-admin.blog">next-admin.blog</a>
+        <a href="https://wordpress.org/plugins/openstation/">wordpress.org/plugins/openstation</a><br>
+        <a href="https://github.com/WordPress/openstation">github.com/WordPress/openstation</a><br>
+        <a href="https://openstation.me">openstation.me</a><br>
+        <a href="https://openstation.blog">openstation.blog</a><br>
+        <a href="#">Discord · invite TBD</a>
       </p>
     </div>
   </div>
 
-  <!-- ============ LOGO: WORDMARK, ICON, CONSTRUCTION, HOLO, CHIPS ============ -->
+  <!-- ============ LOGO: WORDMARK, ICON, HOLO, CHIPS ============ -->
   <section>
     <span class="label">Logo</span>
 
-    <!-- The construction study floats on the page background, outside the panel.
-         flex 4.25 against flex 1, with each figure's own aspect ratio, makes both
-         boxes come out exactly the same height. -->
-    <div class="logo-guides">
-      <div class="guides guides--lockup" role="img" aria-label="Construction of the wordmark lockup: clear space of 32.5% of the mark height at the left and right and the same measure between mark and wordmark, with 25% above and below">
-        <img class="art" src="assets/logoword.svg" alt="">
-        <span class="frame" aria-hidden="true"></span>
-        <span class="v v1" aria-hidden="true"></span>
-        <span class="v v2" aria-hidden="true"></span>
-        <span class="v v3" aria-hidden="true"></span>
-        <span class="v v4" aria-hidden="true"></span>
-        <span class="h h1" aria-hidden="true"></span>
-        <span class="h h2" aria-hidden="true"></span>
-      </div>
-      <div class="guides guides--icon" role="img" aria-label="Construction of the icon: clear space of 25% of the icon height on all four sides">
-        <img class="art" src="assets/logomark.svg" alt="">
-        <span class="frame" aria-hidden="true"></span>
-        <span class="v v1" aria-hidden="true"></span>
-        <span class="v v2" aria-hidden="true"></span>
-        <span class="h h1" aria-hidden="true"></span>
-        <span class="h h2" aria-hidden="true"></span>
-      </div>
-    </div>
-
-    <div class="logo-panel">
+    <!-- Wordmark and icon as two named cards, the same pairing the Holoversion
+         row below repeats. -->
     <div class="logo-row">
       <div>
+        <span class="label mark-label">Wordmark</span>
         <div class="lockup">
           <img class="wordmark-img" src="assets/logoword.svg" alt="OpenStation wordmark in Starlight">
           <a class="dl-btn" href="assets/logoword.svg" download aria-label="Download logoword.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
         </div>
       </div>
       <div>
+        <span class="label mark-label">Icon</span>
         <div class="lockup">
           <img src="assets/logomark.svg" alt="OpenStation logomark in Starlight">
           <a class="dl-btn" href="assets/logomark.svg" download aria-label="Download logomark.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download</a>
         </div>
       </div>
-    </div>
-
     </div>
 
     <span class="label logo-head">Holoversion</span>
@@ -1235,14 +1182,43 @@
     <div class="tbd">Tone of voice, naming rules for features (Spaces, Dock, Palette), and do / don't copy pairs land here.</div>
   </section>
 
-  <!-- ============ LEGAL ============ -->
+  <!-- ============ CHANGELOG ============ -->
+  <section id="changelog">
+    <span class="label">Changelog</span>
+    <table class="changelog">
+      <thead>
+        <tr><th>Date</th><th>Change</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Aug 4, 2026</td>
+          <td>Rebalanced the logo lockup so the wordmark reads proportional to the mark, and darkened Pulse so it clears contrast minimums, with the meshes updated to match.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============ LICENSING + AGENTS ============ -->
   <section>
-    <span class="label">Licensing &amp; open source</span>
-    <div class="legal">
-      <p><b>Everything here is meant to be reused.</b> OpenStation is an open-source WordPress plugin (GPL). Every asset that ships with the brand, including logo, wallpapers, illustrations and fonts, must be freely licensable and GPL-compatible.</p>
-      <p><b>Typefaces.</b> Geist and Geist Mono by Vercel are licensed under the SIL Open Font License 1.1. The license text is bundled in this repository next to the font files.</p>
-      <p><b>Extenders.</b> Third parties build on the public APIs and component kit. Treat the visual system as something others will reuse outside our control: tokens over one-offs, rules over exceptions.</p>
-      <p><b>No internal content.</b> This guide is public. Only public links, public-safe imagery and freely licensed assets belong in it.</p>
+    <div class="use-grid">
+      <div>
+        <span class="label" style="display:block; margin-bottom:40px;">Licensing &amp; open source</span>
+        <div class="legal">
+          <p><b>Everything here is meant to be reused.</b> OpenStation is an open-source WordPress plugin (GPL). Every asset that ships with the brand, including logo, wallpapers, illustrations and fonts, must be freely licensable and GPL-compatible.</p>
+          <p><b>Typefaces.</b> Geist and Geist Mono by Vercel are licensed under the SIL Open Font License 1.1. The license text is bundled in this repository next to the font files.</p>
+          <p><b>Extenders.</b> Third parties build on the public APIs and component kit. Treat the visual system as something others will reuse outside our control: tokens over one-offs, rules over exceptions.</p>
+          <p><b>No internal content.</b> This guide is public. Only public links, public-safe imagery and freely licensed assets belong in it.</p>
+        </div>
+      </div>
+      <div>
+        <span class="label" style="display:block; margin-bottom:40px;">For agents &amp; tooling</span>
+        <p class="use-copy">Machine-readable brand data lives next to this page. Point an AI agent or a build tool at either file and it has the whole system: colors, type, radii, assets, rules.</p>
+        <ul class="dl-list">
+          <li><a href="llms.txt">llms.txt <span>brand summary for AI agents</span></a></li>
+          <li><a href="brand.json" download>brand.json <span>design tokens</span></a></li>
+        </ul>
+        <p class="use-copy">And a small human shortcut: every solid tile and gray swatch in the Color section copies its HEX on click.</p>
+      </div>
     </div>
   </section>
 
@@ -1274,45 +1250,6 @@
             <div class="mini-dock"><i></i><i></i><i></i><i></i><i></i></div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ USE THIS BRAND ============ -->
-  <section id="use-this-brand">
-    <span class="label">Use this brand</span>
-    <div class="use-grid">
-      <div>
-        <p class="use-head">Download</p>
-        <ul class="dl-list">
-          <li><a href="assets/logomark.svg" download>logomark.svg <span>vector</span></a></li>
-          <li><a href="assets/logomark-holo.svg" download>logomark-holo.svg <span>vector · holo fill</span></a></li>
-          <li><a href="assets/logoword.svg" download>logoword.svg <span>lockup · text outlined</span></a></li>
-          <li><a href="assets/logoword-holo.svg" download>logoword-holo.svg <span>lockup · holo mark</span></a></li>
-          <li><a href="assets/logomark-app.svg" download>logomark-app.svg <span>app icon · square</span></a></li>
-          <li><a href="assets/logomark-app-holo.svg" download>logomark-app-holo.svg <span>app icon · square · holo</span></a></li>
-          <li><a href="assets/logomark-app-circle.svg" download>logomark-app-circle.svg <span>app icon · circle</span></a></li>
-          <li><a href="assets/logomark-app-circle-holo.svg" download>logomark-app-circle-holo.svg <span>app icon · circle · holo</span></a></li>
-          <li><a href="assets/plugins-icon.svg" download>plugins-icon.svg <span>wordpress.org icon · 192</span></a></li>
-          <li><a href="assets/holomesh.svg" download>holomesh.svg <span>mesh</span></a></li>
-          <li><a href="assets/pulsemesh.svg" download>pulsemesh.svg <span>mesh</span></a></li>
-          <li><a href="assets/auromesh.svg" download>auromesh.svg <span>mesh</span></a></li>
-          <li><a href="assets/starmesh.svg" download>starmesh.svg <span>mesh</span></a></li>
-          <li><a href="assets/voidmesh.svg" download>voidmesh.svg <span>mesh · formerly space</span></a></li>
-          <li><a href="assets/miomesh.svg" download>miomesh.svg <span>mesh · mio</span></a></li>
-          <li><a href="assets/galaxy.svg" download>galaxy.svg <span>background</span></a></li>
-          <li><a href="fonts/Geist-Variable.woff2" download>Geist-Variable.woff2 <span>OFL 1.1</span></a></li>
-          <li><a href="fonts/GeistMono-Variable.woff2" download>GeistMono-Variable.woff2 <span>OFL 1.1</span></a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="use-head">For agents &amp; tooling</p>
-        <p class="use-copy">Machine-readable brand data lives next to this page. Point an AI agent or a build tool at either file and it has the whole system: colors, type, radii, assets, rules.</p>
-        <ul class="dl-list">
-          <li><a href="llms.txt">llms.txt <span>brand summary for AI agents</span></a></li>
-          <li><a href="brand.json" download>brand.json <span>design tokens</span></a></li>
-        </ul>
-        <p class="use-copy">And a small human shortcut: every solid tile and gray swatch in the Color section copies its HEX on click.</p>
       </div>
     </div>
   </section>
