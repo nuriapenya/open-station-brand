@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenStation · Snap v3</title>
+<!--
+  Concept 2, iteration 3 · Snap v2 with a bigger voice: H1 at 120px,
+  "desktop" highlighted with a hand-sketched orbit ring (no closing dot),
+  hero spacing at 120px. Everything else inherited from v2.
+  Tokens from brand.json v0.7.1. No JavaScript.
+-->
+<style>
+  @font-face {
+    font-family: 'Geist';
+    src: url('../fonts/Geist-Variable.woff2') format('woff2');
+    font-weight: 100 900;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Geist Mono';
+    src: url('../fonts/GeistMono-Variable.woff2') format('woff2');
+    font-weight: 100 900;
+    font-display: swap;
+  }
+
+  /* ============ Tokens (brand.json v0.7.1) ============ */
+  :root {
+    color-scheme: dark;
+    --pulse: #e94ff3;
+    --nebula: #ec9bff;
+    --starlight: #fffbff;
+    --sirius: #9af2ff;
+    --lagoon: #9f98ff;
+    --obsidian: #1a1721;
+    --void: #0c0b0f;
+    --osmium: #99969c;
+    --ash: #b3afb5;
+
+    --ink: var(--starlight);
+    --ink-2: var(--ash);
+    --ink-3: var(--osmium);
+    --line: rgba(255, 251, 255, 0.11);
+    --line-dash: rgba(255, 251, 255, 0.2);
+    --line-soft: rgba(255, 251, 255, 0.06);
+
+    --r-sm: 4px;
+    --r-md: 8px;
+    --r-lg: 12px;
+    --r-xl: 16px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--void);
+    color: var(--ink);
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--pulse); color: var(--void); }
+
+  /* ============ Accessibility ============ */
+  .skip {
+    position: absolute;
+    left: 16px; top: -60px;
+    background: var(--starlight); color: var(--void);
+    padding: 10px 16px; border-radius: var(--r-sm);
+    font-size: 14px; z-index: 100;
+  }
+  .skip:focus { top: 16px; }
+
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* ============ Cosmos backdrop ============ */
+  .cosmos {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+  }
+  .cosmos svg { width: 100%; height: 100%; display: block; }
+
+  /* The whole content column sits on one OS-style glass sheet:
+     translucent and softly blurred, with crisp stars outside the rails */
+  .glass {
+    position: fixed;
+    top: 0; bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1440px, 100%);
+    background: rgba(26, 23, 33, 0.55);
+    backdrop-filter: blur(18px) saturate(1.2);
+    -webkit-backdrop-filter: blur(18px) saturate(1.2);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--sirius);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* ============ The rails (from Blueprint) ============ */
+  .frame {
+    max-width: 1440px;
+    margin-inline: auto;
+    border-inline: 1px solid var(--line);
+    padding-inline: clamp(20px, 5vw, 64px);
+    position: relative;
+  }
+  section.frame, footer .frame { border-top: 1px dashed var(--line-dash); }
+
+  /* Hatched gutter bands outside the rails, tailwind-style.
+     Drawn per section so the horizontal separators cross them. */
+  .frame::before, .frame::after {
+    content: '';
+    position: absolute;
+    top: -1px; bottom: 0;
+    width: 72px;
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--line-soft) 0, var(--line-soft) 1px,
+      transparent 1px, transparent 9px
+    );
+    pointer-events: none;
+    display: none;
+  }
+  .frame::before { left: -73px; border-left: 1px solid var(--line); }
+  .frame::after { right: -73px; border-right: 1px solid var(--line); }
+  section.frame::before, section.frame::after,
+  footer .frame::before, footer .frame::after {
+    border-top: 1px dashed var(--line-dash);
+  }
+  /* flush sections (stats) draw a solid seam instead, matching their border */
+  .flush { padding-inline: 0; border-top: none; }
+  .flush::before, .flush::after {
+    border-top-style: solid;
+    border-top-color: var(--line);
+  }
+  @media (min-width: 1600px) {
+    .frame::before, .frame::after { display: block; }
+  }
+
+  /* Crosshair markers at rail intersections */
+  .x {
+    position: absolute;
+    width: 17px; height: 17px;
+    pointer-events: none;
+  }
+  .x::before, .x::after {
+    content: '';
+    position: absolute;
+    background: var(--pulse);
+  }
+  .x::before { left: 8px; top: 0; width: 1px; height: 17px; }
+  .x::after  { left: 0; top: 8px; width: 17px; height: 1px; }
+  .x.tl { left: -9px; top: -9px; }
+  .x.tr { right: -9px; top: -9px; }
+
+  /* ============ Type helpers ============ */
+  .mono, kbd, figcaption { font-family: 'Geist Mono', ui-monospace, monospace; }
+  .label {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  a { color: inherit; }
+  p a { text-decoration-color: var(--pulse); text-underline-offset: 3px; }
+  p a:hover { color: var(--nebula); }
+
+  /* ============ Buttons (Figma UI kit: Button set) ============ */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    height: 40px; padding-inline: 20px;
+    border-radius: var(--r-sm);
+    font: 500 16px 'Geist', system-ui, sans-serif;
+    text-decoration: none;
+    border: 1px solid transparent;
+  }
+  .btn.sm { height: 32px; padding-inline: 12px; font-size: 13px; }
+  .btn.solid { background: var(--starlight); color: var(--void); }
+  .btn.solid:hover { background: var(--nebula); }
+  .btn.outline { border-color: rgba(255,251,255,0.3); color: var(--ink); }
+  .btn.outline:hover { border-color: var(--starlight); }
+
+  /* ============ Nav ============ */
+  .nav {
+    display: flex; align-items: center; gap: 28px;
+    padding-block: 20px;
+  }
+  .lockup {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+    font: 600 19px 'Geist', system-ui, sans-serif;
+    margin-right: auto;
+  }
+  .lockup svg { width: 26px; height: 26px; }
+  .nav > a:not(.lockup):not(.btn) {
+    font-size: 14px; text-decoration: none; color: var(--ink-2);
+  }
+  .nav > a:not(.lockup):not(.btn):hover { color: var(--ink); }
+
+  /* ============ Hero (left-aligned, annotated) ============ */
+  .hero { padding-block: 120px; }
+  h1 {
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    max-width: 1160px;
+  }
+  h1 .l2 { display: block; }
+  /* The highlighted word: Holomesh fill + a hand-sketched orbit ring */
+  .hl {
+    position: relative;
+    display: inline-block;
+    /* Holomesh recipe from the brand guide, inlined as CSS gradients
+       (background-clip: text over SVG urls is unreliable in Safari) */
+    background:
+      radial-gradient(ellipse 21.7% 39.6% at 96.5% 13.5%, rgba(159,214,255,.6), transparent),
+      radial-gradient(ellipse 26.3% 57.2% at 83.3% 56.2%, rgba(243,181,236,.75), transparent),
+      radial-gradient(ellipse 18.2% 47.3% at 73.6% 64.5%, rgba(255,253,255,.7), transparent),
+      radial-gradient(ellipse 18.4% 34.1% at 29.8% 83.4%, rgba(147,240,198,.8), transparent),
+      radial-gradient(ellipse 17.4% 35.7% at 23% 67.7%, rgba(248,242,182,.85), transparent),
+      radial-gradient(ellipse 23.3% 45.9% at 45.2% 45.8%, #f59fe8, rgba(245,168,234,.55) 55%, transparent),
+      radial-gradient(ellipse 29.9% 53.6% at 53.5% 7.3%, rgba(125,239,245,.9), rgba(142,233,247,.45) 60%, transparent),
+      radial-gradient(ellipse 26.9% 70.7% at 29.8% 44.8%, rgba(255,253,255,.95), rgba(255,253,255,.5) 55%, transparent),
+      linear-gradient(123.69deg, #afa2e8 0%, #b7abea 55%, #c3b8ef 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  /* Constellation underline: finely dotted line in Lagoon, haloed star
+     dots, and a very subtle shake, as if someone grabbed it */
+  .hl .constel {
+    position: absolute;
+    left: -7%; top: -17%;
+    width: 114%; height: 138%;
+    overflow: visible;
+    pointer-events: none;
+  }
+  .constel .shake { animation: c-shake 7s ease-in-out infinite; }
+  .constel .cd { animation: c-bob 4.5s ease-in-out infinite; }
+  @keyframes c-shake {
+    0%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-2.5px); }
+    60% { transform: translateY(1.5px); }
+  }
+  @keyframes c-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-1.8px); }
+  }
+  .hero .sub {
+    margin-top: 24px;
+    max-width: 560px;
+    font-size: 18px;
+    color: var(--ink-2);
+  }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .cta-row .btn { height: 48px; padding-inline: 26px; font-size: 17px; }
+  .cta-note { margin-top: 14px; font-size: 12px; color: var(--ink-3); }
+
+  /* Mio's own section */
+  .mio-sect { padding-block: 80px; }
+  .mio-wrap { display: flex; align-items: center; gap: 48px; flex-wrap: wrap; }
+  .mio-copy { flex: 1 1 320px; max-width: 520px; }
+  .mio-copy .label { display: block; margin-bottom: 14px; }
+  .mio-copy p { color: var(--ink-2); }
+  .mio-stage { flex: 1 1 260px; display: flex; justify-content: center; }
+  .mio-stage svg {
+    width: 180px;
+    animation: floaty 9s ease-in-out infinite;
+  }
+  @keyframes floaty {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-16px) rotate(2deg); }
+  }
+  @keyframes blink { 0%, 90%, 100% { opacity: 1; } 93%, 97% { opacity: 0; } }
+  .mio-eyes { animation: blink 6s infinite; }
+
+  /* ============ The mini desktop ============ */
+  .desktop-stage { padding-block: 56px 72px; }
+
+  /* Scene toggles: radios + :has(), no JavaScript.
+     They live in a sidebar inside the window, like a real app. */
+  .side {
+    position: absolute;
+    left: 0; top: 34px; bottom: 0;
+    width: 190px;
+    border-right: 1px solid var(--line-soft);
+    background: rgba(12, 11, 15, 0.45);
+    padding: 16px 12px;
+  }
+  .side fieldset { border: none; display: grid; gap: 4px; }
+  .side-label {
+    display: block;
+    margin: 2px 8px 10px;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .side input { position: absolute; opacity: 0; pointer-events: none; }
+  .side label {
+    display: block;
+    padding: 9px 14px;
+    border-radius: 100px;
+    font: 500 14px 'Geist', system-ui, sans-serif;
+    color: var(--ink-2);
+    cursor: pointer;
+  }
+  .side label:hover { color: var(--ink); background: rgba(255, 251, 255, 0.05); }
+  .side input:checked + label {
+    background: rgba(255, 251, 255, 0.1);
+    color: var(--ink);
+  }
+  .side input:focus-visible + label { outline: 2px solid var(--sirius); outline-offset: -2px; }
+
+  /* the scenes play out right of the sidebar */
+  .stage {
+    position: absolute;
+    left: 190px; top: 34px; right: 0; bottom: 0;
+  }
+  .scene { display: none; position: absolute; inset: 0; }
+  .desktop-stage:has(#sc-win:checked) .scene-win,
+  .desktop-stage:has(#sc-sp:checked) .scene-sp,
+  .desktop-stage:has(#sc-cmd:checked) .scene-cmd { display: block; }
+
+  .desktop {
+    position: relative;
+    max-width: 1120px;
+    margin-inline: auto;
+    border: 1px solid var(--line);
+    border-radius: var(--r-xl);
+    background: var(--obsidian);
+    box-shadow: 0 16px 24px rgba(0, 0, 0, 0.35), 0 24px 48px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    aspect-ratio: 16 / 9.5;
+    min-height: 400px;
+  }
+  .menubar {
+    display: flex; align-items: center; gap: 18px;
+    height: 34px;
+    padding-inline: 16px;
+    border-bottom: 1px solid var(--line-soft);
+    background: rgba(12, 11, 15, 0.5);
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+  .menubar svg { width: 15px; height: 15px; }
+  .menubar .clock { margin-left: auto; }
+
+  .win {
+    position: absolute;
+    background: rgba(12, 11, 15, 0.88);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+  }
+  .win .bar {
+    display: flex; align-items: center; gap: 6px;
+    height: 30px;
+    padding-inline: 11px;
+    border-bottom: 1px solid var(--line-soft);
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 10px;
+    color: var(--ink-3);
+  }
+  .win .bar i {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--osmium);
+  }
+  .win .bar i.go { background: var(--pulse); border-color: var(--pulse); }
+  .win .bar span { margin-left: 6px; }
+  .win .body { padding: 14px; display: grid; gap: 8px; }
+  .skel { height: 7px; border-radius: 3px; background: rgba(255, 251, 255, 0.14); }
+  .skel.head { height: 10px; width: 60%; background: rgba(255, 251, 255, 0.28); }
+  .skel.short { width: 45%; }
+  .thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .thumbs i { aspect-ratio: 4/3; border-radius: 5px; background: rgba(255, 251, 255, 0.1); }
+
+  .win.left  { left: 4%; top: 14%; width: 40%; height: 56%; }
+  .win.notes { left: 10%; bottom: 9%; width: 27%; z-index: 1; }
+  .c-row { display: flex; gap: 8px; align-items: center; }
+  .c-row > i { width: 16px; height: 16px; border-radius: 50%; background: rgba(255,251,255,0.2); flex: none; }
+  .c-row > div { flex: 1; display: grid; gap: 5px; }
+  .win.drag {
+    right: 6%; top: 20%; width: 38%; height: 52%;
+    transform: rotate(-1.6deg);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.45), 0 16px 32px rgba(0,0,0,0.45);
+    animation: drift 7s ease-in-out infinite;
+  }
+  @keyframes drift {
+    0%, 100% { transform: rotate(-1.6deg) translate(0, 0); }
+    50% { transform: rotate(-1.1deg) translate(-8px, 4px); }
+  }
+
+  /* the snap target the dragged window will land on */
+  .snapline {
+    position: absolute;
+    top: 12%; bottom: 16%;
+    right: 48.5%;
+    border-left: 2px dashed var(--sirius);
+    opacity: 0.75;
+    z-index: 2; /* the measurement chip reads above the dragged window */
+  }
+  .snapline .chip {
+    position: absolute;
+    top: 46%; left: 0;
+    transform: translateX(-50%);
+    background: var(--void);
+    border: 1px solid rgba(154, 242, 255, 0.6);
+    border-radius: var(--r-sm);
+    padding: 1px 7px;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 10px;
+    color: var(--sirius);
+    white-space: nowrap;
+  }
+
+  /* ============ Spaces scene ============ */
+  .spaces-row {
+    position: absolute;
+    left: 50%; top: 45%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 26px;
+    align-items: center;
+  }
+  .space { width: 210px; }
+  .space .shot {
+    aspect-ratio: 16 / 10;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: rgba(12, 11, 15, 0.7);
+    position: relative;
+    overflow: hidden;
+  }
+  .space .shot i {
+    position: absolute;
+    border: 1px solid rgba(255, 251, 255, 0.3);
+    border-radius: 4px;
+    background: rgba(255, 251, 255, 0.06);
+  }
+  .space .lbl {
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .space.active .shot { border-color: var(--pulse); }
+  .space.active .lbl { color: var(--nebula); }
+
+  /* ============ Palette scene ============ */
+  .scrim { position: absolute; inset: 0; background: rgba(12, 11, 15, 0.55); }
+  .ghost-win {
+    position: absolute;
+    left: 7%; top: 18%;
+    width: 38%; height: 55%;
+    border: 1px solid var(--line-soft);
+    border-radius: var(--r-lg);
+  }
+  .palette {
+    position: absolute;
+    left: 50%; top: 20%;
+    transform: translateX(-50%);
+    width: min(440px, 84%);
+    background: rgba(12, 11, 15, 0.95);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 13px;
+    box-shadow: 0 16px 24px rgba(0,0,0,0.4), 0 24px 48px rgba(0,0,0,0.4);
+  }
+  .palette .in {
+    display: flex; align-items: center; gap: 8px;
+    padding: 13px 16px;
+    color: var(--ink);
+  }
+  .p-caret {
+    width: 8px; height: 16px;
+    background: var(--pulse);
+    animation: caret 1.2s step-end infinite;
+  }
+  @keyframes caret { 0%, 55% { opacity: 1; } 56%, 100% { opacity: 0; } }
+  .palette .key {
+    margin-left: auto;
+    border: 1px solid rgba(255, 251, 255, 0.25);
+    border-radius: var(--r-sm);
+    padding: 1px 6px;
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+  .p-row {
+    display: flex; align-items: center;
+    padding: 11px 16px;
+    color: var(--ink-2);
+    border-top: 1px solid var(--line-soft);
+  }
+  .p-row em { font-style: normal; margin-left: auto; color: var(--ink-3); font-size: 11px; }
+  .p-row.sel {
+    background: rgba(233, 79, 243, 0.14);
+    color: var(--ink);
+    box-shadow: inset 2px 0 0 var(--pulse);
+  }
+
+  .dock {
+    position: absolute;
+    left: 50%; bottom: 4.5%;
+    transform: translateX(-50%);
+    display: flex; gap: 9px;
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-xl);
+    background: rgba(12, 11, 15, 0.7);
+  }
+  .dock i {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 251, 255, 0.2);
+  }
+  .dock i:nth-child(1) { background: linear-gradient(135deg, #e94ff3, #4b3eff); border: none; }
+  figcaption {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+
+  /* ============ Stats (Blueprint hairline grid) ============ */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border-block: 1px solid var(--line);
+  }
+  .stat { background: var(--void); padding: 26px 8px; text-align: center; }
+  .stat b {
+    display: block;
+    font: 600 30px 'Geist', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+    color: var(--sirius);
+  }
+  .stat span {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  /* ============ Features (Blueprint hairline grid) ============ */
+  .features { padding-block: 64px 80px; }
+  .features h2, .cta-final h2, .mio-sect h2 {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.12;
+    margin: 14px 0 44px;
+    max-width: 560px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .card {
+    background: var(--void);
+    padding: 28px;
+    position: relative;
+  }
+  .card:hover { background: var(--obsidian); }
+  .card .num {
+    position: absolute; top: 28px; right: 28px;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--ink-3);
+  }
+  .card svg { width: 28px; height: 28px; margin-bottom: 18px; }
+  .card h3 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+  .card p { font-size: 14px; color: var(--ink-2); }
+  .card kbd {
+    font-size: 12px;
+    border: 1px solid rgba(255,251,255,0.25);
+    border-bottom-width: 2px;
+    border-radius: var(--r-sm);
+    padding: 1px 6px;
+    color: var(--ink-2);
+    white-space: nowrap;
+  }
+
+  /* ============ Terminal ============ */
+  .term-sect { padding-block: 64px 80px; }
+  .terminal {
+    max-width: 640px;
+    margin-inline: auto;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--void);
+    overflow: hidden;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 13.5px;
+  }
+  .terminal .bar {
+    display: flex; align-items: center; gap: 6px;
+    padding: 9px 13px;
+    border-bottom: 1px solid var(--line-soft);
+    color: var(--ink-3);
+    font-size: 10px;
+  }
+  .terminal .bar i { width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--osmium); }
+  .terminal .bar span { margin-left: 6px; }
+  .terminal pre {
+    padding: 18px;
+    overflow-x: auto;
+    line-height: 1.9;
+    color: var(--ink);
+  }
+  .terminal .p { color: var(--nebula); }
+  .terminal .c { color: var(--osmium); }
+  .terminal .ok { color: var(--sirius); }
+
+  /* ============ Final CTA + footer ============ */
+  .cta-final { padding-block: 72px; text-align: center; }
+  .cta-final h2 { margin-inline: auto; }
+  .cta-final .cta-row { justify-content: center; }
+  footer .frame {
+    display: flex; flex-wrap: wrap; gap: 10px 28px;
+    padding-block: 28px 40px;
+    font-size: 13px; color: var(--ink-3);
+  }
+  footer a { text-decoration: none; color: var(--ink-2); }
+  footer a:hover { color: var(--ink); text-decoration: underline; }
+  footer .gpl { margin-left: auto; }
+
+  /* ============ Responsive + motion ============ */
+  @media (max-width: 860px) {
+    .grid { grid-template-columns: 1fr 1fr; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .desktop { aspect-ratio: auto; height: 440px; }
+    .win.left { width: 55%; }
+    .win.drag { width: 48%; right: 2%; }
+    .spaces-row { gap: 14px; }
+    .space { width: 150px; }
+  }
+  @media (max-width: 560px) {
+    .grid { grid-template-columns: 1fr; }
+    .nav > a:not(.lockup):not(.btn) { display: none; }
+    .side { width: 130px; padding: 12px 8px; }
+    .side label { padding: 8px 10px; font-size: 13px; }
+    .stage { left: 130px; }
+    .win.notes { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .win.drag { animation: none; }
+    .mio-stage svg { animation: none; }
+    .mio-eyes { animation: none; }
+    .p-caret { animation: none; }
+    .constel .shake, .constel .cd { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="cosmos" aria-hidden="true">
+  <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <radialGradient id="glowA"><stop offset="0%" stop-color="#9f98ff" stop-opacity="0.10"/><stop offset="100%" stop-color="#9f98ff" stop-opacity="0"/></radialGradient>
+      <radialGradient id="glowB"><stop offset="0%" stop-color="#e94ff3" stop-opacity="0.07"/><stop offset="100%" stop-color="#e94ff3" stop-opacity="0"/></radialGradient>
+    </defs>
+    <ellipse cx="1250" cy="140" rx="500" ry="320" fill="url(#glowA)"/>
+    <ellipse cx="260" cy="760" rx="520" ry="340" fill="url(#glowB)"/>
+    <g fill="#fffbff">
+      <circle cx="83" cy="67" r="1.1" opacity="0.55"/><circle cx="210" cy="142" r="0.7" opacity="0.35"/>
+      <circle cx="341" cy="58" r="1.4" opacity="0.7"/><circle cx="447" cy="201" r="0.8" opacity="0.3"/>
+      <circle cx="562" cy="94" r="1" opacity="0.5"/><circle cx="668" cy="33" r="0.7" opacity="0.4"/>
+      <circle cx="790" cy="171" r="1.3" opacity="0.6"/><circle cx="905" cy="79" r="0.8" opacity="0.35"/>
+      <circle cx="1042" cy="127" r="1.1" opacity="0.55"/><circle cx="1149" cy="48" r="0.7" opacity="0.4"/>
+      <circle cx="1263" cy="182" r="1.5" opacity="0.75"/><circle cx="1388" cy="96" r="0.9" opacity="0.45"/>
+      <circle cx="1501" cy="211" r="1.1" opacity="0.5"/><circle cx="1557" cy="61" r="0.7" opacity="0.35"/>
+      <circle cx="57" cy="311" r="0.9" opacity="0.4"/><circle cx="187" cy="422" r="1.3" opacity="0.6"/>
+      <circle cx="309" cy="356" r="0.7" opacity="0.3"/><circle cx="438" cy="489" r="1" opacity="0.5"/>
+      <circle cx="590" cy="371" r="0.8" opacity="0.35"/><circle cx="713" cy="452" r="1.4" opacity="0.65"/>
+      <circle cx="861" cy="329" r="0.7" opacity="0.3"/><circle cx="988" cy="411" r="1" opacity="0.5"/>
+      <circle cx="1108" cy="352" r="0.8" opacity="0.4"/><circle cx="1247" cy="496" r="1.2" opacity="0.55"/>
+      <circle cx="1372" cy="388" r="0.7" opacity="0.35"/><circle cx="1493" cy="443" r="1" opacity="0.5"/>
+      <circle cx="94" cy="587" r="1.2" opacity="0.55"/><circle cx="228" cy="683" r="0.8" opacity="0.35"/>
+      <circle cx="366" cy="611" r="1" opacity="0.5"/><circle cx="482" cy="742" r="0.7" opacity="0.3"/>
+      <circle cx="617" cy="653" r="1.3" opacity="0.6"/><circle cx="758" cy="581" r="0.8" opacity="0.4"/>
+      <circle cx="884" cy="709" r="1" opacity="0.45"/><circle cx="1019" cy="626" r="0.7" opacity="0.3"/>
+      <circle cx="1141" cy="757" r="1.4" opacity="0.65"/><circle cx="1279" cy="668" r="0.8" opacity="0.4"/>
+      <circle cx="1408" cy="723" r="1" opacity="0.5"/><circle cx="1530" cy="641" r="0.7" opacity="0.35"/>
+      <circle cx="141" cy="838" r="1" opacity="0.45"/><circle cx="393" cy="866" r="0.7" opacity="0.3"/>
+      <circle cx="672" cy="827" r="1.1" opacity="0.5"/><circle cx="953" cy="861" r="0.8" opacity="0.35"/>
+      <circle cx="1198" cy="843" r="1.2" opacity="0.55"/><circle cx="1462" cy="872" r="0.7" opacity="0.3"/>
+    </g>
+    <g>
+      <circle cx="524" cy="264" r="1.4" fill="#9af2ff" opacity="0.6"/>
+      <circle cx="1330" cy="304" r="1.3" fill="#ec9bff" opacity="0.6"/>
+      <circle cx="246" cy="536" r="1.4" fill="#9af2ff" opacity="0.5"/>
+      <circle cx="1074" cy="522" r="1.3" fill="#ec9bff" opacity="0.5"/>
+      <circle cx="815" cy="256" r="1.5" fill="#9f98ff" opacity="0.6"/>
+    </g>
+  </svg>
+</div>
+<div class="glass" aria-hidden="true"></div>
+
+<header class="frame nav">
+  <a class="lockup" href="#">
+    <svg viewBox="0 0 80 80" aria-hidden="true"><path d="M38.792 0.0186131C60.8846 -0.649069 79.3313 16.7291 79.9824 38.8223C80.6326 60.8921 63.2773 79.3149 41.208 79.9815C19.1385 80.6488 0.702853 63.3074 0.0195305 41.2383C-0.66441 19.1462 16.6995 0.686396 38.792 0.0186131ZM38.71 9.36236C35.8339 7.89166 32.7628 8.23954 29.8555 9.28033C12.6582 14.7114 3.37017 33.8997 9.45508 50.8067C11.0384 55.2047 13.565 59.4989 16.9609 62.7842C21.6294 67.5336 27.6536 70.7223 34.2061 71.9112C37.0214 72.4165 41.0083 73.0707 43.2295 70.7891C46.4143 67.5174 44.115 64.4383 43.1133 60.8419C42.137 57.2757 41.6165 53.6009 41.5635 49.9044C41.5398 46.776 42.201 42.473 42.8252 39.3565C44.2979 32.0039 46.892 24.7246 44.5537 17.2452C43.5137 14.0551 41.8086 10.9469 38.71 9.36236Z" fill="#fffbff"/></svg>
+    OpenStation
+  </a>
+  <a href="#features">Features</a>
+  <a href="https://next-admin.blog">Dev diary</a>
+  <a href="https://github.com/WordPress/desktop-mode">GitHub</a>
+  <a class="btn sm solid" href="https://wordpress.org/plugins/desktop-mode/">Install</a>
+</header>
+
+<main id="main">
+
+  <!-- ============ Hero ============ -->
+  <section class="frame hero">
+    <i class="x tl" aria-hidden="true"></i>
+    <i class="x tr" aria-hidden="true"></i>
+    <h1>Your wp-admin,
+      <span class="l2">now a <span class="hl">desktop<svg class="constel" viewBox="0 0 560 210" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <radialGradient id="haloS"><stop offset="0%" stop-color="#9af2ff" stop-opacity="0.45"/><stop offset="100%" stop-color="#9af2ff" stop-opacity="0"/></radialGradient>
+          <radialGradient id="haloN"><stop offset="0%" stop-color="#ec9bff" stop-opacity="0.45"/><stop offset="100%" stop-color="#ec9bff" stop-opacity="0"/></radialGradient>
+          <radialGradient id="haloP"><stop offset="0%" stop-color="#e94ff3" stop-opacity="0.5"/><stop offset="100%" stop-color="#e94ff3" stop-opacity="0"/></radialGradient>
+        </defs>
+        <g class="shake">
+          <polyline points="30,190 140,205 255,192 380,206 500,192" fill="none" stroke="#9f98ff" stroke-opacity="0.5" stroke-width="1.5" stroke-dasharray="0.2 5" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+          <g class="cd"><circle cx="30" cy="190" r="11" fill="url(#haloS)"/><circle cx="30" cy="190" r="3" fill="#9af2ff"/></g>
+          <g class="cd" style="animation-delay: -1.2s"><circle cx="140" cy="205" r="10" fill="url(#haloN)"/><circle cx="140" cy="205" r="3" fill="#ec9bff"/></g>
+          <g class="cd" style="animation-delay: -2.2s"><circle cx="255" cy="192" r="12" fill="url(#haloP)"/><circle cx="255" cy="192" r="3.5" fill="#e94ff3"/></g>
+          <g class="cd" style="animation-delay: -3.1s"><circle cx="380" cy="206" r="10" fill="url(#haloN)"/><circle cx="380" cy="206" r="3" fill="#ec9bff"/></g>
+          <g class="cd" style="animation-delay: -3.9s"><circle cx="500" cy="192" r="11" fill="url(#haloS)"/><circle cx="500" cy="192" r="3" fill="#9af2ff"/></g>
+        </g>
+      </svg></span>.</span>
+    </h1>
+    <p class="sub">OpenStation turns wp-admin into a desktop OS. Windows, a dock,
+    virtual desktops, a command palette: everything lines up, nothing gets lost,
+    and your admin finally feels like a place.</p>
+    <div class="cta-row">
+      <a class="btn solid" href="https://wordpress.org/plugins/desktop-mode/">Install the plugin</a>
+      <a class="btn outline" href="https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/WordPress/desktop-mode/refs/heads/trunk/.wordpress-org/blueprints/blueprint.json">Try it in Playground</a>
+    </div>
+    <p class="cta-note mono">2,000+ stations already docked · 5.0 rating</p>
+  </section>
+
+  <!-- ============ Mini desktop showcase ============ -->
+  <section class="frame desktop-stage" aria-label="OpenStation feature showcase">
+    <div class="desktop">
+      <div class="menubar" aria-hidden="true">
+        <svg viewBox="0 0 80 80"><path d="M38.792 0.0186131C60.8846 -0.649069 79.3313 16.7291 79.9824 38.8223C80.6326 60.8921 63.2773 79.3149 41.208 79.9815C19.1385 80.6488 0.702853 63.3074 0.0195305 41.2383C-0.66441 19.1462 16.6995 0.686396 38.792 0.0186131ZM38.71 9.36236C35.8339 7.89166 32.7628 8.23954 29.8555 9.28033C12.6582 14.7114 3.37017 33.8997 9.45508 50.8067C11.0384 55.2047 13.565 59.4989 16.9609 62.7842C21.6294 67.5336 27.6536 70.7223 34.2061 71.9112C37.0214 72.4165 41.0083 73.0707 43.2295 70.7891C46.4143 67.5174 44.115 64.4383 43.1133 60.8419C42.137 57.2757 41.6165 53.6009 41.5635 49.9044C41.5398 46.776 42.201 42.473 42.8252 39.3565C44.2979 32.0039 46.892 24.7246 44.5537 17.2452C43.5137 14.0551 41.8086 10.9469 38.71 9.36236Z" fill="#fffbff"/></svg>
+        <span>Space 2 of 3</span>
+        <span>⌘K to fly</span>
+        <span class="clock">14:02</span>
+      </div>
+
+      <div class="side">
+        <fieldset>
+          <legend class="sr-only">Choose what to preview on the desktop</legend>
+          <span class="side-label" aria-hidden="true">Explore</span>
+          <input type="radio" name="scene" id="sc-win" checked>
+          <label for="sc-win">Windows</label>
+          <input type="radio" name="scene" id="sc-sp">
+          <label for="sc-sp">Spaces</label>
+          <input type="radio" name="scene" id="sc-cmd">
+          <label for="sc-cmd">⌘K palette</label>
+        </fieldset>
+      </div>
+
+      <div class="stage">
+      <!-- Scene 1: tiled windows -->
+      <div class="scene scene-win" aria-hidden="true">
+        <div class="win left">
+          <div class="bar"><i class="go"></i><i></i><i></i><span>edit-post · "Snapping, explained"</span></div>
+          <div class="body">
+            <div class="skel head"></div>
+            <div class="skel"></div>
+            <div class="skel"></div>
+            <div class="skel short"></div>
+            <div class="skel"></div>
+          </div>
+        </div>
+
+        <div class="win notes">
+          <div class="bar"><i class="go"></i><i></i><i></i><span>comments · 2 pending</span></div>
+          <div class="body">
+            <div class="c-row"><i></i><div><div class="skel"></div><div class="skel short"></div></div></div>
+            <div class="c-row"><i></i><div><div class="skel"></div><div class="skel short"></div></div></div>
+          </div>
+        </div>
+
+        <div class="snapline"><span class="chip">snap: right half</span></div>
+
+        <div class="win drag">
+          <div class="bar"><i class="go"></i><i></i><i></i><span>media library</span></div>
+          <div class="body">
+            <div class="thumbs"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 2: Spaces overview -->
+      <div class="scene scene-sp" aria-hidden="true">
+        <div class="spaces-row">
+          <div class="space">
+            <div class="shot">
+              <i style="left: 8%; top: 12%; width: 55%; height: 70%;"></i>
+              <i style="right: 7%; top: 30%; width: 26%; height: 40%;"></i>
+            </div>
+            <span class="lbl">01 · Writing</span>
+          </div>
+          <div class="space active">
+            <div class="shot">
+              <i style="left: 6%; top: 14%; width: 42%; height: 64%;"></i>
+              <i style="right: 6%; top: 22%; width: 42%; height: 56%;"></i>
+            </div>
+            <span class="lbl">02 · Moderation</span>
+          </div>
+          <div class="space">
+            <div class="shot">
+              <i style="left: 5%; top: 10%; width: 34%; height: 38%;"></i>
+              <i style="left: 26%; top: 34%; width: 38%; height: 44%;"></i>
+              <i style="right: 5%; top: 18%; width: 30%; height: 30%;"></i>
+              <i style="right: 14%; bottom: 8%; width: 26%; height: 28%;"></i>
+            </div>
+            <span class="lbl">03 · Chaos</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 3: command palette -->
+      <div class="scene scene-cmd" aria-hidden="true">
+        <div class="scrim"></div>
+        <div class="ghost-win"></div>
+        <div class="palette">
+          <div class="in"><span>spa</span><span class="p-caret"></span><span class="key">⌘K</span></div>
+          <div class="p-row sel">Switch to Space 2 · Moderation<em>↵</em></div>
+          <div class="p-row">Open Spaces settings</div>
+          <div class="p-row">New post in Writing</div>
+          <div class="p-row">Ask the AI: find my 2019 post</div>
+        </div>
+      </div>
+
+      <div class="dock" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Stats ============ -->
+  <section class="frame flush" aria-label="Plugin statistics">
+    <div class="stats">
+      <div class="stat"><b>2,000+</b><span>active installs</span></div>
+      <div class="stat"><b>5.0</b><span>plugin rating</span></div>
+      <div class="stat"><b>0</b><span>core files touched</span></div>
+      <div class="stat"><b>100%</b><span>GPL, forever</span></div>
+    </div>
+  </section>
+
+  <!-- ============ Features ============ -->
+  <section class="frame features" id="features">
+    <i class="x tl" aria-hidden="true"></i>
+    <h2>Mission control for your WordPress.</h2>
+    <div class="grid">
+      <div class="card">
+        <span class="num" aria-hidden="true">01</span>
+        <svg viewBox="0 0 28 28" aria-hidden="true"><rect x="2" y="4" width="17" height="14" rx="2" fill="none" stroke="#fffbff" stroke-width="1.5"/><line x1="2" y1="9" x2="19" y2="9" stroke="#fffbff" stroke-width="1.5"/><rect x="12" y="12" width="14" height="12" rx="2" fill="#0c0b0f" stroke="#e94ff3" stroke-width="1.5"/><line x1="12" y1="16" x2="26" y2="16" stroke="#e94ff3" stroke-width="1.5"/></svg>
+        <h3>Windows</h3>
+        <p>Drag, resize, minimize, snap, tile. Moderate comments while the editor stays open. Radical, we know.</p>
+      </div>
+      <div class="card">
+        <span class="num" aria-hidden="true">02</span>
+        <svg viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="17" width="26" height="10" rx="4" fill="none" stroke="#fffbff" stroke-width="1.5"/><rect x="5" y="20" width="4" height="4" rx="1" fill="#e94ff3"/><rect x="12" y="20" width="4" height="4" rx="1" fill="none" stroke="#fffbff" stroke-width="1.2"/><rect x="19" y="20" width="4" height="4" rx="1" fill="none" stroke="#fffbff" stroke-width="1.2"/></svg>
+        <h3>Dock &amp; taskbar</h3>
+        <p>The admin menu, reborn as a dock. Everything you have open, one glance away in the taskbar.</p>
+      </div>
+      <div class="card">
+        <span class="num" aria-hidden="true">03</span>
+        <svg viewBox="0 0 28 28" aria-hidden="true"><rect x="2" y="6" width="15" height="12" rx="2" fill="none" stroke="#fffbff" stroke-width="1.5"/><rect x="7" y="9" width="15" height="12" rx="2" fill="#0c0b0f" stroke="#fffbff" stroke-width="1.5"/><rect x="12" y="12" width="15" height="12" rx="2" fill="#0c0b0f" stroke="#e94ff3" stroke-width="1.5"/></svg>
+        <h3>Spaces</h3>
+        <p>Virtual desktops for different missions. Writing on one, plugin wrangling on another, chaos on a third.</p>
+      </div>
+      <div class="card">
+        <span class="num" aria-hidden="true">04</span>
+        <svg viewBox="0 0 28 28" aria-hidden="true"><rect x="2" y="7" width="24" height="14" rx="3" fill="none" stroke="#fffbff" stroke-width="1.5"/><line x1="7" y1="14" x2="13" y2="14" stroke="#e94ff3" stroke-width="2"/><line x1="16" y1="14" x2="21" y2="14" stroke="#99969c" stroke-width="2"/></svg>
+        <h3>Command palette</h3>
+        <p>Hit <kbd>⌘K</kbd> and teleport. The optional AI assistant finds that post you wrote in 2019.</p>
+      </div>
+      <div class="card">
+        <span class="num" aria-hidden="true">05</span>
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M23 14a9 9 0 1 1-3-6.7" fill="none" stroke="#fffbff" stroke-width="1.5"/><path d="M20 3v5h-5" fill="none" stroke="#e94ff3" stroke-width="1.5"/></svg>
+        <h3>Session restore</h3>
+        <p>Reload the browser, reboot the planet: your windows come back exactly as you left them.</p>
+      </div>
+      <div class="card">
+        <span class="num" aria-hidden="true">06</span>
+        <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="6" cy="7" r="3" fill="none" stroke="#fffbff" stroke-width="1.5"/><circle cx="22" cy="10" r="3" fill="none" stroke="#fffbff" stroke-width="1.5"/><circle cx="12" cy="22" r="3" fill="#e94ff3"/><line x1="8" y1="9" x2="10" y2="19" stroke="#fffbff" stroke-width="1.2"/><line x1="20" y1="12" x2="14" y2="20" stroke="#fffbff" stroke-width="1.2"/></svg>
+        <h3>Content Graph</h3>
+        <p>Your content as a living star map. Watch posts, pages, and media orbit each other.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Mio ============ -->
+  <section class="frame mio-sect">
+    <i class="x tl" aria-hidden="true"></i>
+    <i class="x tr" aria-hidden="true"></i>
+    <div class="mio-wrap">
+      <div class="mio-copy">
+        <span class="label">Resident ghost</span>
+        <h2>Meet Mio.</h2>
+        <p>A small ghost blob that lives aboard the station. It glows in Pulse,
+        drifts between windows, and shows up where the interface has something
+        to say. Final form: still in peer review.</p>
+      </div>
+      <div class="mio-stage" aria-hidden="true">
+        <svg viewBox="0 0 120 120">
+          <defs>
+            <linearGradient id="mioGrad" x1="0%" y1="10%" x2="90%" y2="100%">
+              <stop offset="0%" stop-color="#e94ff3"/>
+              <stop offset="48%" stop-color="#aa67ff"/>
+              <stop offset="71%" stop-color="#a580ff"/>
+              <stop offset="100%" stop-color="#4b3eff"/>
+            </linearGradient>
+          </defs>
+          <path d="M60 22C78 20 95 34 97 55C99 74 90 92 72 98C63 101 54 101 46 98C29 93 22 80 23 62C24 42 42 24 60 22Z" fill="#0c0b0f" stroke="url(#mioGrad)" stroke-width="5" stroke-linecap="round"/>
+          <g class="mio-eyes">
+            <rect x="46" y="52" width="8" height="18" rx="4" fill="#fffbff"/>
+            <rect x="66" y="52" width="8" height="18" rx="4" fill="#fffbff"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Terminal ============ -->
+  <section class="frame term-sect" aria-label="Install command">
+    <div class="terminal">
+      <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>launch sequence</span></div>
+      <pre><code><span class="p">$</span> wp plugin install desktop-mode --activate
+<span class="c"># Installing OpenStation 0.9.6 ...</span>
+<span class="ok">Plugin activated. Your admin is now a desktop.</span>
+<span class="p">$</span> <span class="c"># that's it, that's the tutorial</span></code></pre>
+    </div>
+  </section>
+
+  <!-- ============ Final CTA ============ -->
+  <section class="frame cta-final">
+    <i class="x tl" aria-hidden="true"></i>
+    <i class="x tr" aria-hidden="true"></i>
+    <h2>Dock your wp-admin.</h2>
+    <div class="cta-row">
+      <a class="btn solid" href="https://wordpress.org/plugins/desktop-mode/">Install the plugin</a>
+      <a class="btn outline" href="https://github.com/WordPress/desktop-mode">Read the source</a>
+    </div>
+    <p class="cta-note mono">opt-in per user · classic admin stays one click away</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="frame">
+    <a href="https://wordpress.org/plugins/desktop-mode/">wordpress.org</a>
+    <a href="https://github.com/WordPress/desktop-mode">GitHub</a>
+    <a href="https://next-admin.blog">Dev diary</a>
+    <span class="gpl mono">GPL · fonts SIL OFL 1.1 · fork away</span>
+  </div>
+</footer>
+
+</body>
+</html>
