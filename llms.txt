@@ -34,7 +34,7 @@ Named gradient fills and backgrounds (all vector SVGs, defined as gradient recip
 
 - Geist (variable): everything human, headlines, UI, body.
 - Geist Mono (variable): the instrument voice, labels, metadata, statuses, code.
-- Typographic scale (line height 1.4). Geist Sans: Display 72px Light 300, H1 48px Bold 700, H2 36px SemiBold 600, H3 30px SemiBold 600, H4 24px Medium 500, H5 20px Medium 500, Body Large 18px Regular 400, Body 16px Regular 400, Body Small 14px Regular 400, Caption 12px Regular 400. Geist Mono: Display 72px Light 300, H1 48px Bold 700, H2 36px Regular 400, H3 30px Regular 400, Body 16px Regular 400, Body Small 14px Regular 400, Caption 12px Regular 400.
+- Typographic scale, from the named text styles in the Figma Typography section. Line height is 1.3 on Display, the headings and Caption, and 1.5 on the three body sizes. Geist Sans: Display 72px Medium 500, H1 48px SemiBold 600, H2 36px SemiBold 600, H3 30px SemiBold 600, H4 24px Medium 500, H5 20px Medium 500, Body Large 18px Regular 400, Body 16px Regular 400, Body Small 14px Regular 400, Caption 13px Regular 400. Geist Mono (no H4 or H5): Display 72px Light 300, H1 48px Bold 700, H2 36px Regular 400, H3 30px Regular 400, Body Large 18px Regular 400, Body 16px Regular 400, Body Small 14px Regular 400, Caption 13px Regular 400.
 - Both under SIL OFL 1.1, self-hosted: fonts/Geist-Variable.woff2, fonts/GeistMono-Variable.woff2, license at fonts/OFL.txt.
 
 ## Logo
@@ -47,7 +47,7 @@ Named gradient fills and backgrounds (all vector SVGs, defined as gradient recip
 - Holoversion rule: the holographic version fills the mark with Holomesh and leaves the wordmark in Starlight. Holomesh may also be used on backgrounds and CTAs elsewhere, but never sits behind the logo; the knocked-out (negative) logo on Holomesh is not part of the system.
 - Lockup proportions (updated August 2026, the wordmark grew about 24% against the mark): the wordmark's cap-to-descender height is 65% of the mark's height, the gap is half that (32.5% of the mark), and the wordmark block sits 20% of the mark height below the top edge and 15% above the bottom. In live text: Geist SemiBold at 0.742 times the mark height. The asset ships at an 80px mark: 59.4px type, 26px gap, 458px wide (5.725 times the mark height).
 - Clear space: 32.5% of the mark height left and right of the lockup (the same measure as the gap), 25% above and below; 25% on all four sides of the standalone icon. That makes the construction box 6.375 by 1.5 mark heights around the lockup, and 1.5 mark heights square around the icon.
-- Note for anyone reading this file: the Logo section of the guide page (index.html) shows these rules as drawings only, with construction guides rather than prose. This file and brand.json carry the wording.
+- Note for anyone reading this file: the Logo section of the guide page (index.html) shows the assets only, as a wordmark card and an icon card plus the holo pair and the chips. The clear-space and proportion rules are not drawn there; this file and brand.json carry the wording.
 
 ## Mascot
 

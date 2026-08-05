@@ -153,27 +153,28 @@
       "license": "SIL OFL 1.1 (fonts/OFL.txt)"
     },
     "scale": {
-      "$description": "Typographic scale from the Figma Typography section. Line height 1.4 across all levels.",
+      "$description": "Typographic scale from the named text styles in the Figma Typography section (node 2261:126). Line height is 1.3 on Display, the headings and Caption, and 1.5 on the three body sizes. Geist Mono has no H4 or H5.",
       "sans": {
-        "display": "72px, Light 300",
-        "h1": "48px, Bold 700",
-        "h2": "36px, SemiBold 600",
-        "h3": "30px, SemiBold 600",
-        "h4": "24px, Medium 500",
-        "h5": "20px, Medium 500",
-        "bodyLarge": "18px, Regular 400",
-        "body": "16px, Regular 400",
-        "bodySmall": "14px, Regular 400",
-        "caption": "12px, Regular 400"
+        "display": "72px, Medium 500, 1.3",
+        "h1": "48px, SemiBold 600, 1.3",
+        "h2": "36px, SemiBold 600, 1.3",
+        "h3": "30px, SemiBold 600, 1.3",
+        "h4": "24px, Medium 500, 1.3",
+        "h5": "20px, Medium 500, 1.3",
+        "bodyLarge": "18px, Regular 400, 1.5",
+        "body": "16px, Regular 400, 1.5",
+        "bodySmall": "14px, Regular 400, 1.5",
+        "caption": "13px, Regular 400, 1.3"
       },
       "mono": {
-        "display": "72px, Light 300",
-        "h1": "48px, Bold 700",
-        "h2": "36px, Regular 400",
-        "h3": "30px, Regular 400",
-        "body": "16px, Regular 400",
-        "bodySmall": "14px, Regular 400",
-        "caption": "12px, Regular 400"
+        "display": "72px, Light 300, 1.3",
+        "h1": "48px, Bold 700, 1.3",
+        "h2": "36px, Regular 400, 1.3",
+        "h3": "30px, Regular 400, 1.3",
+        "bodyLarge": "18px, Regular 400, 1.5",
+        "body": "16px, Regular 400, 1.5",
+        "bodySmall": "14px, Regular 400, 1.5",
+        "caption": "13px, Regular 400, 1.3"
       }
     }
   },
