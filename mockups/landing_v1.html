@@ -169,19 +169,12 @@
   }
   .cosmos svg { width: 100%; height: 100%; display: block; }
 
-  /* The whole content column sits on one OS-style glass sheet:
-     translucent and softly blurred, with crisp stars outside the rails */
-  .glass {
-    position: fixed;
-    top: 0; bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(1440px, 100%);
+  /* Backdrops sit on the sections rather than on one global sheet, so each
+     band can decide how much of the cosmos shows through. */
+  .hero, .demo-stage, .cta-final, footer .frame, section.flush {
     background: rgb(from var(--obsidian) r g b / 0.55);
     backdrop-filter: blur(18px) saturate(1.2);
     -webkit-backdrop-filter: blur(18px) saturate(1.2);
-    z-index: -1;
-    pointer-events: none;
   }
 
   :focus-visible {
@@ -346,8 +339,10 @@
      dots, and a very subtle shake, as if someone grabbed it */
   .hl .constel {
     position: absolute;
-    left: -7%; top: -17%;
-    width: 114%; height: 138%;
+    /* Pulled up so the dotted line meets the underside of the word rather
+       than floating clear of it. */
+    left: -7%; top: -31%;
+    width: 114%; height: 133%;
     overflow: visible;
     pointer-events: none;
   }
@@ -369,11 +364,25 @@
     color: var(--ink-2);
   }
   .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
-  .cta-row .btn { height: 48px; padding-inline: 26px; font-size: var(--fs-h5); }
-  .cta-note { margin-top: 14px; font-size: var(--fs-label); color: var(--ink-3); }
+  .cta-row .btn { height: 52px; padding-inline: 28px; font-size: var(--fs-h5); }
+  /* Cosmic lift: the glow is Pulse over Lagoon, so the buttons sit above
+     the page rather than on it. */
+  .cta-row .btn.solid {
+    box-shadow:
+      0 10px 26px rgb(from var(--pulse) r g b / 0.3),
+      0 3px 10px rgb(from var(--lagoon) r g b / 0.25);
+  }
+  .cta-row .btn.outline { box-shadow: 0 10px 26px rgb(from var(--lagoon) r g b / 0.18); }
 
   /* Mission: open source + Mio, the station resident */
-  .mission { padding-block: var(--section-pad); }
+  /* Mio's band is the one opening in the page: barely tinted and only
+     lightly frosted, so the starfield reads straight through it. */
+  .mission {
+    padding-block: var(--section-pad);
+    background: rgb(from var(--obsidian) r g b / 0.1);
+    backdrop-filter: blur(3px) saturate(1.35);
+    -webkit-backdrop-filter: blur(3px) saturate(1.35);
+  }
   .mission-wrap { display: flex; align-items: center; gap: 64px; }
   .mission-copy { flex: 1.35; min-width: 0; }
   .mission h2 {
@@ -524,6 +533,15 @@
     background:
       radial-gradient(ellipse 55% 60% at 50% 45%, rgb(from var(--lagoon) r g b / 0.14), transparent),
       var(--obsidian);
+  }
+
+  .demo-caption {
+    margin-top: 22px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: var(--fs-caption);
+    letter-spacing: 0.04em;
+    color: var(--ink-2);
   }
 
   .desktop {
@@ -714,7 +732,10 @@
      thing underneath, sitting in a dotted panel. The drawings are built
      from the window / spaces / palette kit above, which is where those
      primitives went when the showcase became a real WordPress. */
-  .does { padding-block: var(--section-pad); }
+  .does {
+    padding-block: var(--section-pad);
+    background: var(--obsidian);
+  }
   .does h2 {
     font-size: var(--fs-section-lg);
     font-weight: var(--fw-bold);
@@ -748,7 +769,7 @@
        objects now, not as cells in a table. */
     border: 1px solid var(--line);
     border-radius: 18px;
-    background: rgb(from var(--obsidian) r g b / 0.55);
+    background: var(--void);
     padding: 28px;
   }
   /* The opening card runs full width on its own, above the masonry. */
@@ -786,14 +807,17 @@
         0 0 / 18px 18px,
       rgb(from var(--void) r g b / 0.55);
   }
-  /* Deliberately uneven, so the masonry has something to stagger. */
-  .fcard.lead .fvis { min-height: 340px; }
-  .vis-snap    { min-height: 300px; }
-  .vis-spaces  { min-height: 216px; }
-  .vis-cmd     { min-height: 284px; }
-  .vis-restore { min-height: 240px; }
-  .vis-dock    { min-height: 296px; }
-  .vis-graph   { min-height: 224px; }
+  /* Deliberately uneven: two tall panels, two short ones, so the masonry
+     staggers properly instead of drifting a few pixels apart. Every drawing
+     is positioned in percentages, so it grows and shrinks with its panel. */
+  .fcard.lead .fvis { min-height: 360px; }
+  .vis-snap    { min-height: 420px; }
+  .vis-dock    { min-height: 400px; }
+  .vis-cmd     { min-height: 300px; }
+  .vis-graph   { min-height: 268px; }
+  .vis-optin   { min-height: 236px; }
+  .vis-restore { min-height: 212px; }
+  .vis-spaces  { min-height: 196px; }
 
   /* -- Everything open at once: three windows, tiled -- */
   .vis-tiled .w1 { left: 3%; top: 8%; width: 42%; bottom: 8%; }
@@ -840,7 +864,7 @@
     background: rgb(from var(--void) r g b / 0.85);
   }
   .vis-dock .dock i {
-    width: 26px; height: 26px;
+    width: 30px; height: 30px;
     border-radius: var(--r-inner);
     background: rgb(from var(--starlight) r g b / 0.12);
   }
@@ -871,6 +895,38 @@
   /* -- Content Graph: the content as a star map -- */
   .vis-graph svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 
+  /* -- Opt-in: a switch, because that is literally what it is -- */
+  .vis-optin .switch {
+    position: absolute;
+    left: 50%; top: 44%;
+    transform: translate(-50%, -50%);
+    width: 128px; height: 54px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    background: rgb(from var(--void) r g b / 0.85);
+  }
+  .vis-optin .switch i {
+    position: absolute;
+    right: 6px; top: 6px;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--pulse);
+    box-shadow: 0 0 0 6px rgb(from var(--pulse) r g b / 0.18);
+  }
+  .vis-optin .ends {
+    position: absolute;
+    left: 50%; top: 72%;
+    transform: translateX(-50%);
+    display: flex; gap: 16px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-nano);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    white-space: nowrap;
+  }
+  .vis-optin .ends .on { color: var(--nebula); }
+
   /* ============ Stats (Blueprint hairline grid) ============ */
   .stats {
     display: grid;
@@ -900,44 +956,12 @@
     font-weight: var(--fw-semibold);
     letter-spacing: -0.02em;
     line-height: var(--lh-display);
-    margin: 14px 0 44px;
+    margin: 14px auto 44px;
     max-width: 560px;
   }
 
-  /* ============ Terminal ============ */
-  .term-sect { padding-block: var(--section-pad); }
-  .terminal {
-    max-width: 640px;
-    margin-inline: auto;
-    border: 1px solid var(--line);
-    border-radius: var(--r-card);
-    background: var(--void);
-    overflow: hidden;
-    font-family: var(--font-mono);
-    font-size: 13.5px;
-  }
-  .terminal .bar {
-    display: flex; align-items: center; gap: 6px;
-    padding: 9px 13px;
-    border-bottom: 1px solid var(--line-soft);
-    color: var(--ink-3);
-    font-size: var(--fs-nano);
-  }
-  .terminal .bar i { width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--osmium); }
-  .terminal .bar span { margin-left: 6px; }
-  .terminal pre {
-    padding: 18px;
-    overflow-x: auto;
-    line-height: 1.9;
-    color: var(--ink);
-  }
-  .terminal .p { color: var(--nebula); }
-  .terminal .c { color: var(--osmium); }
-  .terminal .ok { color: var(--sirius); }
-
   /* ============ Final CTA + footer ============ */
   .cta-final { padding-block: var(--section-pad); text-align: center; }
-  .cta-final h2 { margin-inline: auto; }
   .cta-final .cta-row { justify-content: center; }
   footer .frame {
     display: flex; flex-wrap: wrap; gap: 10px 28px;
@@ -946,7 +970,7 @@
   }
   footer a { text-decoration: none; color: var(--ink-2); }
   footer a:hover { color: var(--ink); text-decoration: underline; }
-  footer .gpl { margin-left: auto; }
+  footer .credit { margin-left: auto; }
 
   /* ============ Responsive + motion ============ */
   @media (max-width: 1000px) {
@@ -1038,7 +1062,6 @@
     </g>
   </svg>
 </div>
-<div class="glass" aria-hidden="true"></div>
 
 <header class="frame nav">
   <a class="lockup" href="#">
@@ -1080,7 +1103,6 @@
       <a class="btn solid" href="https://get.openstation.me/">Install the plugin</a>
       <a class="btn outline" href="#demo">Try it live</a>
     </div>
-    <p class="cta-note mono">2,000+ active installs · 5 stars · built by Automattic</p>
   </section>
 
   <!-- ============ Live demo ============ -->
@@ -1113,6 +1135,7 @@
           loading="lazy"
           src="https://playground.wordpress.net/?mode=seamless&amp;storage=temp#%7B%22landingPage%22%3A%22/desktop-mode/%22%2C%22preferredVersions%22%3A%7B%22php%22%3A%228.3%22%2C%22wp%22%3A%22latest%22%7D%2C%22features%22%3A%7B%22networking%22%3Atrue%7D%2C%22siteOptions%22%3A%7B%22blogname%22%3A%22OpenStation%22%7D%2C%22steps%22%3A%5B%7B%22step%22%3A%22login%22%2C%22username%22%3A%22admin%22%2C%22password%22%3A%22password%22%7D%2C%7B%22step%22%3A%22installPlugin%22%2C%22pluginData%22%3A%7B%22resource%22%3A%22wordpress.org/plugins%22%2C%22slug%22%3A%22desktop-mode%22%7D%2C%22options%22%3A%7B%22activate%22%3Atrue%7D%7D%2C%7B%22step%22%3A%22wp-cli%22%2C%22command%22%3A%22wp%20user%20meta%20update%201%20desktop_mode_mode%201%22%7D%2C%7B%22step%22%3A%22wp-cli%22%2C%22command%22%3A%22wp%20user%20meta%20update%201%20show_welcome_panel%200%22%7D%5D%7D"></iframe>
     </div>
+    <p class="demo-caption">Try it out yourself.</p>
   </section>
 
   <!-- ============ Stats ============ -->
@@ -1396,6 +1419,26 @@
         </div>
       </div>
 
+      <div class="fcard">
+        <div class="fcard-head">
+          <!-- a switch, drawn as one: opt-in is a toggle, not a migration -->
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <rect x="6" y="30" width="88" height="40" rx="20" fill="none" class="s-sirius" stroke-width="6"/>
+            <circle cx="70" cy="50" r="12" class="f-pulse"/>
+            <circle cx="26" cy="50" r="4" class="f-lagoon"/>
+          </svg>
+          <div>
+            <h3>Nothing to undo.</h3>
+            <p>Opt-in per user, zero Core patches, every feature on a public hook. Turn it
+            off and wp-admin is exactly as it was.</p>
+          </div>
+        </div>
+        <div class="fvis vis-optin" aria-hidden="true">
+          <div class="switch"><i></i></div>
+          <div class="ends"><span>classic admin</span><span class="on">OpenStation</span></div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -1455,17 +1498,6 @@
     </div>
   </section>
 
-  <!-- ============ Terminal ============ -->
-  <section class="frame term-sect" aria-label="Install command">
-    <div class="terminal">
-      <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>launch sequence</span></div>
-      <pre><code><span class="p">$</span> wp plugin install desktop-mode --activate
-<span class="c"># Installing OpenStation 0.9.8 ...</span>
-<span class="ok">Plugin activated. Your admin is now a desktop.</span>
-<span class="p">$</span> <span class="c"># that's it, that's the tutorial</span></code></pre>
-    </div>
-  </section>
-
   <!-- ============ Final CTA ============ -->
   <section class="frame cta-final">
     <i class="x tl" aria-hidden="true"></i>
@@ -1475,7 +1507,6 @@
       <a class="btn solid" href="https://get.openstation.me/">Install the plugin</a>
       <a class="btn outline" href="https://github.com/WordPress/openstation">Read the source</a>
     </div>
-    <p class="cta-note mono">opt-in per user · classic admin stays one click away</p>
   </section>
 
 </main>
@@ -1485,7 +1516,7 @@
     <a href="https://wordpress.org/plugins/desktop-mode/">wordpress.org</a>
     <a href="https://github.com/WordPress/openstation">GitHub</a>
     <a href="https://openstation.blog">Blog</a>
-    <span class="gpl mono">GPL · fonts SIL OFL 1.1 · fork away</span>
+    <span class="credit mono">Built by Automattic</span>
   </div>
 </footer>
 
