@@ -319,9 +319,38 @@
   .hl {
     position: relative;
     display: inline-block;
-    /* Holomesh recipe from the brand guide, inlined as CSS gradients
-       (background-clip: text over SVG urls is unreliable in Safari) */
+    /* -- The official Holomesh, and the light it is travelling through --
+
+       Layers 3 to 11 are the Holomesh itself, transcribed from
+       branding/brand-guide/assets/holomesh.svg: the eight radial glows over
+       the lavender base linear, every centre, radius, stop and opacity
+       converted from that file's userSpaceOnUse coordinates on its 1440x960
+       surface. Inlined as CSS gradients rather than the SVG itself because
+       background-clip: text over an SVG url is unreliable in Safari.
+
+       Layers 1 and 2 are the motion, and they invent no colour: the bands
+       are the mesh's own glows (#7DEFF5 cyan, #93F0C6 mint, #F8F2B6 yellow,
+       #F59FE8 pink, #9FD6FF sky, #FFFDFF white) read off the same file and
+       laid out as a diffraction spectrum, which is what a hologram does to
+       light in the first place. The two run on different periods, different
+       leans and different speeds, so what crosses the letters is two sheets
+       of light at two depths rather than one sheet sliding. */
     background:
+      /* 1. Specular streak: one narrow highlight every 96px, the fast one. */
+      repeating-linear-gradient(96deg,
+        rgba(255,253,255,0)    0px,
+        rgba(255,253,255,.26) 12px,
+        rgba(255,253,255,0)   30px,
+        rgba(255,253,255,0)   96px),
+      /* 2. Spectrum: the mesh split into its hues, one pass every 176px. */
+      repeating-linear-gradient(102deg,
+        rgba(125,239,245,0)     0px,
+        rgba(125,239,245,.34)  26px,
+        rgba(147,240,198,.28)  56px,
+        rgba(248,242,182,.26)  84px,
+        rgba(245,159,232,.34) 116px,
+        rgba(159,214,255,.30) 146px,
+        rgba(125,239,245,0)   176px),
       radial-gradient(ellipse 21.7% 39.6% at 96.5% 13.5%, rgba(159,214,255,.6), transparent),
       radial-gradient(ellipse 26.3% 57.2% at 83.3% 56.2%, rgba(243,181,236,.75), transparent),
       radial-gradient(ellipse 18.2% 47.3% at 73.6% 64.5%, rgba(255,253,255,.7), transparent),
@@ -334,6 +363,27 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    animation: holo-travel 4.2s linear infinite;
+  }
+  /* Both bands travel a whole number of their own periods per cycle, so the
+     loop lands exactly where it started and there is no seam to catch.
+
+     The distances are not the periods, though. A repeating gradient's period
+     is measured along its gradient line, and these lean, so a horizontal
+     shift only counts for its projection onto that line: 3 x 96px of streak
+     needs 288 / sin(96deg) = 289.6px of travel, and 1 x 176px of spectrum
+     needs 176 / sin(102deg) = 179.9px. Same 4.2s over different distances is
+     what makes one visibly outrun the other.
+
+     Only the first two entries move. The nine Holomesh layers below them are
+     pinned at 0 0 in both directions: the mesh is the identity and stays
+     put, the light is what rushes past it. */
+  @keyframes holo-travel {
+    to {
+      background-position:
+        -289.6px 0, -179.9px 0,
+        0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
+    }
   }
   /* Constellation underline: finely dotted line in Lagoon, haloed star
      dots, and a very subtle shake, as if someone grabbed it */
@@ -432,7 +482,7 @@
   /* The slot holds the column open when Mio leaves it, so nothing below
      jumps up the page. */
   .mio-slot { display: grid; place-items: center; min-height: 300px; }
-  .mio-stage { width: min(280px, 70%); }
+  .mio-stage { width: min(280px, 70%); transition: opacity 0.6s ease; }
   .mio-stage svg {
     width: 100%;
     display: block;
@@ -467,18 +517,28 @@
      whole page without a line of JavaScript. Fixed positioning takes it out
      of the column; the flight is transform only, so it stays on the
      compositor, and pointer-events: none keeps it from swallowing clicks
-     on whatever it passes over. */
+     on whatever it passes over.
+
+     Three states, and the drawing below is only responsible for two of
+     them. The script at the end of the document fetches the real Mio on
+     the first release and marks the page .mio-loading while it is coming,
+     then .mio-live once it has rendered. Both classes call the flight off:
+     while loading because Mio is about to arrive for real, and while live
+     because it already has. If the fetch never lands, neither class is
+     ever set and this is the whole feature, exactly as before. */
   .mio-toggle { position: absolute; opacity: 0; pointer-events: none; }
   .mio-release { margin-top: 26px; cursor: pointer; }
   .mio-toggle:focus-visible + .mio-release {
     outline: 2px solid var(--sirius);
     outline-offset: 3px;
   }
-  .say-back { display: none; }
+  .say-back, .say-wait { display: none; }
   .mission:has(.mio-toggle:checked) .say-go { display: none; }
   .mission:has(.mio-toggle:checked) .say-back { display: inline; }
+  .mio-loading .mission:has(.mio-toggle:checked) .say-back { display: none; }
+  .mio-loading .mission:has(.mio-toggle:checked) .say-wait { display: inline; }
 
-  .mission:has(.mio-toggle:checked) .mio-stage {
+  :root:not(.mio-live):not(.mio-loading) .mission:has(.mio-toggle:checked) .mio-stage {
     position: fixed;
     left: 0; top: 0;
     z-index: 60;
@@ -486,9 +546,13 @@
     pointer-events: none;
     animation: mio-fly 28s ease-in-out infinite;
   }
-  .mission:has(.mio-toggle:checked) .mio-stage svg {
+  :root:not(.mio-live):not(.mio-loading) .mission:has(.mio-toggle:checked) .mio-stage svg {
     animation: mio-tumble 5.5s ease-in-out infinite;
   }
+  /* Mio is out there on the page for real now, so the drawing stays in its
+     slot and dims to a perch mark: the column keeps its shape, and the spot
+     still reads as Mio's. */
+  .mio-live .mission:has(.mio-toggle:checked) .mio-stage { opacity: 0.14; }
   /* Waypoints stay inside 82vw / 78vh so Mio never clips its own width or
      height off the edge of the viewport. */
   @keyframes mio-fly {
@@ -1019,14 +1083,19 @@
   @media (prefers-reduced-motion: reduce) {
     .win.drag { animation: none; }
     .mio-stage svg { animation: none; }
-    /* Released Mio parks in the corner instead of touring the page. */
-    .mission:has(.mio-toggle:checked) .mio-stage {
+    /* Released Mio parks in the corner instead of touring the page. The
+       real Mio has its own answer to this setting (it stops drifting and
+       holds still until you throw it), so this is only for the drawing. */
+    :root:not(.mio-live):not(.mio-loading) .mission:has(.mio-toggle:checked) .mio-stage {
       animation: none;
       transform: translate(6vw, 74vh);
     }
     .mio-eyes { animation: none; }
     .p-caret { animation: none; }
     .constel .shake, .constel .cd { animation: none; }
+    /* The light stops travelling; the Holomesh underneath is untouched, so
+       the titles keep their fill. */
+    .hl { animation: none; }
   }
 </style>
 </head>
@@ -1506,6 +1575,7 @@
         <input type="checkbox" id="mio-free" class="mio-toggle">
         <label for="mio-free" class="btn outline mio-release">
           <span class="say-go">Release Mio</span>
+          <span class="say-wait">Waking Mio&hellip;</span>
           <span class="say-back">Bring Mio home</span>
         </label>
       </div>
@@ -1533,6 +1603,165 @@
     <span class="credit mono">Built by Automattic</span>
   </div>
 </footer>
+
+<!-- ============ Releasing the real Mio ============
+     Upgrades the checkbox above from a drawing on a keyframe to the actual
+     companion: the same single file the blog runs, built from the plugin's
+     own src/mio/ and published as extensions/mio-js/dist/mio.min.js. Soft
+     body physics, a cursor to follow, throwable, and the cards on this page
+     as furniture to land on.
+
+     Nothing is fetched until Mio is released. The runtime is 420 kB (124 kB
+     over the wire) and a visitor who never presses the button never pays for
+     it. Every failure lands on the CSS flight, which needs none of this. -->
+<script>
+( function () {
+	'use strict';
+
+	var toggle = document.getElementById( 'mio-free' );
+
+	if ( ! toggle ) {
+		return;
+	}
+
+	var root = document.documentElement;
+
+	/**
+	 * Where the runtime lives, relative to this file.
+	 *
+	 * Vendored next to the fonts rather than fetched from a CDN: the brand
+	 * guide is a static site with no build step, and this page should keep
+	 * working from a file:// checkout and from Pages alike.
+	 */
+	var SRC = '../vendor/mio.min.js';
+
+	/**
+	 * Collision markers, the blog's trick applied to this page.
+	 *
+	 * Mio is drawn to matching elements, bumps into them and settles on
+	 * them. The blog uses its images; here the cards and tiles are what read
+	 * as furniture, and they are already shaped like the windows Mio lands
+	 * on inside the shell. Set as an attribute on the tag rather than through
+	 * setColliders() afterwards, so it is in force for the first frame and
+	 * Mio never falls through a card it is about to land on.
+	 */
+	var COLLIDERS = '.fcard, .stat, .m-stat, .desktop';
+
+	/** 'idle' | 'loading' | 'ready' | 'failed'. */
+	var state = 'idle';
+
+	/**
+	 * Is this a machine to keep a physics companion on?
+	 *
+	 * The same gate the blog opens with, for the same reason: Mio is
+	 * something you pick up and throw with a cursor, and on a phone it is a
+	 * quarter of a megabyte spent on an ornament that fights the scroll.
+	 * Failing this is not a dead button, though. It falls through to the CSS
+	 * flight, which is a real answer and costs nothing.
+	 */
+	function wanted() {
+		return (
+			!! window.matchMedia &&
+			window.matchMedia( '(hover: hover) and (pointer: fine)' ).matches
+		);
+	}
+
+	/**
+	 * Stop waiting and let the drawing have it.
+	 *
+	 * Covers both ways the upgrade can fail: the request never arrives, and
+	 * the bundle arrives but never renders (no WebGL, a blocked canvas). The
+	 * second one is only observable as silence, hence the timer.
+	 */
+	function giveUp() {
+		if ( 'ready' === state ) {
+			return;
+		}
+
+		state = 'failed';
+		root.classList.remove( 'mio-loading' );
+	}
+
+	function load() {
+		state = 'loading';
+		root.classList.add( 'mio-loading' );
+
+		var script = document.createElement( 'script' );
+
+		script.src = SRC;
+		script.async = true;
+		script.fetchPriority = 'low';
+		script.setAttribute( 'data-mio-colliders', COLLIDERS );
+		script.onerror = giveUp;
+
+		// The bundle mounts itself as soon as it runs, so by this point Mio
+		// is either on its way to the first frame or it is never coming.
+		script.onload = function () {
+			window.setTimeout( giveUp, 6000 );
+		};
+
+		document.head.appendChild( script );
+	}
+
+	function apply() {
+		if ( ! toggle.checked ) {
+			root.classList.remove( 'mio-live', 'mio-loading' );
+
+			if ( window.Mio && window.Mio.isRunning() ) {
+				window.Mio.stop();
+			}
+
+			return;
+		}
+
+		if ( 'failed' === state || 'loading' === state ) {
+			return;
+		}
+
+		if ( 'ready' === state ) {
+			// Idempotent, and resolves once Mio has rendered. .mio-live is
+			// left to mio:mounted so the drawing only steps aside once there
+			// is something to step aside for.
+			var mounting = window.Mio.start();
+
+			if ( mounting && mounting.catch ) {
+				mounting.catch( giveUp );
+			}
+
+			return;
+		}
+
+		if ( wanted() ) {
+			load();
+		}
+	}
+
+	// Fires on the first mount and on every start() after a stop().
+	document.addEventListener( 'mio:mounted', function () {
+		state = 'ready';
+		root.classList.remove( 'mio-loading' );
+
+		if ( toggle.checked ) {
+			root.classList.add( 'mio-live' );
+		} else {
+			// Brought home while the runtime was still downloading.
+			window.Mio.stop();
+		}
+	} );
+
+	document.addEventListener( 'mio:unmounted', function () {
+		root.classList.remove( 'mio-live' );
+	} );
+
+	toggle.addEventListener( 'change', apply );
+
+	// Firefox and Safari restore checkbox state across a reload, so a page
+	// that comes back with Mio released should come back with Mio.
+	if ( toggle.checked ) {
+		apply();
+	}
+} )();
+</script>
 
 </body>
 </html>
