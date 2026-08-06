@@ -673,6 +673,15 @@
   .space.active .shot { border-color: var(--pulse); }
   .space.active .lbl { color: var(--nebula); }
 
+  /* The palette scales up with its taller panel instead of floating in it. */
+  .vis-cmd .palette {
+    top: 12%;
+    width: min(460px, 90%);
+    font-size: var(--fs-body-sm);
+  }
+  .vis-cmd .palette .in { padding: 15px 18px; }
+  .vis-cmd .p-row { padding: 13px 18px; }
+
   /* ============ Command palette ============ */
   .scrim { position: absolute; inset: 0; background: rgb(from var(--void) r g b / 0.55); }
   .ghost-win {
@@ -775,7 +784,11 @@
   /* The opening card runs full width on its own, above the masonry. */
   .fcard.lead { margin-top: 52px; }
   .fcard-head { display: flex; gap: 18px; align-items: flex-start; }
-  .fcard-head > svg { width: 42px; height: 42px; flex: none; }
+  /* The icon sits on the right (via order, so the markup keeps reading
+     icon-then-copy) and the copy takes the remaining width. That lines the
+     title up with the left edge of the drawing underneath it. */
+  .fcard-head > div { flex: 1; min-width: 0; }
+  .fcard-head > svg { width: 42px; height: 42px; flex: none; order: 2; }
   .fcard h3 {
     font-size: var(--fs-h5);
     font-weight: var(--fw-semibold);
@@ -813,9 +826,9 @@
   .fcard.lead .fvis { min-height: 360px; }
   .vis-snap    { min-height: 420px; }
   .vis-dock    { min-height: 400px; }
-  .vis-cmd     { min-height: 300px; }
-  .vis-graph   { min-height: 268px; }
-  .vis-optin   { min-height: 236px; }
+  .vis-cmd     { min-height: 364px; }
+  .vis-graph   { min-height: 208px; }
+  .vis-optin   { min-height: 196px; }
   .vis-restore { min-height: 212px; }
   .vis-spaces  { min-height: 196px; }
 
@@ -1304,6 +1317,7 @@
             <div class="p-row sel">Switch to Space 2 · Moderation<em>↵</em></div>
             <div class="p-row">Open Spaces settings</div>
             <div class="p-row">New post in Writing</div>
+            <div class="p-row">Snap window to right half</div>
             <div class="p-row">Ask the AI: find my 2019 post</div>
           </div>
         </div>
