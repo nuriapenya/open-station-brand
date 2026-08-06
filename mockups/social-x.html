@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenStation · social kit · X</title>
+<!-- Favicon: the round chip (../assets/logomark-app-circle.svg) -->
+<link rel="icon" type="image/svg+xml" href="../assets/logomark-app-circle.svg">
+<link rel="icon" type="image/png" sizes="180x180" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/favicon.png">
+<!--
+  Social kit, part 1 of 7: X (Twitter).
+  Two takes on Snap at 1500 x 500 (3:1), the format X still uses in 2026,
+  with the round holo chip as the avatar.
+
+  Both share the same skeleton: Void and stars, the lockup and two lines of
+  mono at the left, the product at the right. What changes is which moment of
+  the product is on show. 01 floats the windows, 02 shows the snap itself.
+
+  Each header is authored at true export size and scaled down by one number
+  (--s), so nothing shifts between this page and the PNG. Everything inside
+  .banner is in 1500 x 500 coordinates; the overlay lives in stage space, so
+  its measurements are written as calc(Npx * var(--s)).
+
+  Legibility rule applied throughout: X renders the header at 600 x 200 on
+  desktop and around 350px wide on a phone. Few elements, big shapes, and the
+  bottom left kept clear because the avatar lands there. The "600 x 200"
+  toggle drops both to real desktop size so you can check.
+
+  Tokens from brand.json v0.7.1. No JavaScript: the three toggles are
+  checkboxes read with :has().
+-->
+<style>
+  @font-face {
+    font-family: 'Geist';
+    src: url('../fonts/Geist-Variable.woff2') format('woff2');
+    font-weight: 100 900;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Geist Mono';
+    src: url('../fonts/GeistMono-Variable.woff2') format('woff2');
+    font-weight: 100 900;
+    font-display: swap;
+  }
+
+  /* ============ Tokens (brand.json v0.7.1) ============
+     Brand values verbatim. Anything the guide does not define is marked
+     LOCAL, so it stays obvious what is brand and what this page invented. */
+  :root {
+    color-scheme: dark;
+
+    /* -- Primary palette -- */
+    --pulse: #e94ff3;
+    --nebula: #ec9bff;
+    --starlight: #fffbff;
+    --sirius: #9af2ff;
+    --lagoon: #9f98ff;
+    --obsidian: #1a1721;
+    --void: #0c0b0f;
+
+    /* -- Gray ramp -- */
+    --astro: #33303a;
+    --silver: #4d4a52;
+    --pewter: #66636b;
+    --osmium: #99969c;
+    --ash: #b3afb5;
+    --cloud: #ccc8ce;
+    --mist: #e6e2e6;
+
+    /* -- Type -- */
+    --font-sans: 'Geist', system-ui, sans-serif;
+    --font-mono: 'Geist Mono', ui-monospace, monospace;
+
+    /* -- Radius -- */
+    --r-poster: 13px;
+    --r-card: 10px;
+    --r-inner: 8px;
+
+    /* -- Semantic roles -- */
+    --ink: var(--starlight);
+    --ink-2: var(--ash);
+    --ink-3: var(--osmium);
+    --line: rgb(from var(--starlight) r g b / 0.11);
+
+    /* LOCAL. X's own chrome, used only by the in-situ strip under each
+       header so the crop can be judged in place. X ships dark by default,
+       so the page is #000, secondary text #71767b, the button #eff3f4.
+       Placeholder chrome, not brand. */
+    --x-bg: #000000;
+    --x-dim: #71767b;
+    --x-btn: #eff3f4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 56px 48px 120px;
+    background:
+      radial-gradient(1px 1px at 12% 22%, rgb(255 251 255 / .5) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 78% 12%, rgb(255 251 255 / .35) 50%, transparent 51%),
+      radial-gradient(1px 1px at 55% 68%, rgb(255 251 255 / .28) 50%, transparent 51%),
+      radial-gradient(1px 1px at 31% 85%, rgb(255 251 255 / .3) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 90% 55%, rgb(255 251 255 / .24) 50%, transparent 51%),
+      linear-gradient(135deg, #010101, #111114 58%, #1e1d23);
+    background-attachment: fixed;
+  }
+
+  .sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+  :focus-visible { outline: 2px solid var(--sirius); outline-offset: 3px; border-radius: 4px; }
+
+  /* ============ Page furniture ============ */
+  .wrap { max-width: 1240px; margin-inline: auto; }
+
+  header.page h1 { font-size: 34px; font-weight: 600; letter-spacing: -.01em; }
+  header.page .sub {
+    font-family: var(--font-mono);
+    font-size: 13px; line-height: 1.75; color: var(--ink-2);
+    max-width: 780px; margin-top: 12px;
+  }
+  header.page .sub b { color: var(--ink); font-weight: 400; }
+
+  .toolbar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 26px; }
+  .toolbar .toggle {
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    padding: 8px 15px; border-radius: 999px;
+    border: 1px solid var(--silver); color: var(--ink-2);
+    cursor: pointer; user-select: none;
+    transition: color .15s ease, border-color .15s ease, background-color .15s ease;
+  }
+  .toolbar input { position: absolute; opacity: 0; pointer-events: none; }
+  .toolbar input:checked + .toggle { background: var(--starlight); border-color: var(--starlight); color: var(--void); }
+  .toolbar input:focus-visible + .toggle { outline: 2px solid var(--sirius); outline-offset: 3px; }
+
+  section { margin-top: 148px; }
+  h2.label, .label {
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 500;
+    letter-spacing: .22em; text-transform: uppercase; color: var(--ink-3);
+  }
+  h2.label { border-bottom: 1px solid var(--line); padding-bottom: 10px; margin-bottom: 52px; }
+
+  /* ============ Frame, stage, banner ============
+     .frame holds one scale (--s) and lets the avatar hang below the header,
+     which is what X does. .stage is the header itself and clips. .banner is
+     1500 x 500 of real artwork, scaled by --s. */
+  .frame {
+    --s: 0.76;
+    position: relative;
+    width: calc(1500px * var(--s));
+    box-shadow: 0 24px 60px rgb(0 0 0 / .55), 0 2px 6px rgb(0 0 0 / .5);
+  }
+  body:has(#t-size:checked) .frame { --s: 0.4; }
+  @media (max-width: 1320px) { .frame { --s: 0.62; } }
+  @media (max-width: 1100px) { .frame { --s: 0.48; } }
+  @media (max-width: 860px)  { .frame { --s: 0.34; } }
+
+  .stage { position: relative; width: 100%; height: calc(500px * var(--s)); overflow: hidden; }
+  .banner {
+    position: absolute; inset: 0;
+    width: 1500px; height: 500px;
+    transform: scale(var(--s));
+    transform-origin: top left;
+    overflow: hidden;
+    background: var(--void);
+  }
+  .banner .bg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+  figure.item { margin-bottom: 104px; }
+  figure.item figcaption {
+    display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+    margin-top: 18px;
+    font-family: var(--font-mono); font-size: 13px; color: var(--ink-2);
+  }
+  figcaption .num { color: var(--ink-3); }
+  figcaption .name { color: var(--ink); letter-spacing: .04em; }
+  figcaption .dim { color: var(--ink-3); }
+  figure.item p.why {
+    margin-top: 8px; max-width: 720px;
+    font-size: 14px; line-height: 1.6; color: var(--ink-3);
+  }
+
+  /* ============ In situ: the avatar and the profile strip ============
+     Measurements come from X's own layout: on a 600px-wide header the
+     avatar is 133.5px, sits 16px from the left and is centred on the
+     header's bottom edge. Times 2.5 puts it in 1500 x 500 space, and
+     * var(--s) puts it back on screen. */
+  .below {
+    height: 0; overflow: hidden;
+    background: var(--x-bg); position: relative;
+    transition: height .2s ease;
+  }
+  body:has(#t-insitu:checked) .below { height: calc(320px * var(--s)); }
+
+  .ident { position: absolute; left: calc(40px * var(--s)); top: calc(190px * var(--s)); }
+  .ident .nm { font-size: calc(52px * var(--s)); font-weight: 700; letter-spacing: -.01em; }
+  .ident .hd { font-size: calc(38px * var(--s)); color: var(--x-dim); margin-top: calc(6px * var(--s)); }
+  .below .follow {
+    position: absolute;
+    right: calc(40px * var(--s)); top: calc(48px * var(--s));
+    height: calc(86px * var(--s)); display: flex; align-items: center;
+    padding-inline: calc(42px * var(--s));
+    border-radius: 999px; background: var(--x-btn); color: #0f1419;
+    font-size: calc(38px * var(--s)); font-weight: 700;
+  }
+
+  .ov-avatar {
+    position: absolute; z-index: 2;
+    left: calc(40px * var(--s));
+    top: calc(333px * var(--s));
+    width: calc(334px * var(--s));
+    height: calc(334px * var(--s));
+    border-radius: 50%;
+    box-shadow: 0 0 0 calc(10px * var(--s)) var(--x-bg);
+    opacity: 0; transition: opacity .2s ease;
+    pointer-events: none;
+  }
+  .ov-avatar img { width: 100%; height: 100%; display: block; border-radius: 50%; }
+  body:has(#t-insitu:checked) .ov-avatar { opacity: 1; }
+
+  /* ============ Safe areas ============
+     Two things eat a header on X: up to 60px off the top and bottom
+     depending on viewport, and the avatar in the bottom left. */
+  .ov-guides { position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0; transition: opacity .2s ease; }
+  body:has(#t-safe:checked) .ov-guides { opacity: 1; }
+  .ov-guides > * { position: absolute; }
+  .ov-guides .band {
+    left: 0; width: 100%; height: calc(60px * var(--s));
+    background: repeating-linear-gradient(-45deg,
+      rgb(233 79 243 / .18) 0, rgb(233 79 243 / .18) 1px,
+      transparent 1px, transparent 7px);
+  }
+  .ov-guides .band.t { top: 0; border-bottom: 1px dashed rgb(233 79 243 / .75); }
+  .ov-guides .band.b { bottom: 0; border-top: 1px dashed rgb(233 79 243 / .75); }
+  .ov-guides .keepout {
+    left: calc(20px * var(--s));
+    top: calc(313px * var(--s));
+    width: calc(374px * var(--s));
+    height: calc(374px * var(--s));
+    border-radius: 50%;
+    border: 2px dashed rgb(233 79 243 / .8);
+  }
+  .ov-guides .tag {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--pulse);
+    background: rgb(12 11 15 / .84); padding: 4px 8px; border-radius: 4px;
+  }
+  .ov-guides .tag.t { left: 12px; top: 12px; }
+  .ov-guides .tag.b { left: calc(410px * var(--s)); bottom: 12px; }
+
+  /* ============ Shared by both ============ */
+  .mark { display: block; fill: var(--starlight); }
+
+  /* The lockup, built to brand.json: the wordmark is Geist SemiBold at
+     0.742 of the mark height, sitting 0.325 of the mark height away.
+     --m is the mark height; everything else follows from it. */
+  .lockup { display: flex; align-items: center; gap: calc(var(--m) * 0.325); }
+  .lockup .mark { width: var(--m); height: var(--m); }
+  .lockup .word {
+    font-size: calc(var(--m) * 0.742);
+    font-weight: 600; letter-spacing: 0; line-height: 1;
+    color: var(--starlight); white-space: nowrap;
+  }
+
+  /* The left block is identical in both, so the pair reads as a family */
+  .snap .block { position: absolute; left: 88px; top: 112px; }
+  .snap .tagline {
+    font-family: var(--font-mono);
+    font-size: 18px; line-height: 1.55; color: var(--ash);
+    margin-top: 26px; max-width: 440px;
+  }
+
+  /* ---- Windows ---- */
+  .win {
+    position: absolute;
+    border-radius: var(--r-poster);
+    background: rgb(from var(--obsidian) r g b / .96);
+    border: 1px solid rgb(255 251 255 / .1);
+    box-shadow: 0 34px 70px rgb(0 0 0 / .6), 0 6px 16px rgb(0 0 0 / .45);
+    overflow: hidden;
+  }
+  /* tiled windows sit flush, so they get a flatter shadow than floating ones */
+  .win.tiled { box-shadow: 0 18px 40px rgb(0 0 0 / .45); }
+  .win .bar {
+    height: 46px; display: flex; align-items: center; gap: 9px;
+    padding-inline: 18px;
+    border-bottom: 1px solid rgb(255 251 255 / .08);
+    background: rgb(255 251 255 / .03);
+  }
+  .win .bar i { width: 10px; height: 10px; border-radius: 50%; background: rgb(255 251 255 / .18); }
+  .win .bar .t {
+    font-family: var(--font-mono); font-size: 14px; letter-spacing: .1em;
+    color: var(--osmium); margin-left: 12px;
+  }
+  .win .bar .r { margin-left: auto; font-family: var(--font-mono); font-size: 12px; letter-spacing: .12em; color: var(--pewter); }
+
+  .win .body { padding: 20px; display: flex; gap: 16px; flex-wrap: wrap; }
+  .win .tile { width: var(--tw, 142px); height: var(--th, 104px); border-radius: var(--r-inner); }
+  .win .tile.holo { background: linear-gradient(135deg, #afa2e8, #f59fe8 46%, #9af2ff); }
+  .win .tile.mio  { background: linear-gradient(120deg, #e94ff3, #aa67ff 52%, #4b3eff); }
+  .win .tile.mk { background: rgb(255 251 255 / .05); display: grid; place-items: center; }
+  .win .tile.mk svg { width: 54px; height: 54px; }
+
+  .win .row {
+    width: 100%; display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono); font-size: 16px; color: var(--cloud);
+    padding-block: 11px;
+  }
+  .win .row + .row { border-top: 1px solid rgb(255 251 255 / .06); }
+  .win .sw { width: 46px; height: 26px; border-radius: 999px; background: rgb(255 251 255 / .12); position: relative; }
+  .win .sw.on { background: linear-gradient(100deg, #e94ff3, #a580ff); }
+  .win .sw::after {
+    content: ''; position: absolute; top: 3px; left: 3px;
+    width: 20px; height: 20px; border-radius: 50%; background: var(--starlight);
+  }
+  .win .sw.on::after { left: auto; right: 3px; }
+
+  /* a plain text list, for the tall pane in 02 */
+  .win .list { padding: 15px 18px; font-family: var(--font-mono); font-size: 16px; line-height: 1.86; }
+  .win .list .g { color: var(--osmium); }
+  .win .list .i { color: var(--cloud); padding-left: 20px; }
+  .win .list .h { color: var(--nebula); padding-left: 20px; }
+
+  /* ============ 02 · the drop zone ============ */
+  .drop {
+    position: absolute;
+    border-radius: var(--r-poster);
+    border: 2px dashed rgb(233 79 243 / .8);
+    background: rgb(233 79 243 / .09);
+    display: grid; place-items: center;
+  }
+  .drop span {
+    font-family: var(--font-mono); font-size: 22px;
+    letter-spacing: .3em; text-transform: uppercase; color: var(--pulse);
+  }
+
+  /* ============ Chips ============ */
+  .chips { display: flex; gap: 60px; align-items: flex-end; flex-wrap: wrap; }
+  .chips figure { display: flex; flex-direction: column; gap: 16px; align-items: center; }
+  .chips img { display: block; box-shadow: 0 16px 34px rgb(0 0 0 / .5); }
+  .chips img.sq { border-radius: 20.83%; }
+  .chips img.rd { border-radius: 50%; }
+  .chips figcaption { font-family: var(--font-mono); font-size: 12px; color: var(--ink-2); text-align: center; line-height: 1.7; }
+  .chips figcaption em { display: block; font-style: normal; color: var(--ink-3); }
+  .sizes { display: flex; align-items: flex-end; gap: 22px; }
+  p.note { margin-top: 26px; max-width: 760px; font-size: 14px; line-height: 1.6; color: var(--ink-3); }
+
+  /* ============ Spec table ============ */
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  thead th {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--ink-3); font-weight: 500;
+  }
+  tbody th { font-weight: 500; color: var(--ink); width: 190px; }
+  tbody th.done { color: var(--nebula); }
+  td { color: var(--ink-2); }
+  td.n { font-family: var(--font-mono); color: var(--ink); white-space: nowrap; }
+  td.note { color: var(--ink-3); font-size: 13px; }
+
+  footer {
+    margin-top: 148px; padding-top: 24px; border-top: 1px solid var(--line);
+    font-family: var(--font-mono); font-size: 12px; line-height: 1.8; color: var(--ink-3);
+  }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<!-- ============ Sprite: mark, starfield, gradients ============ -->
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <defs>
+    <!-- The logomark, drawn once. fill inherits, so callers paint it. -->
+    <symbol id="os-mark" viewBox="0 0 80 80">
+      <path d="M38.792 0.0186131C60.8846 -0.649069 79.3313 16.7291 79.9824 38.8223C80.6326 60.8921 63.2773 79.3149 41.208 79.9815C19.1385 80.6488 0.702853 63.3074 0.0195305 41.2383C-0.66441 19.1462 16.6995 0.686396 38.792 0.0186131ZM38.71 9.36236C35.8339 7.89166 32.7628 8.23954 29.8555 9.28033C12.6582 14.7114 3.37017 33.8997 9.45508 50.8067C11.0384 55.2047 13.565 59.4989 16.9609 62.7842C21.6294 67.5336 27.6536 70.7223 34.2061 71.9112C37.0214 72.4165 41.0083 73.0707 43.2295 70.7891C46.4143 67.5174 44.115 64.4383 43.1133 60.8419C42.137 57.2757 41.6165 53.6009 41.5635 49.9044C41.5398 46.776 42.201 42.473 42.8252 39.3565C44.2979 32.0039 46.892 24.7246 44.5537 17.2452C43.5137 14.0551 41.8086 10.9469 38.71 9.36236Z"/>
+    </symbol>
+
+    <!-- Starfield for a 1500 x 500 field. Three depths. -->
+    <symbol id="os-stars" viewBox="0 0 1500 500">
+      <g fill="#fffbff" opacity=".85">
+        <circle cx="215" cy="45" r="1.2"/><circle cx="480" cy="260" r="1.4"/>
+        <circle cx="835" cy="230" r="1.3"/><circle cx="1075" cy="45" r="1.2"/>
+        <circle cx="1365" cy="150" r="1.3"/><circle cx="1250" cy="90" r="1.1"/>
+        <circle cx="720" cy="440" r="1.1"/>
+      </g>
+      <g fill="#fffbff" opacity=".5">
+        <circle cx="60" cy="80" r="1"/><circle cx="140" cy="300" r=".8"/>
+        <circle cx="300" cy="180" r=".7"/><circle cx="355" cy="410" r="1"/>
+        <circle cx="420" cy="95" r=".9"/><circle cx="545" cy="30" r=".7"/>
+        <circle cx="600" cy="350" r="1"/><circle cx="660" cy="140" r=".8"/>
+        <circle cx="780" cy="60" r=".9"/><circle cx="900" cy="390" r=".8"/>
+        <circle cx="955" cy="110" r="1"/><circle cx="1010" cy="300" r=".9"/>
+        <circle cx="1130" cy="190" r=".8"/><circle cx="1190" cy="420" r="1"/>
+        <circle cx="1310" cy="270" r=".9"/><circle cx="1425" cy="360" r=".8"/>
+        <circle cx="1470" cy="70" r="1"/>
+      </g>
+      <g fill="#fffbff" opacity=".28">
+        <circle cx="95" cy="220" r=".7"/><circle cx="250" cy="470" r=".9"/>
+        <circle cx="390" cy="320" r=".8"/><circle cx="510" cy="470" r=".7"/>
+        <circle cx="630" cy="235" r=".7"/><circle cx="755" cy="300" r=".8"/>
+        <circle cx="870" cy="470" r=".9"/><circle cx="990" cy="200" r=".7"/>
+        <circle cx="1105" cy="470" r=".8"/><circle cx="1225" cy="330" r=".7"/>
+        <circle cx="1345" cy="455" r=".9"/><circle cx="1450" cy="215" r=".7"/>
+        <circle cx="170" cy="140" r=".6"/><circle cx="330" cy="255" r=".6"/>
+        <circle cx="455" cy="180" r=".6"/><circle cx="575" cy="140" r=".6"/>
+        <circle cx="695" cy="25" r=".6"/><circle cx="815" cy="395" r=".6"/>
+        <circle cx="935" cy="300" r=".6"/><circle cx="1055" cy="390" r=".6"/>
+        <circle cx="1175" cy="120" r=".6"/><circle cx="1290" cy="190" r=".6"/>
+        <circle cx="1400" cy="280" r=".6"/>
+      </g>
+    </symbol>
+
+    <!-- Voidmesh, reflowed to 3:1 -->
+    <linearGradient id="g-void" gradientUnits="userSpaceOnUse" x1="311" y1="585" x2="1284" y2="-157">
+      <stop offset="0" stop-color="#010101"/>
+      <stop offset=".585" stop-color="#111114"/>
+      <stop offset="1" stop-color="#1e1d23"/>
+    </linearGradient>
+
+    <!-- Glows -->
+    <radialGradient id="g-glow-pulse"><stop offset="0" stop-color="#e94ff3" stop-opacity=".34"/><stop offset="1" stop-color="#e94ff3" stop-opacity="0"/></radialGradient>
+    <radialGradient id="g-glow-lagoon"><stop offset="0" stop-color="#9f98ff" stop-opacity=".3"/><stop offset="1" stop-color="#9f98ff" stop-opacity="0"/></radialGradient>
+    <radialGradient id="g-mio-glow"><stop offset="0" stop-color="#e94ff3" stop-opacity=".55"/><stop offset="1" stop-color="#e94ff3" stop-opacity="0"/></radialGradient>
+    <linearGradient id="g-mio" x1="0" y1="0" x2="1" y2="1">
+      <stop offset=".07" stop-color="#e94ff3"/><stop offset=".48" stop-color="#aa67ff"/>
+      <stop offset=".71" stop-color="#a580ff"/><stop offset=".93" stop-color="#4b3eff"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<div class="wrap">
+
+<header class="page">
+  <h1>Social kit · X · Snap</h1>
+  <p class="sub">
+    Two takes on Snap at <b>1500 × 500</b>, the 3:1 format X still uses in 2026, with the
+    <b>round holo chip</b> as the avatar. Same skeleton in both: Void and stars, the lockup and
+    two lines of mono at the left, the product at the right. What changes is which moment of the
+    product is on show, from loosest to most literal.
+    X renders the header at 600 × 200 on desktop and around 350px wide on a phone, so both are
+    built to hold up small: big shapes, few of them, and the bottom left kept clear for the avatar.
+  </p>
+  <div class="toolbar">
+    <input type="checkbox" id="t-insitu" checked><label class="toggle" for="t-insitu">In situ</label>
+    <input type="checkbox" id="t-safe"><label class="toggle" for="t-safe">Safe areas</label>
+    <input type="checkbox" id="t-size"><label class="toggle" for="t-size">600 × 200 (desktop size)</label>
+  </div>
+</header>
+
+<section>
+  <h2 class="label">Headers · 1500 × 500 · 3:1</h2>
+
+  <!-- ============ 01 · Shingle ============ -->
+  <figure class="item">
+    <div class="frame">
+      <div class="stage">
+        <div class="banner snap s1">
+          <svg class="bg" viewBox="0 0 1500 500" aria-hidden="true">
+            <rect width="1500" height="500" fill="url(#g-void)"/>
+            <ellipse cx="1080" cy="250" rx="520" ry="360" fill="url(#g-glow-lagoon)"/>
+            <ellipse cx="760" cy="420" rx="330" ry="230" fill="url(#g-glow-pulse)"/>
+            <use href="#os-stars" width="1500" height="500" opacity=".8"/>
+          </svg>
+
+          <!-- media library, sitting behind -->
+          <div class="win" style="left: 720px; top: 76px; width: 520px; height: 190px; transform: rotate(-2deg)">
+            <div class="bar"><i></i><i></i><i></i><span class="t">~/MEDIA_LIBRARY</span><span class="r">6 ITEMS</span></div>
+            <div class="body">
+              <div class="tile holo"></div>
+              <div class="tile mio"></div>
+              <div class="tile mk"><svg viewBox="0 0 80 80" class="mark" aria-hidden="true"><use href="#os-mark"/></svg></div>
+            </div>
+          </div>
+
+          <!-- settings, shingled over the corner. gap:0 because .body's
+               16px gap would otherwise stack up between the rows. -->
+          <div class="win" style="left: 1010px; top: 244px; width: 420px; height: 158px; transform: rotate(1.6deg)">
+            <div class="bar"><i></i><i></i><i></i><span class="t">SETTINGS.CFG</span><span class="r">SYNCED</span></div>
+            <div class="body" style="padding: 6px 20px; gap: 0">
+              <div class="row">Snap to grid<span class="sw on"></span></div>
+              <div class="row">Restore session<span class="sw on"></span></div>
+            </div>
+          </div>
+
+          <!-- Mio, aboard as always -->
+          <svg class="bg" viewBox="0 0 1500 500" aria-hidden="true">
+            <circle cx="646" cy="378" r="72" fill="url(#g-mio-glow)"/>
+            <circle cx="646" cy="378" r="30" fill="none" stroke="url(#g-mio)" stroke-width="3"/>
+            <circle cx="637" cy="374" r="3.6" fill="#fffbff"/>
+            <circle cx="655" cy="374" r="3.6" fill="#fffbff"/>
+          </svg>
+
+          <div class="block">
+            <div class="lockup" style="--m: 64px">
+              <svg class="mark" viewBox="0 0 80 80" aria-hidden="true"><use href="#os-mark"/></svg>
+              <span class="word">OpenStation</span>
+            </div>
+            <p class="tagline">Your admin, in windows.<br>Snap them, stack them, keep them.</p>
+          </div>
+        </div>
+        <div class="ov-guides">
+          <div class="band t"></div><div class="band b"></div>
+          <div class="keepout"></div>
+          <span class="tag t">Crop band · 60px</span>
+          <span class="tag b">Avatar keep-clear</span>
+        </div>
+      </div>
+      <div class="below">
+        <div class="ident"><div class="nm">OpenStation</div><div class="hd">@openstation</div></div>
+        <div class="follow">Follow</div>
+      </div>
+      <div class="ov-avatar"><img src="../assets/logomark-app-circle-holo.svg" alt="The round holo chip in place as the X avatar"></div>
+    </div>
+    <figcaption><span class="num">01</span><span class="name">Shingle</span><span class="dim">· floating windows</span></figcaption>
+    <p class="why">The one from the last round. Two windows overlapping at the corner, Mio glowing
+      between them. The looser of the two: it says desktop without spelling out how, and the
+      diagonal keeps the eye moving into the copy.</p>
+  </figure>
+
+  <!-- ============ 02 · Grid ============ -->
+  <figure class="item">
+    <div class="frame">
+      <div class="stage">
+        <div class="banner snap s2">
+          <svg class="bg" viewBox="0 0 1500 500" aria-hidden="true">
+            <rect width="1500" height="500" fill="url(#g-void)"/>
+            <ellipse cx="980" cy="230" rx="520" ry="360" fill="url(#g-glow-lagoon)"/>
+            <ellipse cx="1265" cy="350" rx="330" ry="240" fill="url(#g-glow-pulse)"/>
+            <use href="#os-stars" width="1500" height="500" opacity=".8"/>
+          </svg>
+
+          <!-- the grid: two panes already snapped, one slot still open -->
+          <div class="win tiled" style="left: 730px; top: 78px; width: 345px; height: 344px">
+            <div class="bar"><i></i><i></i><i></i><span class="t">POSTS.TXT</span></div>
+            <div class="list">
+              <div class="g">▸ Drafts (3)</div>
+              <div class="i">· guidelines kick-off</div>
+              <div class="i">· mesh wallpapers</div>
+              <div class="i">· mio expressions</div>
+              <div class="g">▸ Tags</div>
+              <div class="h">#open-station</div>
+              <div class="g">▸ Media</div>
+              <div class="i">6 items</div>
+            </div>
+          </div>
+
+          <div class="win tiled" style="left: 1087px; top: 78px; width: 353px; height: 182px">
+            <div class="bar"><i></i><i></i><i></i><span class="t">MEDIA</span></div>
+            <!-- 146 not 148: the pane's 1px borders eat into the content box,
+                 and at 148 the second tile wraps -->
+            <div class="body" style="padding: 20px">
+              <div class="tile holo" style="--tw: 146px; --th: 92px"></div>
+              <div class="tile mio" style="--tw: 146px; --th: 92px"></div>
+            </div>
+          </div>
+
+          <div class="drop" style="left: 1087px; top: 272px; width: 353px; height: 150px"><span>Snap</span></div>
+
+          <!-- snap guides along the gutters, and the cursor doing the dragging -->
+          <svg class="bg" viewBox="0 0 1500 500" aria-hidden="true">
+            <g stroke="#e94ff3" stroke-opacity=".55" stroke-width="1.5">
+              <path d="M1081 50v400"/>
+              <path d="M1046 266h424"/>
+            </g>
+            <g fill="#e94ff3" fill-opacity=".8">
+              <circle cx="1081" cy="50" r="3"/><circle cx="1081" cy="450" r="3"/>
+              <circle cx="1046" cy="266" r="3"/><circle cx="1470" cy="266" r="3"/>
+            </g>
+            <g transform="translate(1140 300) scale(1.9)">
+              <path d="M0 0 L0 22.5 L5.6 17.2 L9.1 25.6 L12.9 23.9 L9.3 15.7 L16.4 15.4 Z"
+                    fill="#fffbff" stroke="#0c0b0f" stroke-width="1.3" stroke-linejoin="round"/>
+            </g>
+          </svg>
+
+          <div class="block">
+            <div class="lockup" style="--m: 64px">
+              <svg class="mark" viewBox="0 0 80 80" aria-hidden="true"><use href="#os-mark"/></svg>
+              <span class="word">OpenStation</span>
+            </div>
+            <p class="tagline">Drag it anywhere.<br>It snaps where it belongs.</p>
+          </div>
+        </div>
+        <div class="ov-guides">
+          <div class="band t"></div><div class="band b"></div>
+          <div class="keepout"></div>
+          <span class="tag t">Crop band · 60px</span>
+          <span class="tag b">Avatar keep-clear</span>
+        </div>
+      </div>
+      <div class="below">
+        <div class="ident"><div class="nm">OpenStation</div><div class="hd">@openstation</div></div>
+        <div class="follow">Follow</div>
+      </div>
+      <div class="ov-avatar"><img src="../assets/logomark-app-circle-holo.svg" alt="The round holo chip in place as the X avatar"></div>
+    </div>
+    <figcaption><span class="num">02</span><span class="name">Grid</span><span class="dim">· the snap itself</span></figcaption>
+    <p class="why">The verb, not the vibe. Two panes already tiled, one slot open with the Pulse drop
+      zone and the cursor above it, and the snap guides running down the gutters. It explains the name, and flat tiled rectangles survive a 350px render better than anything
+      else here.</p>
+  </figure>
+</section>
+
+<!-- ============ Avatar ============ -->
+<section>
+  <h2 class="label">Avatar · the holo chip</h2>
+  <div class="chips">
+    <figure>
+      <img class="rd" src="../assets/logomark-app-circle-holo.svg" width="200" height="200" alt="Round holo chip">
+      <figcaption>Round holo chip<em>X · Bluesky · Mastodon<br>LinkedIn · Facebook</em></figcaption>
+    </figure>
+    <figure>
+      <img class="sq" src="../assets/logomark-app-holo.svg" width="200" height="200" alt="Rounded square holo chip">
+      <figcaption>Square holo chip<em>Discord · Tumblr</em></figcaption>
+    </figure>
+    <figure>
+      <div class="sizes">
+        <img class="rd" src="../assets/logomark-app-circle-holo.svg" width="128" height="128" alt="Round holo chip at 128px">
+        <img class="rd" src="../assets/logomark-app-circle-holo.svg" width="64" height="64" alt="Round holo chip at 64px">
+        <img class="rd" src="../assets/logomark-app-circle-holo.svg" width="40" height="40" alt="Round holo chip at 40px">
+        <img class="rd" src="../assets/logomark-app-circle-holo.svg" width="24" height="24" alt="Round holo chip at 24px">
+      </div>
+      <figcaption>128 · 64 · 40 · 24<em>the sizes a timeline actually shows</em></figcaption>
+    </figure>
+  </div>
+  <p class="note">
+    Export at 400 × 400 for X. The artwork is the same either way, so the only decision per platform
+    is whether the crop is a circle or a rounded square. Both keep the mark on Void, which is what
+    the chip rule asks for.
+  </p>
+</section>
+
+<!-- ============ Specs ============ -->
+<section>
+  <h2 class="label">2026 specs · the other six</h2>
+  <table>
+    <thead>
+      <tr><th>Platform</th><th>Avatar</th><th>Header / banner</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th class="done">X</th>
+        <td class="n">400 × 400</td>
+        <td class="n">1500 × 500 · 3:1</td>
+        <td class="note">Circle crop. The avatar overlaps the header's bottom left, and up to 60px can be shaved off the top and bottom.</td>
+      </tr>
+      <tr>
+        <th>Bluesky</th>
+        <td class="n">400 × 400<br>(1000 × 1000 safe)</td>
+        <td class="n">1500 × 500 · 3:1</td>
+        <td class="note">Same 3:1 as X, so whichever wins ports straight across. Mobile crops closer to 4:1, so keep the edges quiet.</td>
+      </tr>
+      <tr>
+        <th>Mastodon</th>
+        <td class="n">400 × 400</td>
+        <td class="n">1500 × 500 · 3:1</td>
+        <td class="note">Same again, avatar bottom left over the header. Three platforms off one export.</td>
+      </tr>
+      <tr>
+        <th>LinkedIn · page</th>
+        <td class="n">400 × 400</td>
+        <td class="n">1128 × 191 · 5.9:1</td>
+        <td class="note">The hard one. Far wider and shorter, so it needs its own composition rather than a resize.</td>
+      </tr>
+      <tr>
+        <th>LinkedIn · profile</th>
+        <td class="n">400 × 400</td>
+        <td class="n">1584 × 396 · 4:1</td>
+        <td class="note">For a person rather than the product page. Avatar overlaps bottom left.</td>
+      </tr>
+      <tr>
+        <th>Facebook · page</th>
+        <td class="n">320 × 320</td>
+        <td class="n">851 × 315 · 2.7:1</td>
+        <td class="note">Renders 640 × 360 on mobile, which crops the sides hard. Everything that matters goes centre.</td>
+      </tr>
+      <tr>
+        <th>Discord · profile</th>
+        <td class="n">512 × 512</td>
+        <td class="n">680 × 240 · 17:6</td>
+        <td class="note">Square crop with rounded corners. The avatar covers a big share of the banner's left.</td>
+      </tr>
+      <tr>
+        <th>Discord · server</th>
+        <td class="n">512 × 512</td>
+        <td class="n">960 × 540 · 16:9</td>
+        <td class="note">Much taller than the rest. The only one where a vertical composition works.</td>
+      </tr>
+      <tr>
+        <th>Tumblr</th>
+        <td class="n">512 × 512</td>
+        <td class="n">3000 × 1055 · 2.8:1</td>
+        <td class="note">Square crop. Renders around 1000 × 313 on desktop and 640 × 360 on mobile.</td>
+      </tr>
+      <tr>
+        <th>Any feed post</th>
+        <td class="n">—</td>
+        <td class="n">1200 × 675 · 16:9</td>
+        <td class="note">The one size every platform here accepts. Worth building once as a template.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<footer>
+  OpenStation · social kit part 1 of 7 · brand.json v0.7.1<br>
+  Specs checked August 2026 · assets from the OpenStation brand guide
+</footer>
+
+</div>
+</body>
+</html>
