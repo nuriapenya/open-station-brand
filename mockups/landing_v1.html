@@ -98,11 +98,12 @@
     --fs-body-sm: 14px;
     --fs-caption: 13px;
     /* LOCAL. The mono voice runs below the sans scale for labels and
-       metadata, and the hero deliberately outgrows Display. */
+       metadata. The hero tops out at Display: it is set in Bold rather than
+       set larger than the scale allows. */
     --fs-label: 12px;
     --fs-micro: 11px;
     --fs-nano: 10px;
-    --fs-hero: clamp(48px, 8vw, 96px);
+    --fs-hero: clamp(40px, 7vw, 72px);
     /* LOCAL. Fluid section heads, riding between the scale's H2 and H1. */
     --fs-section: clamp(28px, 4vw, 40px);
     --fs-section-lg: clamp(34px, 4.5vw, 56px);
@@ -119,6 +120,10 @@
     /* LOCAL. Display line heights, tighter than the guide's 1.3 because
        these run far above the 72px the scale was drawn for. */
     --lh-hero: 1.04;
+
+    /* LOCAL. One number for the vertical rhythm: every content section
+       carries this above and below its content. */
+    --section-pad: 120px;
     --lh-display: 1.12;
   }
 
@@ -271,14 +276,6 @@
 
   /* ============ Type helpers ============ */
   .mono, kbd, figcaption { font-family: var(--font-mono); }
-  .label {
-    font-family: var(--font-mono);
-    font-size: var(--fs-label);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-  }
-
   a { color: inherit; }
   p a { text-decoration-color: var(--pulse); text-underline-offset: 3px; }
   p a:hover { color: var(--nebula); }
@@ -316,7 +313,7 @@
   .nav > a:not(.lockup):not(.btn):hover { color: var(--ink); }
 
   /* ============ Hero (left-aligned, annotated) ============ */
-  .hero { padding-block: 120px; }
+  .hero { padding-block: var(--section-pad); }
   h1 {
     font-size: var(--fs-hero);
     font-weight: var(--fw-bold);
@@ -376,10 +373,9 @@
   .cta-note { margin-top: 14px; font-size: var(--fs-label); color: var(--ink-3); }
 
   /* Mission: open source + Mio, the station resident */
-  .mission { padding-block: 96px; }
+  .mission { padding-block: var(--section-pad); }
   .mission-wrap { display: flex; align-items: center; gap: 64px; }
   .mission-copy { flex: 1.35; min-width: 0; }
-  .mission-copy .label { display: block; margin-bottom: 16px; }
   .mission h2 {
     font-size: var(--fs-section-lg);
     font-weight: var(--fw-bold);
@@ -424,8 +420,13 @@
     color: var(--ink-3);
   }
   .mio-col { flex: 1; text-align: center; }
+  /* The slot holds the column open when Mio leaves it, so nothing below
+     jumps up the page. */
+  .mio-slot { display: grid; place-items: center; min-height: 300px; }
+  .mio-stage { width: min(280px, 70%); }
   .mio-stage svg {
-    width: min(280px, 70%);
+    width: 100%;
+    display: block;
     animation: floaty 9s ease-in-out infinite;
   }
   .mio-name {
@@ -452,60 +453,77 @@
   @keyframes blink { 0%, 90%, 100% { opacity: 1; } 93%, 97% { opacity: 0; } }
   .mio-eyes { animation: blink 6s infinite; }
 
-  /* ============ The live demo ============ */
-  .demo-stage { padding-block: 56px 64px; }
-
-  /* Boots on demand. The iframe sits in a display:none wrapper with
-     loading="lazy", so the browser fetches nothing at all until the poster
-     is clicked: nobody pays for a WordPress they did not ask for, and
-     playground.wordpress.net only gets hit on purpose. Checkbox + :has(),
-     still no JavaScript. */
-  .demo-toggle { position: absolute; opacity: 0; pointer-events: none; }
-  .poster {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    cursor: pointer;
-    background:
-      radial-gradient(ellipse 55% 60% at 50% 45%, rgb(from var(--lagoon) r g b / 0.14), transparent),
-      var(--obsidian);
-  }
-  .poster .play {
-    display: inline-flex; align-items: center; gap: 11px;
-    height: 48px; padding-inline: 26px;
-    border-radius: var(--r-pill);
-    background: var(--starlight); color: var(--void);
-    font: var(--fw-medium) var(--fs-h5) var(--font-sans);
-  }
-  .poster .play::before {
-    content: '';
-    width: 0; height: 0;
-    border-left: 9px solid currentColor;
-    border-block: 6px solid transparent;
-  }
-  .poster:hover .play { background: var(--nebula); }
-  .poster small {
-    font-family: var(--font-mono);
-    font-size: var(--fs-label);
-    color: var(--ink-3);
-  }
-  .demo-toggle:focus-visible + .poster .play {
+  /* ---- Releasing Mio ----
+     A checkbox and :has(), so Mio can snap out of the section and tour the
+     whole page without a line of JavaScript. Fixed positioning takes it out
+     of the column; the flight is transform only, so it stays on the
+     compositor, and pointer-events: none keeps it from swallowing clicks
+     on whatever it passes over. */
+  .mio-toggle { position: absolute; opacity: 0; pointer-events: none; }
+  .mio-release { margin-top: 26px; cursor: pointer; }
+  .mio-toggle:focus-visible + .mio-release {
     outline: 2px solid var(--sirius);
     outline-offset: 3px;
   }
+  .say-back { display: none; }
+  .mission:has(.mio-toggle:checked) .say-go { display: none; }
+  .mission:has(.mio-toggle:checked) .say-back { display: inline; }
 
-  .live-wrap { position: absolute; inset: 0; display: none; }
-  .demo-stage:has(.demo-toggle:checked) .live-wrap { display: block; }
-  .demo-stage:has(.demo-toggle:checked) .poster { display: none; }
-  .live-wrap iframe {
+  .mission:has(.mio-toggle:checked) .mio-stage {
+    position: fixed;
+    left: 0; top: 0;
+    z-index: 60;
+    width: clamp(52px, 6vw, 88px);
+    pointer-events: none;
+    animation: mio-fly 28s ease-in-out infinite;
+  }
+  .mission:has(.mio-toggle:checked) .mio-stage svg {
+    animation: mio-tumble 5.5s ease-in-out infinite;
+  }
+  /* Waypoints stay inside 82vw / 78vh so Mio never clips its own width or
+     height off the edge of the viewport. */
+  @keyframes mio-fly {
+    0%   { transform: translate(6vw, 74vh); }
+    12%  { transform: translate(30vw, 22vh); }
+    25%  { transform: translate(62vw, 58vh); }
+    38%  { transform: translate(82vw, 16vh); }
+    50%  { transform: translate(68vw, 78vh); }
+    63%  { transform: translate(34vw, 40vh); }
+    75%  { transform: translate(8vw, 12vh); }
+    88%  { transform: translate(44vw, 78vh); }
+    100% { transform: translate(6vw, 74vh); }
+  }
+  @keyframes mio-tumble {
+    0%, 100% { transform: rotate(-9deg) scale(1); }
+    50%      { transform: rotate(10deg) scale(1.09); }
+  }
+
+  /* ============ The live demo ============ */
+  .demo-stage { padding-block: var(--section-pad); }
+
+  /* The demo loads itself. loading="lazy" keeps it out of the initial page
+     load, then Playground boots the moment the frame scrolls into view, so
+     there is nothing to click. The frame is left transparent rather than
+     given a background, so the notice underneath is what fills the box
+     until Playground paints. */
+  .desktop iframe {
+    position: absolute;
+    inset: 0;
     width: 100%; height: 100%;
     display: block;
     border: 0;
-    background: var(--void);
+  }
+  .booting {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    color: var(--ink-3);
+    background:
+      radial-gradient(ellipse 55% 60% at 50% 45%, rgb(from var(--lagoon) r g b / 0.14), transparent),
+      var(--obsidian);
   }
 
   .desktop {
@@ -696,8 +714,7 @@
      thing underneath, sitting in a dotted panel. The drawings are built
      from the window / spaces / palette kit above, which is where those
      primitives went when the showcase became a real WordPress. */
-  .does { padding-block: 80px 96px; }
-  .does .label { display: block; margin-bottom: 16px; }
+  .does { padding-block: var(--section-pad); }
   .does h2 {
     font-size: var(--fs-section-lg);
     font-weight: var(--fw-bold);
@@ -712,15 +729,21 @@
     color: var(--ink-2);
   }
 
+  /* Masonry by multi-column: every card keeps its own height and packs
+     upward instead of stretching to match whatever sits beside it. The
+     trade is that reading order runs down the first column and then down
+     the second. Fine for a browsable set, and screen readers follow the
+     DOM either way. */
   .cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-top: 52px;
+    columns: 2;
+    column-gap: 20px;
+    margin-top: 20px;
+  }
+  .cards > .fcard {
+    break-inside: avoid;
+    margin-bottom: 20px;
   }
   .fcard {
-    display: flex;
-    flex-direction: column;
     /* LOCAL. Softer than the hairline grid this replaced: these read as
        objects now, not as cells in a table. */
     border: 1px solid var(--line);
@@ -728,7 +751,8 @@
     background: rgb(from var(--obsidian) r g b / 0.55);
     padding: 28px;
   }
-  .fcard.wide { grid-column: 1 / -1; }
+  /* The opening card runs full width on its own, above the masonry. */
+  .fcard.lead { margin-top: 52px; }
   .fcard-head { display: flex; gap: 18px; align-items: flex-start; }
   .fcard-head > svg { width: 42px; height: 42px; flex: none; }
   .fcard h3 {
@@ -752,7 +776,6 @@
      blueprint language as the hatched gutters outside the rails. */
   .fvis {
     position: relative;
-    flex: 1;
     margin-top: 26px;
     min-height: 250px;
     border: 1px solid var(--line-soft);
@@ -763,7 +786,14 @@
         0 0 / 18px 18px,
       rgb(from var(--void) r g b / 0.55);
   }
-  .fcard.wide .fvis { min-height: 340px; }
+  /* Deliberately uneven, so the masonry has something to stagger. */
+  .fcard.lead .fvis { min-height: 340px; }
+  .vis-snap    { min-height: 300px; }
+  .vis-spaces  { min-height: 216px; }
+  .vis-cmd     { min-height: 284px; }
+  .vis-restore { min-height: 240px; }
+  .vis-dock    { min-height: 296px; }
+  .vis-graph   { min-height: 224px; }
 
   /* -- Everything open at once: three windows, tiled -- */
   .vis-tiled .w1 { left: 3%; top: 8%; width: 42%; bottom: 8%; }
@@ -875,7 +905,7 @@
   }
 
   /* ============ Terminal ============ */
-  .term-sect { padding-block: 64px 80px; }
+  .term-sect { padding-block: var(--section-pad); }
   .terminal {
     max-width: 640px;
     margin-inline: auto;
@@ -906,7 +936,7 @@
   .terminal .ok { color: var(--sirius); }
 
   /* ============ Final CTA + footer ============ */
-  .cta-final { padding-block: 72px; text-align: center; }
+  .cta-final { padding-block: var(--section-pad); text-align: center; }
   .cta-final h2 { margin-inline: auto; }
   .cta-final .cta-row { justify-content: center; }
   footer .frame {
@@ -924,9 +954,11 @@
     .mio-col { width: 100%; }
   }
   @media (max-width: 860px) {
-    .cards { grid-template-columns: 1fr; }
-    .fcard.wide { grid-column: auto; }
-    .fcard.wide .fvis { min-height: 250px; }
+    /* 120px between sections is right on a wide screen and far too much
+       scrolling on a phone. */
+    :root { --section-pad: 72px; }
+    .cards { columns: 1; }
+    .fcard.lead .fvis { min-height: 250px; }
     .m-stats { grid-template-columns: 1fr 1fr; }
     .stats { grid-template-columns: repeat(2, 1fr); }
     /* The demo is a real desktop OS, so give it height rather than the
@@ -950,6 +982,11 @@
   @media (prefers-reduced-motion: reduce) {
     .win.drag { animation: none; }
     .mio-stage svg { animation: none; }
+    /* Released Mio parks in the corner instead of touring the page. */
+    .mission:has(.mio-toggle:checked) .mio-stage {
+      animation: none;
+      transform: translate(6vw, 74vh);
+    }
     .mio-eyes { animation: none; }
     .p-caret { animation: none; }
     .constel .shake, .constel .cd { animation: none; }
@@ -1049,14 +1086,7 @@
   <!-- ============ Live demo ============ -->
   <section class="frame demo-stage" id="demo" aria-label="Live OpenStation demo">
     <div class="desktop">
-      <!-- aria-label rather than relying on the poster: once the demo is
-           running the poster is display:none, and the control would lose
-           its name with it. -->
-      <input type="checkbox" id="demo-go" class="demo-toggle" aria-label="Launch the live demo">
-      <label for="demo-go" class="poster">
-        <span class="play">Launch the live demo</span>
-        <small>a real WordPress, booted in your browser</small>
-      </label>
+      <p class="booting" aria-hidden="true">booting a real WordPress in your browser</p>
 
       <!-- The Blueprint rides in the URL fragment rather than as a
            blueprint-url, so this file stays self-contained and does not
@@ -1078,12 +1108,10 @@
            release still ships desktop-mode.zip. Swap back to
            blueprint-url=.../openstation/.../blueprint.json once that is
            fixed upstream. -->
-      <div class="live-wrap">
-        <iframe
+      <iframe
           title="Live OpenStation demo running in WordPress Playground"
           loading="lazy"
           src="https://playground.wordpress.net/?mode=seamless&amp;storage=temp#%7B%22landingPage%22%3A%22/desktop-mode/%22%2C%22preferredVersions%22%3A%7B%22php%22%3A%228.3%22%2C%22wp%22%3A%22latest%22%7D%2C%22features%22%3A%7B%22networking%22%3Atrue%7D%2C%22siteOptions%22%3A%7B%22blogname%22%3A%22OpenStation%22%7D%2C%22steps%22%3A%5B%7B%22step%22%3A%22login%22%2C%22username%22%3A%22admin%22%2C%22password%22%3A%22password%22%7D%2C%7B%22step%22%3A%22installPlugin%22%2C%22pluginData%22%3A%7B%22resource%22%3A%22wordpress.org/plugins%22%2C%22slug%22%3A%22desktop-mode%22%7D%2C%22options%22%3A%7B%22activate%22%3Atrue%7D%7D%2C%7B%22step%22%3A%22wp-cli%22%2C%22command%22%3A%22wp%20user%20meta%20update%201%20desktop_mode_mode%201%22%7D%2C%7B%22step%22%3A%22wp-cli%22%2C%22command%22%3A%22wp%20user%20meta%20update%201%20show_welcome_panel%200%22%7D%5D%7D"></iframe>
-      </div>
     </div>
   </section>
 
@@ -1103,65 +1131,63 @@
   <section class="frame does" id="features">
     <i class="x tl" aria-hidden="true"></i>
     <i class="x tr" aria-hidden="true"></i>
-    <span class="label">/// What_it_does</span>
     <h2>Not a theme. Not a novelty.<br><span class="hl">A workspace you own.</span></h2>
     <p class="lede">Every admin screen you already use, in windows you can arrange, on
     desktops you can name, kept exactly as you left them.</p>
 
-    <div class="cards">
-
-      <!-- The core promise, so it takes the full width -->
-      <div class="fcard wide">
-        <div class="fcard-head">
-          <!-- constellation: several things, linked, all lit at once -->
-          <svg viewBox="0 0 100 100" aria-hidden="true">
-            <g stroke-width="3.5" stroke-linecap="round" stroke-opacity="0.6">
-              <line x1="22" y1="30" x2="56" y2="17" class="s-lagoon"/>
-              <line x1="56" y1="17" x2="80" y2="50" class="s-lagoon"/>
-              <line x1="80" y1="50" x2="36" y2="76" class="s-lagoon"/>
-              <line x1="36" y1="76" x2="22" y2="30" class="s-lagoon"/>
-            </g>
-            <circle cx="22" cy="30" r="8" class="f-pulse"/>
-            <circle cx="56" cy="17" r="6" class="f-sirius"/>
-            <circle cx="80" cy="50" r="7" class="f-nebula"/>
-            <circle cx="36" cy="76" r="6" class="f-sirius"/>
-          </svg>
-          <div>
-            <h3>Everything open at the same time.</h3>
-            <p>Editor, media library and comments side by side, arranged how you like. Drag
-            an image out of the library and drop it straight into the post you are writing.</p>
+    <!-- The core promise, full width above the masonry -->
+    <div class="fcard lead">
+      <div class="fcard-head">
+        <!-- constellation: several things, linked, all lit at once -->
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <g stroke-width="3.5" stroke-linecap="round" stroke-opacity="0.6">
+            <line x1="22" y1="30" x2="56" y2="17" class="s-lagoon"/>
+            <line x1="56" y1="17" x2="80" y2="50" class="s-lagoon"/>
+            <line x1="80" y1="50" x2="36" y2="76" class="s-lagoon"/>
+            <line x1="36" y1="76" x2="22" y2="30" class="s-lagoon"/>
+          </g>
+          <circle cx="22" cy="30" r="8" class="f-pulse"/>
+          <circle cx="56" cy="17" r="6" class="f-sirius"/>
+          <circle cx="80" cy="50" r="7" class="f-nebula"/>
+          <circle cx="36" cy="76" r="6" class="f-sirius"/>
+        </svg>
+        <div>
+          <h3>Everything open at the same time.</h3>
+          <p>Editor, media library and comments side by side, arranged how you like. Drag
+          an image out of the library and drop it straight into the post you are writing.</p>
+        </div>
+      </div>
+      <div class="fvis vis-tiled" aria-hidden="true">
+        <div class="win w1">
+          <div class="bar"><i class="go"></i><i></i><i></i><span>edit-post · "Snapping, explained"</span></div>
+          <div class="body">
+            <div class="skel head"></div>
+            <div class="skel"></div>
+            <div class="skel"></div>
+            <div class="skel short"></div>
+            <div class="skel"></div>
+            <div class="skel"></div>
+            <div class="skel short"></div>
+            <div class="skel"></div>
+            <div class="skel"></div>
+            <div class="skel short"></div>
           </div>
         </div>
-        <div class="fvis vis-tiled" aria-hidden="true">
-          <div class="win w1">
-            <div class="bar"><i class="go"></i><i></i><i></i><span>edit-post · "Snapping, explained"</span></div>
-            <div class="body">
-              <div class="skel head"></div>
-              <div class="skel"></div>
-              <div class="skel"></div>
-              <div class="skel short"></div>
-              <div class="skel"></div>
-              <div class="skel"></div>
-              <div class="skel short"></div>
-              <div class="skel"></div>
-              <div class="skel"></div>
-              <div class="skel short"></div>
-            </div>
-          </div>
-          <div class="win w2">
-            <div class="bar"><i class="go"></i><i></i><i></i><span>media library</span></div>
-            <div class="body"><div class="thumbs"><i></i><i></i><i></i><i></i></div></div>
-          </div>
-          <div class="win w3">
-            <div class="bar"><i class="go"></i><i></i><i></i><span>comments · 2 pending</span></div>
-            <div class="body">
-              <div class="c-row"><i></i><div><div class="skel"></div><div class="skel short"></div></div></div>
-              <div class="c-row"><i></i><div><div class="skel"></div><div class="skel short"></div></div></div>
-            </div>
+        <div class="win w2">
+          <div class="bar"><i class="go"></i><i></i><i></i><span>media library</span></div>
+          <div class="body"><div class="thumbs"><i></i><i></i><i></i><i></i></div></div>
+        </div>
+        <div class="win w3">
+          <div class="bar"><i class="go"></i><i></i><i></i><span>comments · 2 pending</span></div>
+          <div class="body">
+            <div class="c-row"><i></i><div><div class="skel"></div><div class="skel short"></div></div></div>
+            <div class="c-row"><i></i><div><div class="skel"></div><div class="skel short"></div></div></div>
           </div>
         </div>
       </div>
+    </div>
 
+    <div class="cards">
       <div class="fcard">
         <div class="fcard-head">
           <!-- asteroid: a body already in motion, for drag and snap -->
@@ -1379,7 +1405,6 @@
     <i class="x tr" aria-hidden="true"></i>
     <div class="mission-wrap">
       <div class="mission-copy">
-        <span class="label">/// Built_in_the_open</span>
         <h2>Free. GPL.<br><span class="hl">Yours to extend.</span></h2>
         <p>OpenStation is an open-source WordPress plugin built entirely on
         public hooks. The community is already building on the
@@ -1394,6 +1419,7 @@
         </div>
       </div>
       <div class="mio-col">
+        <div class="mio-slot">
         <div class="mio-stage" aria-hidden="true">
           <svg viewBox="0 0 120 120">
             <defs>
@@ -1417,8 +1443,14 @@
             </g>
           </svg>
         </div>
+        </div>
         <span class="mio-name">Mio</span>
         <p>Our station resident that glows when there is something to say.</p>
+        <input type="checkbox" id="mio-free" class="mio-toggle">
+        <label for="mio-free" class="btn outline mio-release">
+          <span class="say-go">Release Mio</span>
+          <span class="say-back">Bring Mio home</span>
+        </label>
       </div>
     </div>
   </section>
