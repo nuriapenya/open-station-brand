@@ -3,7 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../assets/logomark-app-circle.svg">
+<link rel="icon" type="image/png" sizes="180x180" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/favicon.png">
 <title>OpenStation · Landing v1</title>
+<!-- Favicon: the round chip (../assets/logomark-app-circle.svg) -->
+<link rel="icon" type="image/svg+xml" href="../assets/logomark-app-circle.svg">
+<link rel="icon" type="image/png" sizes="180x180" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/favicon.png">
 <!--
   Landing v1. Hero leads on the productivity promise, the showcase carries a
   live Playground tab alongside the three drawn scenes, and a Why section
@@ -453,31 +460,6 @@
     white-space: nowrap;
   }
   .chip.blue { border-color: rgb(from var(--lagoon) r g b / 0.5); color: var(--lagoon); }
-  .m-stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
-    margin-top: 40px;
-  }
-  .m-stat {
-    border: 1px solid var(--line);
-    border-radius: var(--r-card);
-    padding: 22px;
-  }
-  .m-stat b {
-    display: block;
-    font: var(--fw-semibold) var(--fs-h3) var(--font-sans);
-    letter-spacing: -0.02em;
-    margin-bottom: 12px;
-  }
-  .m-stat b.hl { display: block; }
-  .m-stat span {
-    font-family: var(--font-mono);
-    font-size: var(--fs-micro);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-  }
   .mio-col { flex: 1; text-align: center; }
   /* The slot holds the column open when Mio leaves it, so nothing below
      jumps up the page. */
@@ -1019,7 +1001,12 @@
     letter-spacing: -0.02em;
     color: var(--sirius);
   }
-  .stat span {
+  /* The rating should read as a rating, not a bare decimal. Slightly under
+     1em so the star matches the cap height of the number next to it. */
+  .stat .star { font-size: 0.85em; vertical-align: 0.06em; margin-right: 0.1em; }
+  /* Direct child only: the label. The spans inside <b> are the star and the
+     value, and they take their styling from <b>, not from this. */
+  .stat > span {
     font-family: var(--font-mono);
     font-size: var(--fs-micro);
     letter-spacing: 0.12em;
@@ -1060,7 +1047,6 @@
     :root { --section-pad: 72px; }
     .cards { columns: 1; }
     .fcard.lead .fvis { min-height: 250px; }
-    .m-stats { grid-template-columns: 1fr 1fr; }
     .stats { grid-template-columns: repeat(2, 1fr); }
     /* The demo is a real desktop OS, so give it height rather than the
        16/9.5 the drawn showcase used to need. */
@@ -1215,18 +1201,22 @@
       <iframe
           title="Live OpenStation demo running in WordPress Playground"
           loading="lazy"
-          src="https://playground.wordpress.net/?mode=seamless&amp;storage=temp#%7B%22landingPage%22%3A%22/desktop-mode/%22%2C%22preferredVersions%22%3A%7B%22php%22%3A%228.3%22%2C%22wp%22%3A%22latest%22%7D%2C%22features%22%3A%7B%22networking%22%3Atrue%7D%2C%22siteOptions%22%3A%7B%22blogname%22%3A%22OpenStation%22%7D%2C%22steps%22%3A%5B%7B%22step%22%3A%22login%22%2C%22username%22%3A%22admin%22%2C%22password%22%3A%22password%22%7D%2C%7B%22step%22%3A%22installPlugin%22%2C%22pluginData%22%3A%7B%22resource%22%3A%22wordpress.org/plugins%22%2C%22slug%22%3A%22desktop-mode%22%7D%2C%22options%22%3A%7B%22activate%22%3Atrue%7D%7D%2C%7B%22step%22%3A%22wp-cli%22%2C%22command%22%3A%22wp%20user%20meta%20update%201%20desktop_mode_mode%201%22%7D%2C%7B%22step%22%3A%22wp-cli%22%2C%22command%22%3A%22wp%20user%20meta%20update%201%20show_welcome_panel%200%22%7D%5D%7D"></iframe>
+          src="https://playground.wordpress.net/?mode=seamless&amp;storage=temp#%7B%22landingPage%22%3A%22%2Fdesktop-mode%2F%22%2C%22preferredVersions%22%3A%7B%22php%22%3A%228.3%22%2C%22wp%22%3A%22latest%22%7D%2C%22features%22%3A%7B%22networking%22%3Atrue%7D%2C%22siteOptions%22%3A%7B%22blogname%22%3A%22OpenStation%22%7D%2C%22steps%22%3A%5B%7B%22step%22%3A%22login%22%2C%22username%22%3A%22admin%22%2C%22password%22%3A%22password%22%7D%2C%7B%22step%22%3A%22mkdir%22%2C%22path%22%3A%22%2Fwordpress%2Fwp-content%2Fmu-plugins%22%7D%2C%7B%22step%22%3A%22writeFile%22%2C%22path%22%3A%22%2Fwordpress%2Fwp-content%2Fmu-plugins%2Fopenstation-demo-no-core-update.php%22%2C%22data%22%3A%22%3C%3Fphp%5Cn%2F%2A%2A%5Cn%20%2A%20Demo%20only.%20Playground%20pins%20WordPress%20to%20a%20major.minor%20build%2C%20so%20its%207.0%5Cn%20%2A%20trails%20the%20newest%20patch%20release%20and%20wp-admin%20offers%20an%20update%20a%20throwaway%5Cn%20%2A%20sandbox%20cannot%20usefully%20apply.%20Report%20%5C%22no%20core%20updates%5C%22%20so%20the%20demo%20shows%5Cn%20%2A%20OpenStation%20instead%20of%20an%20update%20nag.%5Cn%20%2A%5Cn%20%2A%20This%20also%20clears%20OpenStation%27s%20own%20release%20notification%2C%20which%20reads%20the%5Cn%20%2A%20same%20data%20via%20get_preferred_from_update_core%28%29.%5Cn%20%2A%2F%5Cnadd_filter%28%5Cn%5Ct%27pre_site_transient_update_core%27%2C%5Cn%5Ctstatic%20function%20%28%29%20%7B%5Cn%5Ct%5Ctreturn%20%28object%29%20array%28%5Cn%5Ct%5Ct%5Ct%27updates%27%20%20%20%20%20%20%20%20%20%3D%3E%20array%28%29%2C%5Cn%5Ct%5Ct%5Ct%27version_checked%27%20%3D%3E%20%24GLOBALS%5B%27wp_version%27%5D%2C%5Cn%5Ct%5Ct%5Ct%27last_checked%27%20%20%20%20%3D%3E%20time%28%29%2C%5Cn%5Ct%5Ct%29%3B%5Cn%5Ct%7D%5Cn%29%3B%5Cn%22%7D%2C%7B%22step%22%3A%22installPlugin%22%2C%22pluginData%22%3A%7B%22resource%22%3A%22wordpress.org%2Fplugins%22%2C%22slug%22%3A%22desktop-mode%22%7D%2C%22options%22%3A%7B%22activate%22%3Atrue%7D%7D%2C%7B%22step%22%3A%22wp-cli%22%2C%22command%22%3A%22wp%20user%20meta%20update%201%20desktop_mode_mode%201%22%7D%2C%7B%22step%22%3A%22wp-cli%22%2C%22command%22%3A%22wp%20user%20meta%20update%201%20show_welcome_panel%200%22%7D%5D%7D"></iframe>
     </div>
     <p class="demo-caption">Try it out yourself.</p>
   </section>
 
-  <!-- ============ Stats ============ -->
+  <!-- ============ Stats ============
+       The numbers in the markup are the real ones at time of writing and are
+       what everybody sees if the script below never runs. The script only
+       refreshes them from wordpress.org, so this section is correct with
+       JavaScript off, blocked, or failing. -->
   <section class="frame flush" aria-label="Plugin statistics">
     <div class="stats">
-      <div class="stat"><b>2,000+</b><span>active installs</span></div>
-      <div class="stat"><b>5.0</b><span>plugin rating</span></div>
-      <div class="stat"><b>v0.9.8</b><span>latest release</span></div>
-      <div class="stat"><b>6.0+</b><span>works on WordPress</span></div>
+      <div class="stat"><b><span data-stat="installs">2,000+</span></b><span>active installs</span></div>
+      <div class="stat"><b><span class="star" aria-hidden="true">&#9733;</span><span data-stat="rating">5.0</span></b><span>plugin rating</span></div>
+      <div class="stat"><b><span data-stat="version">v0.9.8</span></b><span>latest release</span></div>
+      <div class="stat"><b><span data-stat="requires">6.0+</span></b><span>works on WordPress</span></div>
     </div>
   </section>
 
@@ -1531,18 +1521,12 @@
     <i class="x tr" aria-hidden="true"></i>
     <div class="mission-wrap">
       <div class="mission-copy">
-        <h2>Free. GPL.<br><span class="hl">Yours to extend.</span></h2>
+        <h2>Free forever.<br><span class="hl">Yours to extend.</span></h2>
         <p>OpenStation is an open-source WordPress plugin built entirely on
         public hooks. The community is already building on the
         <span class="chip">wp.os.*</span> APIs and the
         <span class="chip blue">&lt;os-*&gt;</span> component kit: app stores,
         extensions, new apps for the shell. Fork it, extend it, make it yours.</p>
-        <div class="m-stats">
-          <div class="m-stat"><b>0</b><span>Core patches</span></div>
-          <div class="m-stat"><b>25+</b><span>Shell components</span></div>
-          <div class="m-stat"><b class="hl">100%</b><span>GPL, forever</span></div>
-          <div class="m-stat"><b>&#8734;</b><span>Extendable</span></div>
-        </div>
       </div>
       <div class="mio-col">
         <div class="mio-slot">
@@ -1600,9 +1584,83 @@
     <a href="https://wordpress.org/plugins/desktop-mode/">wordpress.org</a>
     <a href="https://github.com/WordPress/openstation">GitHub</a>
     <a href="https://openstation.blog">Blog</a>
-    <span class="credit mono">Built by Automattic</span>
+    <span class="credit mono">Built by Automattic &middot; <a href="https://spacefast.com">Hosted on Spacefast</a></span>
   </div>
 </footer>
+
+<!-- ============ Keeping the stats row honest ============
+     The numbers above were hardcoded, which was fine for a mockup and is not
+     fine for the page that lives at openstation.me: `latest release` goes
+     wrong the first time the plugin ships. wordpress.org serves the real ones
+     and sends `access-control-allow-origin: *`, so one request fixes it.
+
+     Progressive enhancement, deliberately. The markup already carries the
+     correct values, this only overwrites them on success, and every failure
+     path leaves the page exactly as served. Nothing here writes markup: each
+     stat is a text node, so the API can never inject HTML into the page.
+
+     The slug is still `desktop-mode`, which is what the plugin is registered
+     as on wordpress.org even though everything else has moved to OpenStation. -->
+<script>
+( function () {
+	'use strict';
+
+	var stats = document.querySelectorAll( '[data-stat]' );
+
+	if ( ! stats.length || ! window.fetch ) {
+		return;
+	}
+
+	var ENDPOINT = 'https://api.wordpress.org/plugins/info/1.2/' +
+		'?action=plugin_information' +
+		'&request[slug]=desktop-mode' +
+		'&request[fields][sections]=0';
+
+	/**
+	 * How each stat reads itself out of the API payload.
+	 *
+	 * Returning null means "leave the markup alone", so a field the API
+	 * stops sending keeps its existing number rather than blanking out.
+	 */
+	var read = {
+		installs: function ( data ) {
+			return typeof data.active_installs === 'number'
+				? data.active_installs.toLocaleString( 'en-US' ) + '+'
+				: null;
+		},
+		rating: function ( data ) {
+			// The API reports 0-100. The row shows the familiar 0-5.
+			return typeof data.rating === 'number'
+				? ( data.rating / 20 ).toFixed( 1 )
+				: null;
+		},
+		version: function ( data ) {
+			return data.version ? 'v' + data.version : null;
+		},
+		requires: function ( data ) {
+			return data.requires ? data.requires + '+' : null;
+		}
+	};
+
+	fetch( ENDPOINT )
+		.then( function ( response ) {
+			return response.ok ? response.json() : Promise.reject();
+		} )
+		.then( function ( data ) {
+			Array.prototype.forEach.call( stats, function ( node ) {
+				var value = read[ node.getAttribute( 'data-stat' ) ];
+				value = value && value( data );
+
+				if ( value ) {
+					node.textContent = value;
+				}
+			} );
+		} )
+		.catch( function () {
+			// The served numbers stand. Nothing to undo, nothing to report.
+		} );
+}() );
+</script>
 
 <!-- ============ Releasing the real Mio ============
      Upgrades the checkbox above from a drawing on a keyframe to the actual
@@ -1645,7 +1703,7 @@
 	 * setColliders() afterwards, so it is in force for the first frame and
 	 * Mio never falls through a card it is about to land on.
 	 */
-	var COLLIDERS = '.fcard, .stat, .m-stat, .desktop';
+	var COLLIDERS = '.fcard, .stat, .desktop';
 
 	/** 'idle' | 'loading' | 'ready' | 'failed'. */
 	var state = 'idle';
