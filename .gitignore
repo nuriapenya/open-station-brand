@@ -1,0 +1,5 @@
+# Build output from mockups/build-landing-bundle.sh. Generated, never committed:
+# GitHub Pages serves this repo from the root, so anything committed here ships.
+build/
+
+.DS_Store
