@@ -334,16 +334,21 @@
   .nav > a:not(.lockup):not(.btn):hover { color: var(--ink); }
 
   /* ============ Hero (left-aligned, annotated) ============ */
-  .hero { padding-block: var(--section-pad); }
+  .hero { padding-block: var(--section-pad); text-align: center; }
   h1 {
     font-size: var(--fs-hero);
     font-weight: var(--fw-bold);
     line-height: var(--lh-hero);
     letter-spacing: -0.03em;
     max-width: 1160px;
+    margin-inline: auto;
+    /* Centred display type lives or dies on where it breaks. Left to itself
+       the last line can hang as one short word under two full ones; balance
+       evens the lines out instead. Purely a refinement: browsers without it
+       get the ordinary greedy wrap, which is what this had before. */
+    text-wrap: balance;
   }
-  h1 .l2 { display: block; }
-  /* The highlighted word: Holomesh fill + a hand-sketched orbit ring */
+  /* The highlighted word: Holomesh fill */
   .hl {
     position: relative;
     display: inline-block;
@@ -413,35 +418,16 @@
         0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
     }
   }
-  /* Constellation underline: finely dotted line in Lagoon, haloed star
-     dots, and a very subtle shake, as if someone grabbed it */
-  .hl .constel {
-    position: absolute;
-    /* Pulled up so the dotted line meets the underside of the word rather
-       than floating clear of it. */
-    left: -7%; top: -31%;
-    width: 114%; height: 133%;
-    overflow: visible;
-    pointer-events: none;
-  }
-  .constel .shake { animation: c-shake 7s ease-in-out infinite; }
-  .constel .cd { animation: c-bob 4.5s ease-in-out infinite; }
-  @keyframes c-shake {
-    0%, 100% { transform: translateY(0); }
-    30% { transform: translateY(-2.5px); }
-    60% { transform: translateY(1.5px); }
-  }
-  @keyframes c-bob {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-1.8px); }
-  }
   .hero .sub {
-    margin-top: 24px;
+    margin: 24px auto 0;
     max-width: 620px;
     font-size: var(--fs-body-lg);
     color: var(--ink-2);
   }
   .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  /* text-align does not reach flex children, so the row centres itself the
+     same way the closing CTA already does. */
+  .hero .cta-row { justify-content: center; }
   .cta-row .btn { height: 52px; padding-inline: 28px; font-size: var(--fs-h5); }
   /* Cosmic lift: the glow is Pulse over Lagoon, so the buttons sit above
      the page rather than on it. */
@@ -1099,7 +1085,6 @@
     }
     .mio-eyes { animation: none; }
     .p-caret { animation: none; }
-    .constel .shake, .constel .cd { animation: none; }
     /* The light stops travelling; the Holomesh underneath is untouched, so
        the titles keep their fill. */
     .hl { animation: none; }
@@ -1168,23 +1153,7 @@
   <section class="frame hero">
     <i class="x tl" aria-hidden="true"></i>
     <i class="x tr" aria-hidden="true"></i>
-    <h1>Everything in wp-admin,
-      <span class="l2">open <span class="hl">at once<svg class="constel" viewBox="0 0 560 210" preserveAspectRatio="none" aria-hidden="true">
-        <defs>
-          <radialGradient id="haloS"><stop offset="0%" class="sc-sirius" stop-opacity="0.45"/><stop offset="100%" class="sc-sirius" stop-opacity="0"/></radialGradient>
-          <radialGradient id="haloN"><stop offset="0%" class="sc-nebula" stop-opacity="0.45"/><stop offset="100%" class="sc-nebula" stop-opacity="0"/></radialGradient>
-          <radialGradient id="haloP"><stop offset="0%" class="sc-pulse" stop-opacity="0.5"/><stop offset="100%" class="sc-pulse" stop-opacity="0"/></radialGradient>
-        </defs>
-        <g class="shake">
-          <polyline points="30,190 140,205 255,192 380,206 500,192" fill="none" class="s-lagoon" stroke-opacity="0.5" stroke-width="1.5" stroke-dasharray="0.2 5" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
-          <g class="cd"><circle cx="30" cy="190" r="11" fill="url(#haloS)"/><circle cx="30" cy="190" r="3" class="f-sirius"/></g>
-          <g class="cd" style="animation-delay: -1.2s"><circle cx="140" cy="205" r="10" fill="url(#haloN)"/><circle cx="140" cy="205" r="3" class="f-nebula"/></g>
-          <g class="cd" style="animation-delay: -2.2s"><circle cx="255" cy="192" r="12" fill="url(#haloP)"/><circle cx="255" cy="192" r="3.5" class="f-pulse"/></g>
-          <g class="cd" style="animation-delay: -3.1s"><circle cx="380" cy="206" r="10" fill="url(#haloN)"/><circle cx="380" cy="206" r="3" class="f-nebula"/></g>
-          <g class="cd" style="animation-delay: -3.9s"><circle cx="500" cy="192" r="11" fill="url(#haloS)"/><circle cx="500" cy="192" r="3" class="f-sirius"/></g>
-        </g>
-      </svg></span>.</span>
-    </h1>
+    <h1>One tab. <span class="hl">Your whole</span> WordPress site.</h1>
     <p class="sub">OpenStation is a WordPress plugin that gives wp-admin real
     windows, a dock, and virtual desktops. Put the editor, the media library,
     and any other admin screen side by side, arranged how you like.</p>
