@@ -37,8 +37,8 @@
 <link rel="preload" href="../fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <!--
-  Landing v1. Hero leads on the productivity promise, the demo below it is a
-  real WordPress running in the browser, and the feature cards carry the
+  Landing v1. Hero leads on the productivity promise and sends anyone who
+  wants to try it to Playground in a new tab, and the feature cards carry the
   drawn scenes.
   Tokens from brand.json v0.7.1. Two small progressive-enhancement scripts at
   the end of the body; the page is complete and correct without them.
@@ -239,7 +239,7 @@
 
   /* Backdrops sit on the sections rather than on one global sheet, so each
      band can decide how much of the cosmos shows through. */
-  .hero, .demo-stage, .cta-final, footer .frame, section.flush {
+  .hero, .cta-final, footer .frame, section.flush {
     background: rgb(from var(--obsidian) r g b / 0.55);
     backdrop-filter: blur(18px) saturate(1.2);
     -webkit-backdrop-filter: blur(18px) saturate(1.2);
@@ -633,110 +633,10 @@
     50%      { transform: rotate(10deg) scale(1.09); }
   }
 
-  /* ============ The live demo ============ */
-  .demo-stage { padding-block: var(--section-pad); }
-
-  /* How the demo loads, and why it is not just an iframe any more.
-     Two things were wrong with that. loading="lazy" did not defer anything:
-     the frame sits only a little below the fold, the browser's lazy
-     threshold is far larger than that, and testing with no scrolling at all
-     showed Playground already fetching. So every visitor paid a 12 to 15
-     second boot and tens of megabytes whether or not they cared about the
-     demo. And below roughly 869px the frame cannot reach the 782px at which
-     WordPress leaves its mobile admin layout, so the shell drew desktop
-     window chrome over a mobile wp-admin and the result was unusable.
-
-     So the markup now ships the poster and a plain link, which is what a
-     phone, a text browser and a visitor with no JavaScript all get, and the
-     script at the end of the body swaps in the iframe only when the viewport
-     is wide enough to render it and the section is actually approaching. */
-  .desktop iframe {
-    position: absolute;
-    inset: 0;
-    width: 100%; height: 100%;
-    display: block;
-    border: 0;
-    z-index: 2;
-  }
-  /* Not rendered until it has something to render. An iframe with no src is
-     still a painted, hit-testable box, and this one is inset: 0 at z-index 2
-     over the whole stage, so it silently swallowed every tap on the offer
-     underneath it: the button looked fine and did nothing. */
-  .desktop:not(.is-booting) iframe { display: none; }
-  .booting {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    align-content: center;
-    gap: 18px;
-    padding: 24px;
-    text-align: center;
-    font-family: var(--font-mono);
-    font-size: var(--fs-label);
-    color: var(--ink-3);
-    background:
-      radial-gradient(ellipse 55% 60% at 50% 45%, rgb(from var(--lagoon) r g b / 0.14), transparent),
-      var(--obsidian);
-  }
-  .booting .lede {
-    font-family: var(--font-sans);
-    font-size: var(--fs-h5);
-    color: var(--ink);
-    max-width: 30ch;
-    line-height: var(--lh-tight);
-  }
-  .booting .wait {
-    /* Sans, not the mono the notice defaults to. Three centred lines of
-       monospace is a lot to ask of a reader for what is basically a caveat. */
-    font-family: var(--font-sans);
-    font-size: var(--fs-body-sm);
-    max-width: 40ch;
-    line-height: 1.55;
-    color: var(--ink-3);
-  }
-  /* The spinner is the only thing on the page that says "still working", so
-     it stays put under reduced motion and just stops turning. */
-  .booting .ring {
-    width: 26px; height: 26px;
-    border-radius: 50%;
-    border: 2px solid rgb(from var(--starlight) r g b / 0.16);
-    border-top-color: var(--pulse);
-    animation: ring-spin 0.9s linear infinite;
-  }
-  @keyframes ring-spin { to { transform: rotate(360deg); } }
-  /* Once the script has decided this machine gets the real thing, the notice
-     becomes a boot state rather than an offer, so the button steps aside and
-     the spinner appears. */
-  .desktop:not(.is-booting) .ring { display: none; }
-  .desktop.is-booting .booting .btn { display: none; }
-  .desktop.is-booting .booting .lede { font-size: var(--fs-body); color: var(--ink-2); }
-
-  .demo-caption {
-    margin-top: 22px;
-    text-align: center;
-    font-family: var(--font-mono);
-    font-size: var(--fs-caption);
-    letter-spacing: 0.04em;
-    color: var(--ink-2);
-  }
-
-  .desktop {
-    position: relative;
-    max-width: 1120px;
-    margin-inline: auto;
-    border: 1px solid var(--line);
-    border-radius: var(--r-poster);
-    background: var(--obsidian);
-    box-shadow: 0 16px 24px rgba(0, 0, 0, 0.35), 0 24px 48px rgba(0, 0, 0, 0.35);
-    overflow: hidden;
-    aspect-ratio: 16 / 9.5;
-    min-height: 400px;
-  }
   /* ============ Drawing kit for the feature-card visuals ============
-     Windows, skeletons, spaces and the palette used to play out inside the
-     showcase. The showcase is a real WordPress now, so these primitives
-     moved down into the cards; each visual positions them itself. */
+     Windows, skeletons, spaces and the palette used to play out inside a
+     showcase band at the top of the page. That band is gone, so these
+     primitives live in the cards; each visual positions them itself. */
   .win {
     position: absolute;
     background: rgb(from var(--void) r g b / 0.88);
@@ -928,8 +828,7 @@
   /* ============ What it does: the feature cards ============
      One card per capability: icon, name, one line, and a drawing of the
      thing underneath, sitting in a dotted panel. The drawings are built
-     from the window / spaces / palette kit above, which is where those
-     primitives went when the showcase became a real WordPress. */
+     from the window / spaces / palette kit above. */
   .does {
     padding-block: var(--section-pad);
     background: var(--obsidian);
@@ -1201,17 +1100,6 @@
     .cards { columns: 1; }
     .fcard.lead .fvis { min-height: 250px; }
     .stats { grid-template-columns: repeat(2, 1fr); }
-    /* No demo boots at this width, so the box holds an offer rather than an
-       operating system and has no reason to be OS-shaped. It was a 70vh,
-       460px-minimum frame with a short message floating in the middle of it.
-       Letting the notice sit in flow means the box is exactly as tall as what
-       it contains. Above this breakpoint the fixed height stays, because
-       there it really is reserving space for the frame and preventing a jump
-       when the iframe lands. */
-    .desktop { aspect-ratio: auto; height: auto; min-height: 0; }
-    .booting { position: static; padding-block: 54px; }
-    /* Redundant directly under a button that says the same thing. */
-    .demo-caption { display: none; }
     .space { max-width: 118px; }
     .spaces-row { gap: 10px; padding-inline: 10px; }
   }
@@ -1273,9 +1161,6 @@
     /* The light stops travelling; the Holomesh underneath is untouched, so
        the titles keep their fill. */
     .hl { animation: none; }
-    /* The boot spinner keeps its shape and stops turning. The notice next to
-       it carries the same information in words, so nothing is lost. */
-    .booting .ring { animation: none; }
   }
 </style>
 </head>
@@ -1349,60 +1234,13 @@
     and any other admin screen side by side, arranged how you like.</p>
     <div class="cta-row">
       <a class="btn solid" href="https://get.openstation.me/">Install the plugin</a>
-      <a class="btn outline" href="#demo">Try it live</a>
+      <!-- Straight to Playground in a new tab. There used to be an
+           embedded demo section below the hero; it is gone, so this is
+           the only route to it and it should not cost the visitor their
+           place on the page. -->
+      <a class="btn outline" href="https://playground.wordpress.net/?mode=seamless&amp;storage=temp#%7B%22landingPage%22%3A%22%2Fdesktop-mode%2F%22%2C%22preferredVersions%22%3A%7B%22php%22%3A%228.3%22%2C%22wp%22%3A%22latest%22%7D%2C%22features%22%3A%7B%22networking%22%3Atrue%7D%2C%22siteOptions%22%3A%7B%22blogname%22%3A%22OpenStation%22%7D%2C%22steps%22%3A%5B%7B%22step%22%3A%22login%22%2C%22username%22%3A%22admin%22%2C%22password%22%3A%22password%22%7D%2C%7B%22step%22%3A%22mkdir%22%2C%22path%22%3A%22%2Fwordpress%2Fwp-content%2Fmu-plugins%22%7D%2C%7B%22step%22%3A%22writeFile%22%2C%22path%22%3A%22%2Fwordpress%2Fwp-content%2Fmu-plugins%2Fopenstation-demo-no-core-update.php%22%2C%22data%22%3A%22%3C%3Fphp%5Cn%2F%2A%2A%5Cn%20%2A%20Demo%20only.%20Playground%20pins%20WordPress%20to%20a%20major.minor%20build%2C%20so%20its%207.0%5Cn%20%2A%20trails%20the%20newest%20patch%20release%20and%20wp-admin%20offers%20an%20update%20a%20throwaway%5Cn%20%2A%20sandbox%20cannot%20usefully%20apply.%20Report%20%5C%22no%20core%20updates%5C%22%20so%20the%20demo%20shows%5Cn%20%2A%20OpenStation%20instead%20of%20an%20update%20nag.%5Cn%20%2A%5Cn%20%2A%20This%20also%20clears%20OpenStation%27s%20own%20release%20notification%2C%20which%20reads%20the%5Cn%20%2A%20same%20data%20via%20get_preferred_from_update_core%28%29.%5Cn%20%2A%2F%5Cnadd_filter%28%5Cn%5Ct%27pre_site_transient_update_core%27%2C%5Cn%5Ctstatic%20function%20%28%29%20%7B%5Cn%5Ct%5Ctreturn%20%28object%29%20array%28%5Cn%5Ct%5Ct%5Ct%27updates%27%20%20%20%20%20%20%20%20%20%3D%3E%20array%28%29%2C%5Cn%5Ct%5Ct%5Ct%27version_checked%27%20%3D%3E%20%24GLOBALS%5B%27wp_version%27%5D%2C%5Cn%5Ct%5Ct%5Ct%27last_checked%27%20%20%20%20%3D%3E%20time%28%29%2C%5Cn%5Ct%5Ct%29%3B%5Cn%5Ct%7D%5Cn%29%3B%5Cn%22%7D%2C%7B%22step%22%3A%22installPlugin%22%2C%22pluginData%22%3A%7B%22resource%22%3A%22wordpress.org%2Fplugins%22%2C%22slug%22%3A%22desktop-mode%22%7D%2C%22options%22%3A%7B%22activate%22%3Atrue%7D%7D%2C%7B%22step%22%3A%22runPHP%22%2C%22code%22%3A%22%3C%3Fphp%5Cnrequire_once%20%27%2Fwordpress%2Fwp-load.php%27%3B%5Cn%2F%2F%20Open%20straight%20onto%20the%20desktop%20rather%20than%20the%20per-user%20opt-in%20screen%2C%5Cn%2F%2F%20and%20drop%20Core%27s%20welcome%20panel.%20Was%20two%20wp-cli%20steps%2C%20which%20dragged%5Cn%2F%2F%20wp-cli.phar%20into%20the%20boot%20for%20two%20one-line%20writes.%5Cnupdate_user_meta%28%201%2C%20%27desktop_mode_mode%27%2C%201%20%29%3B%5Cnupdate_user_meta%28%201%2C%20%27show_welcome_panel%27%2C%200%20%29%3B%5Cn%22%7D%5D%7D"
+         target="_blank" rel="noopener">Try it live<span class="sr-only"> (opens in a new tab)</span></a>
     </div>
-  </section>
-
-  <!-- ============ Live demo ============ -->
-  <section class="frame demo-stage" id="demo" aria-label="Live OpenStation demo">
-    <div class="desktop">
-      <!-- Served state: a real offer with a real link. This is what a phone,
-           a text browser and anyone without JavaScript gets, and it is a
-           working route to the demo rather than a dead "loading" box. The
-           script at the end of the body replaces it with the live frame when
-           the viewport is wide enough and the section comes into range. -->
-      <div class="booting">
-        <div class="ring" aria-hidden="true"></div>
-        <p class="lede">A real WordPress, running in your browser.</p>
-        <p class="wait">Nothing is installed and nothing is saved. The sandbox
-        takes around fifteen seconds to build itself the first time.</p>
-        <a class="btn outline sm" href="https://playground.wordpress.net/?mode=seamless&amp;storage=temp#%7B%22landingPage%22%3A%22%2Fdesktop-mode%2F%22%2C%22preferredVersions%22%3A%7B%22php%22%3A%228.3%22%2C%22wp%22%3A%22latest%22%7D%2C%22features%22%3A%7B%22networking%22%3Atrue%7D%2C%22siteOptions%22%3A%7B%22blogname%22%3A%22OpenStation%22%7D%2C%22steps%22%3A%5B%7B%22step%22%3A%22login%22%2C%22username%22%3A%22admin%22%2C%22password%22%3A%22password%22%7D%2C%7B%22step%22%3A%22mkdir%22%2C%22path%22%3A%22%2Fwordpress%2Fwp-content%2Fmu-plugins%22%7D%2C%7B%22step%22%3A%22writeFile%22%2C%22path%22%3A%22%2Fwordpress%2Fwp-content%2Fmu-plugins%2Fopenstation-demo-no-core-update.php%22%2C%22data%22%3A%22%3C%3Fphp%5Cn%2F%2A%2A%5Cn%20%2A%20Demo%20only.%20Playground%20pins%20WordPress%20to%20a%20major.minor%20build%2C%20so%20its%207.0%5Cn%20%2A%20trails%20the%20newest%20patch%20release%20and%20wp-admin%20offers%20an%20update%20a%20throwaway%5Cn%20%2A%20sandbox%20cannot%20usefully%20apply.%20Report%20%5C%22no%20core%20updates%5C%22%20so%20the%20demo%20shows%5Cn%20%2A%20OpenStation%20instead%20of%20an%20update%20nag.%5Cn%20%2A%5Cn%20%2A%20This%20also%20clears%20OpenStation%27s%20own%20release%20notification%2C%20which%20reads%20the%5Cn%20%2A%20same%20data%20via%20get_preferred_from_update_core%28%29.%5Cn%20%2A%2F%5Cnadd_filter%28%5Cn%5Ct%27pre_site_transient_update_core%27%2C%5Cn%5Ctstatic%20function%20%28%29%20%7B%5Cn%5Ct%5Ctreturn%20%28object%29%20array%28%5Cn%5Ct%5Ct%5Ct%27updates%27%20%20%20%20%20%20%20%20%20%3D%3E%20array%28%29%2C%5Cn%5Ct%5Ct%5Ct%27version_checked%27%20%3D%3E%20%24GLOBALS%5B%27wp_version%27%5D%2C%5Cn%5Ct%5Ct%5Ct%27last_checked%27%20%20%20%20%3D%3E%20time%28%29%2C%5Cn%5Ct%5Ct%29%3B%5Cn%5Ct%7D%5Cn%29%3B%5Cn%22%7D%2C%7B%22step%22%3A%22installPlugin%22%2C%22pluginData%22%3A%7B%22resource%22%3A%22wordpress.org%2Fplugins%22%2C%22slug%22%3A%22desktop-mode%22%7D%2C%22options%22%3A%7B%22activate%22%3Atrue%7D%7D%2C%7B%22step%22%3A%22runPHP%22%2C%22code%22%3A%22%3C%3Fphp%5Cnrequire_once%20%27%2Fwordpress%2Fwp-load.php%27%3B%5Cn%2F%2F%20Open%20straight%20onto%20the%20desktop%20rather%20than%20the%20per-user%20opt-in%20screen%2C%5Cn%2F%2F%20and%20drop%20Core%27s%20welcome%20panel.%20Was%20two%20wp-cli%20steps%2C%20which%20dragged%5Cn%2F%2F%20wp-cli.phar%20into%20the%20boot%20for%20two%20one-line%20writes.%5Cnupdate_user_meta%28%201%2C%20%27desktop_mode_mode%27%2C%201%20%29%3B%5Cnupdate_user_meta%28%201%2C%20%27show_welcome_panel%27%2C%200%20%29%3B%5Cn%22%7D%5D%7D" target="_blank" rel="noopener">Open the live demo</a>
-      </div>
-
-      <!-- The Blueprint rides in the URL fragment rather than as a
-           blueprint-url, so this file stays self-contained and does not
-           depend on a JSON we also have to host. Decoded, it is:
-
-             landingPage    /desktop-mode/   (the plugin's portal route)
-             php 8.3, wp latest, networking on, blogname "OpenStation"
-             steps          log in as admin
-                            mkdir  wp-content/mu-plugins
-                            writeFile  a one-filter mu-plugin that reports
-                              "no core updates", because Playground pins WP to
-                              a major.minor build and cannot apply the patch
-                              release wp-admin would otherwise nag about
-                            install desktop-mode from wordpress.org, activate
-                            runPHP  set desktop_mode_mode = 1 so the demo opens
-                              on the desktop instead of the opt-in screen, and
-                              show_welcome_panel = 0 to drop Core's panel
-
-           Those last two were a pair of wp-cli steps, which pulled a
-           multi-megabyte wp-cli.phar into the boot to do two one-line writes.
-
-           It installs from wordpress.org so it always tracks the released
-           version. Not using the plugin repo's own blueprint because that
-           one currently 404s: it asks for openstation.zip and the latest
-           release still ships desktop-mode.zip. Swap back to
-           blueprint-url=.../openstation/.../blueprint.json once that is
-           fixed upstream.
-
-           src is deliberately absent. It lives in data-src until the script
-           decides this viewport can render a desktop OS. -->
-      <iframe
-          title="Live OpenStation demo running in WordPress Playground"
-          data-src="https://playground.wordpress.net/?mode=seamless&amp;storage=temp#%7B%22landingPage%22%3A%22%2Fdesktop-mode%2F%22%2C%22preferredVersions%22%3A%7B%22php%22%3A%228.3%22%2C%22wp%22%3A%22latest%22%7D%2C%22features%22%3A%7B%22networking%22%3Atrue%7D%2C%22siteOptions%22%3A%7B%22blogname%22%3A%22OpenStation%22%7D%2C%22steps%22%3A%5B%7B%22step%22%3A%22login%22%2C%22username%22%3A%22admin%22%2C%22password%22%3A%22password%22%7D%2C%7B%22step%22%3A%22mkdir%22%2C%22path%22%3A%22%2Fwordpress%2Fwp-content%2Fmu-plugins%22%7D%2C%7B%22step%22%3A%22writeFile%22%2C%22path%22%3A%22%2Fwordpress%2Fwp-content%2Fmu-plugins%2Fopenstation-demo-no-core-update.php%22%2C%22data%22%3A%22%3C%3Fphp%5Cn%2F%2A%2A%5Cn%20%2A%20Demo%20only.%20Playground%20pins%20WordPress%20to%20a%20major.minor%20build%2C%20so%20its%207.0%5Cn%20%2A%20trails%20the%20newest%20patch%20release%20and%20wp-admin%20offers%20an%20update%20a%20throwaway%5Cn%20%2A%20sandbox%20cannot%20usefully%20apply.%20Report%20%5C%22no%20core%20updates%5C%22%20so%20the%20demo%20shows%5Cn%20%2A%20OpenStation%20instead%20of%20an%20update%20nag.%5Cn%20%2A%5Cn%20%2A%20This%20also%20clears%20OpenStation%27s%20own%20release%20notification%2C%20which%20reads%20the%5Cn%20%2A%20same%20data%20via%20get_preferred_from_update_core%28%29.%5Cn%20%2A%2F%5Cnadd_filter%28%5Cn%5Ct%27pre_site_transient_update_core%27%2C%5Cn%5Ctstatic%20function%20%28%29%20%7B%5Cn%5Ct%5Ctreturn%20%28object%29%20array%28%5Cn%5Ct%5Ct%5Ct%27updates%27%20%20%20%20%20%20%20%20%20%3D%3E%20array%28%29%2C%5Cn%5Ct%5Ct%5Ct%27version_checked%27%20%3D%3E%20%24GLOBALS%5B%27wp_version%27%5D%2C%5Cn%5Ct%5Ct%5Ct%27last_checked%27%20%20%20%20%3D%3E%20time%28%29%2C%5Cn%5Ct%5Ct%29%3B%5Cn%5Ct%7D%5Cn%29%3B%5Cn%22%7D%2C%7B%22step%22%3A%22installPlugin%22%2C%22pluginData%22%3A%7B%22resource%22%3A%22wordpress.org%2Fplugins%22%2C%22slug%22%3A%22desktop-mode%22%7D%2C%22options%22%3A%7B%22activate%22%3Atrue%7D%7D%2C%7B%22step%22%3A%22runPHP%22%2C%22code%22%3A%22%3C%3Fphp%5Cnrequire_once%20%27%2Fwordpress%2Fwp-load.php%27%3B%5Cn%2F%2F%20Open%20straight%20onto%20the%20desktop%20rather%20than%20the%20per-user%20opt-in%20screen%2C%5Cn%2F%2F%20and%20drop%20Core%27s%20welcome%20panel.%20Was%20two%20wp-cli%20steps%2C%20which%20dragged%5Cn%2F%2F%20wp-cli.phar%20into%20the%20boot%20for%20two%20one-line%20writes.%5Cnupdate_user_meta%28%201%2C%20%27desktop_mode_mode%27%2C%201%20%29%3B%5Cnupdate_user_meta%28%201%2C%20%27show_welcome_panel%27%2C%200%20%29%3B%5Cn%22%7D%5D%7D"></iframe>
-    </div>
-    <p class="demo-caption">Try it out yourself.</p>
   </section>
 
   <!-- ============ Stats ============
@@ -1804,138 +1642,6 @@
      The slug is still `desktop-mode`, which is what the plugin is registered
      as on wordpress.org even though everything else has moved to OpenStation. -->
 
-<!-- ============ Booting the live demo ============
-     Upgrades the served offer into the real Playground frame, on the machines
-     that can actually show it.
-
-     Two gates, and the page is correct if neither ever opens. Width, because
-     WordPress drops into its mobile admin layout below 782px and the shell
-     keeps drawing desktop window chrome on top of it, so a frame narrower
-     than that is not a demo of anything. And proximity, because the frame
-     pulls tens of megabytes and a visitor who never scrolls to it should
-     never pay for that. The old markup relied on loading="lazy" for the
-     second gate and it did not hold: the frame sits just under the fold and
-     the browser's lazy threshold is much larger than that, so Playground was
-     fetching on load for everyone. -->
-<script>
-( function () {
-	'use strict';
-
-	var stage = document.querySelector( '.desktop' );
-	var frame = stage && stage.querySelector( 'iframe[data-src]' );
-
-	if ( ! frame || ! window.matchMedia || ! window.IntersectionObserver ) {
-		return;
-	}
-
-	// 782px is where wp-admin leaves its mobile layout. Measuring rather than
-	// picking a viewport breakpoint, because the frame is narrower than the
-	// viewport by the page gutters and its own max-width, and a hardcoded
-	// breakpoint would drift the next time the rails change.
-	//
-	// It measures the stage, not the iframe. The iframe is display: none
-	// until it boots, so that it cannot swallow taps meant for the offer
-	// underneath, which means asking it for its width returns 0 and the gate
-	// never opens. clientWidth is the stage's inner box, which is exactly the
-	// space the iframe will fill, since the iframe is inset: 0 within it.
-	var MIN_FRAME_WIDTH = 782;
-
-	function wideEnough() {
-		return stage.clientWidth >= MIN_FRAME_WIDTH;
-	}
-
-	function boot() {
-		if ( frame.src ) {
-			return;
-		}
-
-		// The notice stops being an offer and becomes a boot state: the
-		// button steps aside, the spinner appears, and the text stays put
-		// underneath so a frame that never paints still explains itself.
-		stage.classList.add( 'is-booting' );
-		frame.src = frame.getAttribute( 'data-src' );
-	}
-
-	var observer = new IntersectionObserver( function ( entries ) {
-		if ( ! entries[ 0 ].isIntersecting || ! wideEnough() ) {
-			return;
-		}
-
-		observer.disconnect();
-		boot();
-	}, { rootMargin: '400px 0px' } );
-
-	observer.observe( stage );
-}() );
-</script>
-
-<script>
-( function () {
-	'use strict';
-
-	var stats = document.querySelectorAll( '[data-stat]' );
-
-	if ( ! stats.length || ! window.fetch ) {
-		return;
-	}
-
-	var ENDPOINT = 'https://api.wordpress.org/plugins/info/1.2/' +
-		'?action=plugin_information' +
-		'&request[slug]=desktop-mode' +
-		'&request[fields][sections]=0';
-
-	/**
-	 * How each stat reads itself out of the API payload.
-	 *
-	 * Returning null means "leave the markup alone", so a field the API
-	 * stops sending keeps its existing number rather than blanking out.
-	 */
-	var read = {
-		// Both of these guard on the value, not just the type. A real zero
-		// from the API is a number, and "0+ active installs" or "0.0 plugin
-		// rating" painted over the correct served figure would be worse than
-		// showing nothing new. Zero installs cannot be true while the page is
-		// up, and a zero rating means nobody has rated it rather than that it
-		// scored nothing.
-		installs: function ( data ) {
-			return data.active_installs > 0
-				? data.active_installs.toLocaleString( 'en-US' ) + '+'
-				: null;
-		},
-		rating: function ( data ) {
-			// The API reports 0-100. The row shows the familiar 0-5.
-			return data.num_ratings > 0 && data.rating > 0
-				? ( data.rating / 20 ).toFixed( 1 )
-				: null;
-		},
-		version: function ( data ) {
-			return data.version ? 'v' + data.version : null;
-		},
-		requires: function ( data ) {
-			return data.requires ? data.requires + '+' : null;
-		}
-	};
-
-	fetch( ENDPOINT )
-		.then( function ( response ) {
-			return response.ok ? response.json() : Promise.reject();
-		} )
-		.then( function ( data ) {
-			Array.prototype.forEach.call( stats, function ( node ) {
-				var value = read[ node.getAttribute( 'data-stat' ) ];
-				value = value && value( data );
-
-				if ( value ) {
-					node.textContent = value;
-				}
-			} );
-		} )
-		.catch( function () {
-			// The served numbers stand. Nothing to undo, nothing to report.
-		} );
-}() );
-</script>
-
 <!-- ============ Releasing the real Mio ============
      Upgrades the checkbox above from a drawing on a keyframe to the actual
      companion: the same single file the blog runs, built from the plugin's
@@ -1977,7 +1683,7 @@
 	 * setColliders() afterwards, so it is in force for the first frame and
 	 * Mio never falls through a card it is about to land on.
 	 */
-	var COLLIDERS = '.fcard, .stat, .desktop';
+	var COLLIDERS = '.fcard, .stat';
 
 	/** 'idle' | 'loading' | 'ready'. A failed attempt returns to 'idle'. */
 	var state = 'idle';
