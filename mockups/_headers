@@ -1,0 +1,46 @@
+# Response headers for the landing-page bundle.
+#
+# Spacefast reads a _headers file at the root of the published folder, using the
+# usual "matcher line, then indented Name: value lines" grammar. This file is
+# copied into the bundle by build-landing-bundle.sh; it does nothing sitting in
+# the repo on its own.
+#
+# The reason it exists: the host's default is
+#   cache-control: public, max-age=0, s-maxage=600, stale-while-revalidate=60
+# which is right for the HTML and wrong for everything with a stable name.
+# max-age=0 means the browser will not use its own cached copy of a font
+# without revalidating first, so Geist needed a network round trip on every
+# single page view. That round trip is exactly the window font-display fills
+# with a fallback, and Geist is about 9% wider than every system sans we fall
+# back to, so the hero was reflowing by a whole line on every visit rather than
+# only the first one.
+
+# Fonts never change: same bytes, same filename, for the life of the typeface.
+# Access-Control-Allow-Origin because font fetches are always CORS mode, and the
+# preload links in the page carry crossorigin.
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+
+# Favicons, the social card, and the Mio runtime. All content-stable, and all
+# re-published under the same names whenever they do change, so a long cache is
+# a deliberate tradeoff: a change to one of these needs a filename change or a
+# wait, and that is worth it against re-validating them on every visit.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/vendor/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# The page itself keeps the host default: revalidate every time, so a publish
+# is live immediately. Only the security headers are added here.
+#
+# nosniff matters more than it looks. vendor/mio.min.js is loaded by injecting a
+# <script>, and a 404 that returned an HTML error page as 200 text/html would be
+# parsed as JavaScript, leaving the Mio button stuck in its loading state for
+# the full six-second timeout. nosniff makes that a clean failure instead.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: object-src 'none'; base-uri 'none'; form-action 'none'

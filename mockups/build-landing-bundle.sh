@@ -8,6 +8,7 @@
 # into a self-contained directory:
 #
 #   index.html   the page, with ../fonts, ../vendor and ../assets rewritten
+#   _headers     cache and security headers, read by the host at the root
 #   assets/      favicons
 #   fonts/       Geist and Geist Mono, plus their licence
 #   vendor/      mio.min.js, plus its provenance note
@@ -33,6 +34,11 @@ sed -e 's|\.\./fonts/|fonts/|g' \
     -e 's|\.\./vendor/|vendor/|g' \
     -e 's|\.\./assets/|assets/|g' \
     "$source_page" > "$out/index.html"
+
+# The host only reads _headers from the root of the published folder, so it has
+# to be copied in rather than left in mockups/. Without it the fonts come back
+# with max-age=0 and the hero reflows on every visit; see the file itself.
+cp "$repo_root/mockups/_headers"               "$out/_headers"
 
 cp "$repo_root/assets/logomark-app-circle.svg" "$out/assets/"
 cp "$repo_root/assets/favicon.png"             "$out/assets/"
