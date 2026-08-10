@@ -10,7 +10,10 @@
 <!-- Social cards. Absolute URLs on purpose: scrapers do not resolve relative
      paths, and they point at openstation.me because that is where this page
      lives, not at whatever host is previewing it. The image is
-     mockups/og-card.html, rendered by mockups/render-og-card.sh. -->
+     mockups/og-card.html, rendered by mockups/render-og-card.sh. It carries
+     no words: og:title and the domain are printed next to the image by every
+     unfurl, so repeating them inside the artwork spent the pixels twice. The
+     alt text describes the picture rather than restating the title. -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="OpenStation">
 <meta property="og:url" content="https://openstation.me/">
@@ -19,12 +22,12 @@
 <meta property="og:image" content="https://openstation.me/assets/imagery/og.png">
 <meta property="og:image:width" content="2400">
 <meta property="og:image:height" content="1260">
-<meta property="og:image:alt" content="OpenStation: one tab, your whole WordPress site.">
+<meta property="og:image:alt" content="The OpenStation logomark, a holographic crescent on a dark round tile, glowing against a starfield.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="One tab. Your whole WordPress site.">
 <meta name="twitter:description" content="A free WordPress plugin that gives wp-admin real windows, a dock, and virtual desktops. Open every admin screen at once and keep your layout where you left it.">
 <meta name="twitter:image" content="https://openstation.me/assets/imagery/og.png">
-<meta name="twitter:image:alt" content="OpenStation: one tab, your whole WordPress site.">
+<meta name="twitter:image:alt" content="The OpenStation logomark, a holographic crescent on a dark round tile, glowing against a starfield.">
 <!-- Favicon: the round chip (../assets/logomark-app-circle.svg) -->
 <link rel="icon" type="image/svg+xml" href="../assets/logomark-app-circle.svg">
 <link rel="icon" type="image/png" sizes="180x180" href="../assets/favicon.png">
