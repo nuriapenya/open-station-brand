@@ -49,6 +49,24 @@ Named gradient fills and backgrounds (all vector SVGs, defined as gradient recip
 - Clear space: 32.5% of the mark height left and right of the lockup (the same measure as the gap), 25% above and below; 25% on all four sides of the standalone icon. That makes the construction box 6.375 by 1.5 mark heights around the lockup, and 1.5 mark heights square around the icon.
 - Note for anyone reading this file: the Logo section of the guide page (index.html) shows the assets only, as a wordmark card and an icon card plus the holo pair and the chips. The clear-space and proportion rules are not drawn there; this file and brand.json carry the wording.
 
+## Icons
+
+Thirty monoline UI icons, drawn on a 24 x 24 grid with a 20 x 20 live area, a single 1.5 stroke with round caps and joins, corners at radius 2 (the same value WordPress Core uses), and `currentColor` for the stroke so one file works on any surface. Nothing is filled except dots and the copilot spark (the brand sparkle, which stays solid because outlined it collapses at 16px). Display sizes: 16, 20, 24, 32, 48. Scale the icon, never the stroke.
+
+Core owns the verbs, OpenStation owns the nouns. Nineteen of the thirty resolve to `@wordpress/icons` (GPL-2.0-or-later, 341 icons, the set behind WordPress 7.1's `wp_get_icon()`); only eleven are drawn here: window, windows, dock, spaces, copilot, snap, command, apps, widgets, user, lock. When a new icon is needed, take it from Core if the concept exists there and draw one only if it does not. Seven keep our name but resolve to a differently-named Core icon: more to more-horizontal, maximize to fullscreen, edit to pencil, palette to color, wallpaper to image, warning to caution, minimize to line-solid. Core's registry sanitises to `<svg>`, `<path>` and `<polygon>` only, so convert shapes to paths before registering. Full inventory: https://nuriapenya.github.io/open-station-brand/icons/
+
+Names, by group:
+
+- The station: window, windows, dock, spaces, apps, palette, widgets, wallpaper, copilot
+- Window controls: close, minimize, maximize, snap, pin
+- Navigation: search, chevron-right, arrow-up-right, more, command
+- Actions: plus, check, edit, trash, download, settings
+- Status: info, warning, bell, user, lock
+
+Files: assets/icons/<name>.svg, one per icon, plus assets/icons/openstation-icons.svg, a sprite holding all thirty as `<symbol id="os-NAME">`. Reference with `<use href="assets/icons/openstation-icons.svg#os-palette"/>` and the icon inherits the surrounding text color; used as `<img>` it renders black, because currentColor has no context to resolve against. chevron-right is the only directional glyph: rotate it for the other three. Decorative icons take aria-hidden="true"; icon-only controls carry the name on the button.
+
+These are the functional icons. The illustrative space icons (100 x 100, multi-color: asteroid, eclipse, meteor shower, orbit, planet, pulsar, rocket, sparkle, star, sun, supernova, ufo) are a separate family for spot art, and the two are not mixed in the same row.
+
 ## Mascot
 
 Mio, a small ghost blob that glows in Pulse and drifts between windows. Its own gradient is Miomesh (assets/miomesh.svg): Pulse #E94FF3 to #AA67FF to #A580FF to #4B3EFF. Named explorations: Luna, Cometa, Órbita, Eclipse, Alba, Nube, Asteroide, Gotita (assets/mio/). Final form and usage rules are still open.
@@ -56,6 +74,7 @@ Mio, a small ghost blob that glows in Pulse and drifts between windows. Its own 
 ## Files
 
 - [brand.json](brand.json): design tokens (colors, grays, meshes, type scale, radii, logo rules)
+- [assets/icons/](assets/icons/): the thirty UI icons, one SVG each, plus the openstation-icons.svg sprite
 - [assets/](assets/): logomark, logoword, app icons, the wordpress.org plugin icon (plugins-icon.svg, 192px chip with radius 13), meshes and backgrounds, Mio explorations, merch renders, and imagery mockups under assets/imagery/ (wordpress.org plugin banner, X profile mockups)
 - [fonts/](fonts/): Geist and Geist Mono variable files plus the OFL license
 

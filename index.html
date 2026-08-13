@@ -644,19 +644,101 @@
   .usage-row .tbd { flex: 1; }
 
   /* ---------- Iconography ---------- */
-  .icon-band { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 72px); align-items: start; }
-  .icon-row { display: flex; gap: 12px; flex-wrap: wrap; }
-  .icon-dot {
-    width: 42px; height: 42px;
-    border-radius: 50%;
-    border: 1px solid var(--line);
-    background: rgba(255, 255, 255, .03);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--muted);
+  .icon-intro {
+    display: grid;
+    grid-template-columns: 1.2fr .8fr;
+    gap: clamp(28px, 5vw, 72px);
+    align-items: start;
   }
-  .icon-dot svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+  .icon-copy { color: var(--muted); font: 400 15px/1.75 var(--sans); max-width: 62ch; }
+  .icon-copy b { color: var(--paper); font-weight: 500; }
+  .icon-copy code, .icon-use code {
+    font: 400 13px/1 var(--mono);
+    color: var(--nebula);
+  }
+  .icon-specs { list-style: none; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .icon-specs li {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 12px 16px;
+    font: 400 12px/1.4 var(--mono);
+    color: var(--dim);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .icon-specs li:last-child { border-bottom: 0; }
+  .icon-specs b { color: var(--paper); font-weight: 400; text-align: right; }
+
+  .icon-scale {
+    display: flex;
+    align-items: flex-end;
+    gap: clamp(24px, 4vw, 56px);
+    flex-wrap: wrap;
+    margin: 56px 0 64px;
+    padding: 32px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: rgba(255,255,255,.02);
+  }
+  .scale-step { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .scale-row { display: flex; align-items: center; gap: 12px; height: 48px; }
+  .scale-step svg { width: var(--s); height: var(--s); }
+  .scale-step span { font: 400 10px/1 var(--mono); letter-spacing: .08em; color: var(--dim); }
+  .scale-note { flex: 1; min-width: 220px; color: var(--dim); font: 400 12px/1.7 var(--mono); }
+
+  .icon-group { margin-bottom: 48px; }
+  .icon-group > .label { display: block; margin-bottom: 20px; }
+  .icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(102px, 1fr)); gap: 10px; }
+  .icon-cell {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 22px 8px 14px;
+    border: 1px solid var(--line-soft);
+    border-radius: 10px;
+    background: rgba(255,255,255,.02);
+    color: var(--paper);
+    transition: border-color .18s ease, color .18s ease;
+  }
+  .icon-cell:hover { border-color: rgba(233,79,243,.4); color: var(--starlight); }
+  .icon-cell svg { width: 32px; height: 32px; }   /* shown at 32; true sizes live in the scale strip */
+  .icon-cell figcaption {
+    font: 400 10px/1.3 var(--mono);
+    letter-spacing: .04em;
+    color: var(--dim);
+    text-align: center;
+  }
+
+  /* Every icon in the set: 24 grid, monoline 1.5, currentColor.
+     Dots and the spark carry fill="currentColor" on the element, which beats this inherited fill. */
+  .icon-grid svg, .icon-scale svg, .icon-cell svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .icon-use {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(28px, 5vw, 72px);
+    align-items: start;
+    margin-top: 64px;
+  }
+  .icon-use .label { display: block; margin-bottom: 20px; }
+  .icon-use .icon-copy { margin-bottom: 20px; }
+  .snippet {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px;
+    font: 400 12px/1.7 var(--mono);
+    color: var(--osmium);
+    overflow-x: auto;
+    background: rgba(0,0,0,.25);
+  }
 
   /* ---------- Imagery ---------- */
   .imagery { display: grid; gap: 28px; }
@@ -813,7 +895,8 @@
     .use-grid { grid-template-columns: 1fr; }
     .masthead { grid-template-columns: 1fr; align-items: start; padding-bottom: 72px; }
     .contact { text-align: left; }
-    .band, .icon-band { grid-template-columns: 1fr; }
+    .band { grid-template-columns: 1fr; }
+    .icon-intro, .icon-use { grid-template-columns: 1fr; }
     .lockups, .imagery, .img-row, .examples, .product-tiles { grid-template-columns: 1fr; }
     .legal { columns: 1; }
     .specimen-aa { font-size: 88px; }
@@ -1199,18 +1282,149 @@
   </section>
 
   <!-- ============ ICONOGRAPHY ============ -->
-  <section>
+  <section id="icons">
     <span class="label">Iconography</span>
-    <div class="icon-band">
-      <div class="icon-row">
-        <div class="icon-dot"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1.5"/><line x1="2" y1="6" x2="14" y2="6"/></svg></div>
-        <div class="icon-dot"><svg viewBox="0 0 16 16"><circle cx="4" cy="12" r="1.4"/><circle cx="8" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><line x1="2" y1="8.5" x2="14" y2="8.5"/></svg></div>
-        <div class="icon-dot"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5"/><ellipse cx="8" cy="8" rx="5.5" ry="2.2"/></svg></div>
-        <div class="icon-dot"><svg viewBox="0 0 16 16"><path d="M8 2 L9.5 6.5 L14 8 L9.5 9.5 L8 14 L6.5 9.5 L2 8 L6.5 6.5 Z"/></svg></div>
-        <div class="icon-dot"><svg viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="4.5" height="4.5" rx="1"/><rect x="9" y="2.5" width="4.5" height="4.5" rx="1"/><rect x="2.5" y="9" width="4.5" height="4.5" rx="1"/><rect x="9" y="9" width="4.5" height="4.5" rx="1"/></svg></div>
-        <div class="icon-dot"><svg viewBox="0 0 16 16"><path d="M3 13 L8 3 L13 13"/><line x1="5" y1="9.5" x2="11" y2="9.5"/></svg></div>
+    <div class="icon-intro">
+      <p class="icon-copy"><b>Thirty icons, one line weight.</b> The set covers the station's own
+        vocabulary, windows and dock and Spaces and the palette, and the everyday verbs around it.
+        Every icon is drawn on a 24 by 24 grid with a 20 by 20 live area, one 1.5 stroke, round caps
+        and joins, and a corner radius of 2, the same value Core uses. Nothing carries a color of its own: the stroke is
+        <code>currentColor</code>, so the same file works on Void and on Starlight and picks up
+        whatever text color surrounds it. The only filled shapes are dots and the spark. The spark is
+        the brand sparkle and stays solid, because outlined it collapses at 16&nbsp;px.</p>
+      <ul class="icon-specs">
+        <li><span>Grid</span><b>24 × 24</b></li>
+        <li><span>Live area</span><b>20 × 20</b></li>
+        <li><span>Stroke</span><b>1.5, round caps and joins</b></li>
+        <li><span>Corners</span><b>2, matching Core</b></li>
+        <li><span>Color</span><b>currentColor, never hardcoded</b></li>
+        <li><span>Sizes</span><b>16, 20, 24, 32, 48</b></li>
+      </ul>
+    </div>
+
+    <div class="icon-scale">
+        <div class="scale-step" style="--s: 16px">
+          <div class="scale-row"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="M3 9.5h18"/><circle cx="6.6" cy="7" r="0.85" fill="currentColor" stroke="none"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="3"/><path d="M2.5 10h19"/><path d="M5.9 6.15 7.2 7.3 5.9 8.45"/><path d="M9.4 8.45h4.6"/><path d="M6 13.5h9"/><path d="M6 16.5h5.5"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 2.5Q10.9 8.5 17.5 10Q10.9 11.5 10 17.5Q9.1 11.5 2.5 10Q9.1 8.5 10 2.5Z" fill="currentColor" stroke="none"/><path d="M17.9 14Q18.35 17.1 21.5 17.6Q18.35 18.1 17.9 21.2Q17.45 18.1 14.3 17.6Q17.45 17.1 17.9 14Z" fill="currentColor" stroke="none"/></svg></div>
+          <span>16 px</span>
+        </div>
+        <div class="scale-step" style="--s: 20px">
+          <div class="scale-row"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="M3 9.5h18"/><circle cx="6.6" cy="7" r="0.85" fill="currentColor" stroke="none"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="3"/><path d="M2.5 10h19"/><path d="M5.9 6.15 7.2 7.3 5.9 8.45"/><path d="M9.4 8.45h4.6"/><path d="M6 13.5h9"/><path d="M6 16.5h5.5"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 2.5Q10.9 8.5 17.5 10Q10.9 11.5 10 17.5Q9.1 11.5 2.5 10Q9.1 8.5 10 2.5Z" fill="currentColor" stroke="none"/><path d="M17.9 14Q18.35 17.1 21.5 17.6Q18.35 18.1 17.9 21.2Q17.45 18.1 14.3 17.6Q17.45 17.1 17.9 14Z" fill="currentColor" stroke="none"/></svg></div>
+          <span>20 px</span>
+        </div>
+        <div class="scale-step" style="--s: 24px">
+          <div class="scale-row"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="M3 9.5h18"/><circle cx="6.6" cy="7" r="0.85" fill="currentColor" stroke="none"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="3"/><path d="M2.5 10h19"/><path d="M5.9 6.15 7.2 7.3 5.9 8.45"/><path d="M9.4 8.45h4.6"/><path d="M6 13.5h9"/><path d="M6 16.5h5.5"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 2.5Q10.9 8.5 17.5 10Q10.9 11.5 10 17.5Q9.1 11.5 2.5 10Q9.1 8.5 10 2.5Z" fill="currentColor" stroke="none"/><path d="M17.9 14Q18.35 17.1 21.5 17.6Q18.35 18.1 17.9 21.2Q17.45 18.1 14.3 17.6Q17.45 17.1 17.9 14Z" fill="currentColor" stroke="none"/></svg></div>
+          <span>24 px</span>
+        </div>
+        <div class="scale-step" style="--s: 32px">
+          <div class="scale-row"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="M3 9.5h18"/><circle cx="6.6" cy="7" r="0.85" fill="currentColor" stroke="none"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="3"/><path d="M2.5 10h19"/><path d="M5.9 6.15 7.2 7.3 5.9 8.45"/><path d="M9.4 8.45h4.6"/><path d="M6 13.5h9"/><path d="M6 16.5h5.5"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 2.5Q10.9 8.5 17.5 10Q10.9 11.5 10 17.5Q9.1 11.5 2.5 10Q9.1 8.5 10 2.5Z" fill="currentColor" stroke="none"/><path d="M17.9 14Q18.35 17.1 21.5 17.6Q18.35 18.1 17.9 21.2Q17.45 18.1 14.3 17.6Q17.45 17.1 17.9 14Z" fill="currentColor" stroke="none"/></svg></div>
+          <span>32 px</span>
+        </div>
+        <div class="scale-step" style="--s: 48px">
+          <div class="scale-row"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="M3 9.5h18"/><circle cx="6.6" cy="7" r="0.85" fill="currentColor" stroke="none"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="3"/><path d="M2.5 10h19"/><path d="M5.9 6.15 7.2 7.3 5.9 8.45"/><path d="M9.4 8.45h4.6"/><path d="M6 13.5h9"/><path d="M6 16.5h5.5"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 2.5Q10.9 8.5 17.5 10Q10.9 11.5 10 17.5Q9.1 11.5 2.5 10Q9.1 8.5 10 2.5Z" fill="currentColor" stroke="none"/><path d="M17.9 14Q18.35 17.1 21.5 17.6Q18.35 18.1 17.9 21.2Q17.45 18.1 14.3 17.6Q17.45 17.1 17.9 14Z" fill="currentColor" stroke="none"/></svg></div>
+          <span>48 px</span>
+        </div>
+      <p class="scale-note">One drawing, five sizes. Below 16&nbsp;px the set stops working:
+        scale the icon, never the stroke.</p>
+    </div>
+
+      <div class="icon-group">
+        <span class="label">The station <b>·</b> The product's own vocabulary.</span>
+        <div class="icon-grid">
+          <figure class="icon-cell" title="A single admin screen open as a window"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="M3 9.5h18"/><circle cx="6.6" cy="7" r="0.85" fill="currentColor" stroke="none"/></svg><figcaption>window</figcaption></figure>
+          <figure class="icon-cell" title="Stacked windows, the multi-window shell"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="8" width="13" height="11.5" rx="2.5"/><path d="M2.5 12h13"/><path d="M8 8V7a2.5 2.5 0 0 1 2.5-2.5h8A2.5 2.5 0 0 1 21 7v7a2.5 2.5 0 0 1-2.5 2.5h-3"/></svg><figcaption>windows</figcaption></figure>
+          <figure class="icon-cell" title="The dock: launcher bar for apps and screens"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="8" width="20" height="8" rx="4"/><circle cx="7" cy="12" r="1.15" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.15" fill="currentColor" stroke="none"/><circle cx="17" cy="12" r="1.15" fill="currentColor" stroke="none"/></svg><figcaption>dock</figcaption></figure>
+          <figure class="icon-cell" title="Virtual desktops, switched with the pager"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4.5" width="8.5" height="9" rx="2"/><rect x="13" y="4.5" width="8.5" height="9" rx="2"/><circle cx="9" cy="18.5" r="0.9" fill="currentColor" stroke="none"/><circle cx="12" cy="18.5" r="0.9" fill="currentColor" stroke="none"/><circle cx="15" cy="18.5" r="0.9" fill="currentColor" stroke="none"/></svg><figcaption>spaces</figcaption></figure>
+          <figure class="icon-cell" title="All apps, the grid of installed screens"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></svg><figcaption>apps</figcaption></figure>
+          <figure class="icon-cell" title="Command palette: type to run anything"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="3"/><path d="M2.5 10h19"/><path d="M5.9 6.15 7.2 7.3 5.9 8.45"/><path d="M9.4 8.45h4.6"/><path d="M6 13.5h9"/><path d="M6 16.5h5.5"/></svg><figcaption>palette</figcaption></figure>
+          <figure class="icon-cell" title="Widgets laid out on the desktop"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="11" height="11" rx="2.5"/><rect x="15.5" y="2.5" width="6" height="6" rx="2"/><rect x="15.5" y="10.5" width="6" height="11" rx="2"/><rect x="2.5" y="15.5" width="11" height="6" rx="2"/></svg><figcaption>widgets</figcaption></figure>
+          <figure class="icon-cell" title="Desktop wallpaper and backgrounds"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4" width="19" height="16" rx="2.5"/><circle cx="8" cy="8.6" r="1.6"/><path d="M2.5 17.6 8.2 11.4a2 2 0 0 1 2.9 0l6.4 7"/><path d="M14.2 15.4 15.9 13.6a2 2 0 0 1 2.8 0l2.6 2.6"/></svg><figcaption>wallpaper</figcaption></figure>
+          <figure class="icon-cell" title="The AI assistant. Brand spark, always filled"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 2.5Q10.9 8.5 17.5 10Q10.9 11.5 10 17.5Q9.1 11.5 2.5 10Q9.1 8.5 10 2.5Z" fill="currentColor" stroke="none"/><path d="M17.9 14Q18.35 17.1 21.5 17.6Q18.35 18.1 17.9 21.2Q17.45 18.1 14.3 17.6Q17.45 17.1 17.9 14Z" fill="currentColor" stroke="none"/></svg><figcaption>copilot</figcaption></figure>
+        </div>
       </div>
-      <div class="tbd">WIP · Icon grid, stroke weight and corner language to be defined with the product icon set.</div>
+      <div class="icon-group">
+        <span class="label">Window controls <b>·</b> What sits in the window chrome.</span>
+        <div class="icon-grid">
+          <figure class="icon-cell" title="Close a window, dismiss a panel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.75 6.75 17.25 17.25"/><path d="M17.25 6.75 6.75 17.25"/></svg><figcaption>close</figcaption></figure>
+          <figure class="icon-cell" title="Send a window down to the dock"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg><figcaption>minimize</figcaption></figure>
+          <figure class="icon-cell" title="Fill the desktop, enter full screen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5V6.5A2.5 2.5 0 0 1 6.5 4h3"/><path d="M14.5 4h3A2.5 2.5 0 0 1 20 6.5v3"/><path d="M20 14.5v3a2.5 2.5 0 0 1-2.5 2.5h-3"/><path d="M9.5 20h-3A2.5 2.5 0 0 1 4 17.5v-3"/></svg><figcaption>maximize</figcaption></figure>
+          <figure class="icon-cell" title="Snap windows into a split layout"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M12 4.5v15"/><path d="M12 12h9.5"/></svg><figcaption>snap</figcaption></figure>
+          <figure class="icon-cell" title="Keep a window or widget in place"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 3h7"/><path d="M10 3v5.5a2 2 0 0 1-.8 1.6l-1.6 1.2a2 2 0 0 0-.8 1.6v.6a.5.5 0 0 0 .5.5h9.4a.5.5 0 0 0 .5-.5v-.6a2 2 0 0 0-.8-1.6l-1.6-1.2a2 2 0 0 1-.8-1.6V3"/><path d="M12 14v6.5"/></svg><figcaption>pin</figcaption></figure>
+        </div>
+      </div>
+      <div class="icon-group">
+        <span class="label">Navigation <b>·</b> Moving around and getting out.</span>
+        <div class="icon-grid">
+          <figure class="icon-cell" title="Search across the station"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 20.5 20.5"/></svg><figcaption>search</figcaption></figure>
+          <figure class="icon-cell" title="Disclosure, next, drill in. Rotate for the other three"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.75 5.5 16.25 12l-6.5 6.5"/></svg><figcaption>chevron-right</figcaption></figure>
+          <figure class="icon-cell" title="Open elsewhere, external link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8.75 7H17v8.25"/></svg><figcaption>arrow-up-right</figcaption></figure>
+          <figure class="icon-cell" title="More actions, overflow menu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.75" cy="12" r="1.1" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.1" fill="currentColor" stroke="none"/><circle cx="18.25" cy="12" r="1.1" fill="currentColor" stroke="none"/></svg><figcaption>more</figcaption></figure>
+          <figure class="icon-cell" title="Keyboard shortcut, the palette key"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"/></svg><figcaption>command</figcaption></figure>
+        </div>
+      </div>
+      <div class="icon-group">
+        <span class="label">Actions <b>·</b> The everyday verbs.</span>
+        <div class="icon-grid">
+          <figure class="icon-cell" title="Add, create, new"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5.5v13"/><path d="M5.5 12h13"/></svg><figcaption>plus</figcaption></figure>
+          <figure class="icon-cell" title="Done, confirmed, saved"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 9.75 17.25 19 6.75"/></svg><figcaption>check</figcaption></figure>
+          <figure class="icon-cell" title="Edit, rename, write"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.4 4.6a2.15 2.15 0 0 1 3 3L8.4 18.6l-4.4 1.4 1.4-4.4z"/><path d="M14.4 6.6 17.4 9.6"/></svg><figcaption>edit</figcaption></figure>
+          <figure class="icon-cell" title="Delete, move to trash"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h16"/><path d="M9.5 6.5V5a1.5 1.5 0 0 1 1.5-1.5h2A1.5 1.5 0 0 1 14.5 5v1.5"/><path d="M6.5 6.5v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-12"/><path d="M10.5 10.5v5.5"/><path d="M13.5 10.5v5.5"/></svg><figcaption>trash</figcaption></figure>
+          <figure class="icon-cell" title="Download an asset or export"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5v11"/><path d="M7.5 10 12 14.5 16.5 10"/><path d="M4.5 17v2a1.5 1.5 0 0 0 1.5 1.5h12a1.5 1.5 0 0 0 1.5-1.5v-2"/></svg><figcaption>download</figcaption></figure>
+          <figure class="icon-cell" title="Settings and preferences"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5h9"/><path d="M17 7.5h3"/><circle cx="15" cy="7.5" r="2"/><path d="M4 16.5h3"/><path d="M11 16.5h9"/><circle cx="9" cy="16.5" r="2"/></svg><figcaption>settings</figcaption></figure>
+        </div>
+      </div>
+      <div class="icon-group">
+        <span class="label">Status <b>·</b> What the interface has to say.</span>
+        <div class="icon-grid">
+          <figure class="icon-cell" title="Informational, tell me more"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11.25v5"/><circle cx="12" cy="7.9" r="0.9" fill="currentColor" stroke="none"/></svg><figcaption>info</figcaption></figure>
+          <figure class="icon-cell" title="Something needs attention"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.3 4.3 2.7 17.4a2 2 0 0 0 1.7 3h15.2a2 2 0 0 0 1.7-3L13.7 4.3a2 2 0 0 0-3.4 0z"/><path d="M12 9.5v4"/><circle cx="12" cy="16.9" r="0.9" fill="currentColor" stroke="none"/></svg><figcaption>warning</figcaption></figure>
+          <figure class="icon-cell" title="Notifications and alerts"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 5.2-2 6.5-2 6.5h16S18 14.2 18 9z"/><path d="M10.3 18.5a2 2 0 0 0 3.4 0"/></svg><figcaption>bell</figcaption></figure>
+          <figure class="icon-cell" title="Account, profile, the person at the station"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/></svg><figcaption>user</figcaption></figure>
+          <figure class="icon-cell" title="Private, locked, permissions"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg><figcaption>lock</figcaption></figure>
+        </div>
+      </div>
+
+    <div class="icon-use">
+      <div>
+        <span class="label">Using them</span>
+        <p class="icon-copy">One SVG per icon in <code>assets/icons/</code>, plus a sprite that holds
+          all thirty. Reference an icon by name and it inherits the surrounding text color. Dropped in
+          with <code>&lt;img&gt;</code> it cannot inherit anything and renders black, so inline it or
+          use the sprite whenever color matters.</p>
+        <pre class="snippet">&lt;svg width="24" height="24" aria-hidden="true"&gt;
+  &lt;use href="assets/icons/openstation-icons.svg#os-palette"/&gt;
+&lt;/svg&gt;</pre>
+      </div>
+      <div>
+        <span class="label">Drawing a new one</span>
+        <p class="icon-copy">Start from an existing icon rather than a blank grid. Keep the shape
+          inside the live area, keep the stroke at 1.5, and let shapes touch the edge of the live area
+          rather than floating in the middle. If a glyph needs a second element to be readable, it is
+          usually two icons.</p>
+        <div class="dl-row">
+          <a class="dl-btn" href="assets/icons/openstation-icons.svg" download aria-label="Download openstation-icons.svg"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="arr" d="M8 2.5v7M4.8 6.7 8 9.9l3.2-3.2"/><path d="M2.8 11.2v1.6a1.4 1.4 0 0 0 1.4 1.4h7.6a1.4 1.4 0 0 0 1.4-1.4v-1.6"/></svg>Download the sprite</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ICONS & CORE ============ -->
+  <section id="icons-core">
+    <span class="label">Icons &amp; WordPress Core</span>
+    <p class="icon-copy"><b>Core owns the verbs, OpenStation owns the nouns.</b> Nineteen of the
+      thirty come from <a href="https://developer.wordpress.org/block-editor/reference-guides/packages/packages-icons/"><code>@wordpress/icons</code></a>,
+      the GPL set behind WordPress&nbsp;7.1&rsquo;s <code>wp_get_icon()</code>. The other eleven are
+      drawn here, because they only exist once /wp-admin is a desktop: window, windows, dock, spaces,
+      copilot, snap, command, apps, widgets, user and lock. When a new icon is needed, take it from
+      Core if the concept is already there and draw one only if it is not. Core&rsquo;s share grows as
+      the product does.</p>
+    <ul class="icon-specs">
+      <li><span>From Core</span><b>19</b></li>
+      <li><span>Drawn here</span><b>11</b></li>
+      <li><span>Core library</span><b>341 icons</b></li>
+      <li><span>License</span><b>GPL-2.0-or-later</b></li>
+    </ul>
+    <div class="dl-row">
+      <a class="dl-btn" href="icons/"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h7"/></svg>See the full icon inventory</a>
     </div>
   </section>
 
@@ -1228,6 +1442,16 @@
         <tr><th>Date</th><th>Change</th></tr>
       </thead>
       <tbody>
+        <tr>
+          <td>Aug 13, 2026</td>
+          <td>Mapped the icon set onto WordPress Core: nineteen of the thirty now come from
+            <code>@wordpress/icons</code> and eleven stay ours. Corner radius tightened from 2.5 to
+            2 to match Core. Added the full icon inventory as a nested page.</td>
+        </tr>
+        <tr>
+          <td>Aug 12, 2026</td>
+          <td>Added the icon set: thirty monoline icons on a 24 grid, drawn in <code>currentColor</code>, shipped as one SVG per icon plus a sprite. Replaces the placeholder glyphs in Iconography.</td>
+        </tr>
         <tr>
           <td>Aug 5, 2026</td>
           <td>Brought the type scale in line with the Figma text styles: Geist Display is now Medium 500 and H1 SemiBold 600, Caption moves to 13px, both families carry Body Large / Body / Body Small, and line height is 1.3 with 1.5 on the body sizes.</td>

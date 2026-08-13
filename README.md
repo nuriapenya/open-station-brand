@@ -10,6 +10,7 @@ The living visual identity reference for [OpenStation](https://wordpress.org/plu
 - `brand.json`: design tokens (colors, meshes, typography, radii, logo rules)
 - `llms.txt`: machine-readable brand summary for AI agents and tooling
 - `assets/`: logomark, app icon, gradient meshes, Mio mascot explorations, merch renders
+- `icons/`: the [full icon inventory](https://nuriapenya.github.io/open-station-brand/icons/), every icon OpenStation uses, and which of them come from [`@wordpress/icons`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-icons/) rather than being drawn here
 - `fonts/`: Geist and Geist Mono (variable), licensed under the SIL Open Font License 1.1 (`fonts/OFL.txt`)
 
 ## Using the brand

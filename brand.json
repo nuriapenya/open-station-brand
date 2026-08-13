@@ -2,8 +2,8 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "name": "OpenStation",
   "description": "Brand tokens for OpenStation, the open-source WordPress plugin that turns wp-admin into a desktop OS.",
-  "version": "0.7.1",
-  "updated": "2026-08-04",
+  "version": "0.8.0",
+  "updated": "2026-08-13",
   "guidelines": "https://nuriapenya.github.io/open-station-brand/",
   "color": {
     "pulse": {
@@ -215,6 +215,95 @@
       "Holoversion: the holographic version fills the mark with Holomesh and leaves the wordmark in Starlight. Holomesh is for backgrounds, CTAs and surfaces elsewhere, never a background behind the logo: the knocked-out (negative) logo on Holomesh is not part of the system.",
       "App icon: Void (#0C0B0F) tile, rounded square (radius 25/120 of the icon size) or circle, with a soft white inner shadow; the mark fills the central 3/5 of the tile (1/5 margin on each side). Inside the icon the mark gets the dimensional treatment: the Pearl radial fill (Starlight to Cloud) or Holomesh, a Mist edge stroke, a soft halo ring, stacked drop shadows and an inner highlight, all baked into the SVGs. Always on Void; there is no inverted or holo-background app icon.",
       "Clear space: around the lockup, 32.5% of the mark height at the left and right (the same measure as the gap between mark and wordmark) and 25% above and below. Around the standalone icon, 25% of its height on all four sides. Measured from the construction guides in Figma. That makes the construction box 6.375 by 1.5 mark heights around the lockup, and 1.5 mark heights square around the icon."
+    ]
+  },
+  "icon": {
+    "$description": "The UI icon set: thirty concepts for interface work. Nineteen resolve to @wordpress/icons and eleven are drawn here. Separate from the illustrative space icons (100x100, multi-color), which are spot art and are not mixed with these.",
+    "core": {
+      "$description": "Core owns the verbs, OpenStation owns the nouns. Take an icon from @wordpress/icons when the concept exists there; draw one only when it exists because OpenStation is a desktop and wp-admin is not.",
+      "package": "@wordpress/icons",
+      "license": "GPL-2.0-or-later",
+      "libraryCount": 341,
+      "fromCore": 19,
+      "drawnHere": [
+        "window",
+        "windows",
+        "dock",
+        "spaces",
+        "copilot",
+        "snap",
+        "command",
+        "apps",
+        "widgets",
+        "user",
+        "lock"
+      ],
+      "renamed": {
+        "more": "core/more-horizontal",
+        "maximize": "core/fullscreen",
+        "edit": "core/pencil",
+        "palette": "core/color",
+        "wallpaper": "core/image",
+        "warning": "core/caution",
+        "minimize": "core/line-solid"
+      },
+      "sanitizer": "Core's registry allows only <svg>, <path> and <polygon>; convert shapes to paths before calling wp_register_icon().",
+      "inventory": "https://nuriapenya.github.io/open-station-brand/icons/"
+    },
+    "grid": "24 x 24",
+    "liveArea": "20 x 20, so 2 units of margin on every side",
+    "stroke": "1.5, round caps and round joins",
+    "corners": "radius 2, the same value WordPress Core uses (Core: r=2 on frames, r=0.5 on inner details)",
+    "color": "currentColor. Icons never carry a hardcoded hex, so one file works on Void and on Starlight.",
+    "fill": "none, except dots and the copilot spark, which are filled with currentColor",
+    "sizes": [
+      16,
+      20,
+      24,
+      32,
+      48
+    ],
+    "files": "assets/icons/<name>.svg, one per icon",
+    "sprite": "assets/icons/openstation-icons.svg, all thirty as <symbol id=\"os-NAME\">",
+    "names": [
+      "window",
+      "windows",
+      "dock",
+      "spaces",
+      "apps",
+      "palette",
+      "widgets",
+      "wallpaper",
+      "copilot",
+      "close",
+      "minimize",
+      "maximize",
+      "snap",
+      "pin",
+      "search",
+      "chevron-right",
+      "arrow-up-right",
+      "more",
+      "command",
+      "plus",
+      "check",
+      "edit",
+      "trash",
+      "download",
+      "settings",
+      "info",
+      "warning",
+      "bell",
+      "user",
+      "lock"
+    ],
+    "rules": [
+      "Scale the icon, never the stroke: a 48px icon keeps a 1.5 stroke on its own 24 grid. Below 16px the drawings stop holding together.",
+      "chevron-right is the only directional glyph: rotate it 90, 180 or 270 degrees rather than adding files.",
+      "copilot is the brand sparkle and ships filled; outlined at 16px its points collapse.",
+      "Referenced with <img> an icon renders black, because currentColor has nothing to resolve against. Inline it or use the sprite whenever color matters.",
+      "An icon that repeats a visible label is decorative and takes aria-hidden=\"true\". An icon-only control carries its name on the button (aria-label), not on the SVG.",
+      "New icons start from an existing one: same live area, same 1.5 stroke, shapes reaching the edge of the live area rather than floating in the middle."
     ]
   },
   "mascot": {
