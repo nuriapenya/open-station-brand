@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
   <title>snap</title>
-  <rect x="2.5" y="4.5" width="19" height="15" rx="2"/>
-  <path d="M12 4.5v15"/>
-  <path d="M12 12h9.5"/>
+  <rect x="3.6875" y="5.4375" width="16.625" height="13.125" rx="1.75"/>
+  <path d="M12 5.4375v13.125"/>
+  <path d="M12 12h8.3125"/>
 </svg>

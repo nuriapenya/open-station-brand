@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
   <title>windows</title>
-  <rect x="2.5" y="8" width="13" height="11.5" rx="2"/>
-  <path d="M2.5 12h13"/>
-  <path d="M8 8V7a2 2 0 0 1 2.5-2.5h8A2 2 0 0 1 21 7v7a2 2 0 0 1-2.5 2.5h-3"/>
+  <rect x="3.6875" y="8.5" width="11.375" height="10.0625" rx="1.75"/>
+  <path d="M3.6875 12h11.375"/>
+  <path d="M8.5 8.5V7.1875a1.75 1.75 0 0 1 1.75-1.75h7.875A1.75 1.75 0 0 1 19.875 7.1875v7a1.75 1.75 0 0 1-1.75 1.75h-3.0625"/>
 </svg>
