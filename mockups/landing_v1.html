@@ -369,7 +369,7 @@
     margin-right: auto;
   }
   .lockup svg { width: 26px; height: 26px; }
-  /* The two text links are a real nav landmark rather than bare links in the
+  /* The text links are a real nav landmark rather than bare links in the
      banner, so keyboard and screen reader users get something to jump to. */
   .nav > nav { display: flex; align-items: center; gap: 28px; }
   .nav > nav a {
@@ -1185,6 +1185,71 @@
   footer a:hover { color: var(--ink); text-decoration: underline; }
   footer .credit { margin-left: auto; }
 
+  /* ============ Mobile menu ============
+     Below 640px the four links do not fit beside the lockup and the Install
+     button, so they move behind a toggle. The panel is the same <nav>, laid out
+     as a centred column over a Void sheet.
+
+     The button ships hidden and the script at the end of the body reveals it.
+     That way a visitor without JavaScript gets exactly what they got before,
+     the links simply absent, rather than a control that does nothing. */
+  .nav-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 32px; height: 32px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--ink-2);
+    cursor: pointer;
+  }
+  .nav-toggle svg {
+    width: 22px; height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+  }
+  .nav-toggle:hover { color: var(--ink); }
+  .i-close { display: none; }
+  .nav-toggle[aria-expanded="true"] { color: var(--ink); }
+  .nav-toggle[aria-expanded="true"] .i-menu { display: none; }
+  .nav-toggle[aria-expanded="true"] .i-close { display: block; }
+
+  /* Locked while the panel is open, so the page behind it does not scroll. */
+  html.nav-locked, html.nav-locked body { overflow: hidden; }
+
+  @media (max-width: 640px) {
+    /* Tighter than the 28px the row uses, so the toggle sits close to Install
+       rather than marooned between it and the lockup. */
+    .nav { gap: 16px; }
+    .nav-toggle:not([hidden]) { display: inline-flex; }
+
+    .nav > nav.is-open {
+      display: flex;
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      padding: 24px;
+      background: var(--void);
+    }
+    .nav > nav.is-open a { font-size: var(--fs-h5); }
+    .nav > nav.is-open a[aria-current] { color: var(--ink); }
+
+    /* Lifted above the panel so the same control closes it. */
+    .nav-toggle[aria-expanded="true"] {
+      position: fixed;
+      z-index: 91;
+      top: 20px;
+      right: clamp(20px, 5vw, 64px);
+    }
+  }
+
   /* ============ Responsive + motion ============ */
   @media (max-width: 1000px) {
     .mission-wrap { flex-direction: column; gap: 48px; }
@@ -1217,8 +1282,13 @@
     .space { max-width: 118px; }
     .spaces-row { gap: 10px; padding-inline: 10px; }
   }
-  @media (max-width: 560px) {
+  /* Four links plus the lockup and the Install button need 596px of frame
+     before the button starts pushing past the padding. Drop the nav here
+     rather than at 560px, where the row still fit when it held two links. */
+  @media (max-width: 640px) {
     .nav > nav { display: none; }
+  }
+  @media (max-width: 560px) {
     .fcard { padding: 20px; }
     .fcard-head { gap: 14px; }
     .fcard-head > svg { width: 34px; height: 34px; }
@@ -1332,10 +1402,17 @@
     <svg viewBox="0 0 80 80" aria-hidden="true"><path d="M38.792 0.0186131C60.8846 -0.649069 79.3313 16.7291 79.9824 38.8223C80.6326 60.8921 63.2773 79.3149 41.208 79.9815C19.1385 80.6488 0.702853 63.3074 0.0195305 41.2383C-0.66441 19.1462 16.6995 0.686396 38.792 0.0186131ZM38.71 9.36236C35.8339 7.89166 32.7628 8.23954 29.8555 9.28033C12.6582 14.7114 3.37017 33.8997 9.45508 50.8067C11.0384 55.2047 13.565 59.4989 16.9609 62.7842C21.6294 67.5336 27.6536 70.7223 34.2061 71.9112C37.0214 72.4165 41.0083 73.0707 43.2295 70.7891C46.4143 67.5174 44.115 64.4383 43.1133 60.8419C42.137 57.2757 41.6165 53.6009 41.5635 49.9044C41.5398 46.776 42.201 42.473 42.8252 39.3565C44.2979 32.0039 46.892 24.7246 44.5537 17.2452C43.5137 14.0551 41.8086 10.9469 38.71 9.36236Z" class="f-star"/></svg>
     OpenStation
   </a>
-  <nav aria-label="Site">
+  <nav id="site-nav" aria-label="Site">
     <a href="https://openstation.blog">Blog</a>
+    <a href="/contribute/">Contribute</a>
     <a href="https://github.com/WordPress/openstation">GitHub</a>
+    <a href="/press/">Press</a>
   </nav>
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" hidden>
+    <span class="sr-only">Menu</span>
+    <svg class="i-menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5h18M3 12h18M3 17.5h18"/></svg>
+    <svg class="i-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 5.5l13 13M18.5 5.5l-13 13"/></svg>
+  </button>
   <a class="btn sm solid" href="https://get.openstation.me/">Install</a>
 </header>
 
@@ -2107,6 +2184,58 @@
 		apply();
 	}
 } )();
+</script>
+
+
+<!-- ============ Mobile menu ============
+     Reveals the toggle and wires it to the panel. Everything it touches is
+     inert until this runs: the button ships with the hidden attribute, and the
+     panel is only a panel while it carries .is-open. -->
+<script>
+( function () {
+	'use strict';
+
+	var toggle = document.querySelector( '.nav-toggle' );
+	var menu = document.getElementById( 'site-nav' );
+
+	if ( ! toggle || ! menu ) {
+		return;
+	}
+
+	toggle.hidden = false;
+
+	function setOpen( open ) {
+		menu.classList.toggle( 'is-open', open );
+		toggle.setAttribute( 'aria-expanded', String( open ) );
+		document.documentElement.classList.toggle( 'nav-locked', open );
+	}
+
+	toggle.addEventListener( 'click', function () {
+		setOpen( 'true' !== toggle.getAttribute( 'aria-expanded' ) );
+	} );
+
+	// Following a link leaves the page anyway, but the two that stay on it
+	// (an in-page anchor, a same-page href) would otherwise leave the panel up.
+	menu.addEventListener( 'click', function ( event ) {
+		if ( 'A' === event.target.tagName ) {
+			setOpen( false );
+		}
+	} );
+
+	document.addEventListener( 'keydown', function ( event ) {
+		if ( 'Escape' === event.key ) {
+			setOpen( false );
+		}
+	} );
+
+	// Widening past the breakpoint puts the links back in the row; the panel
+	// state has to come off with them or the scroll lock stays behind.
+	window.matchMedia( '(min-width: 641px)' ).addEventListener( 'change', function ( event ) {
+		if ( event.matches ) {
+			setOpen( false );
+		}
+	} );
+}() );
 </script>
 
 </body>
