@@ -1221,6 +1221,9 @@
   html.nav-locked, html.nav-locked body { overflow: hidden; }
 
   @media (max-width: 640px) {
+    /* Tighter than the 28px the row uses, so the toggle sits close to Install
+       rather than marooned between it and the lockup. */
+    .nav { gap: 16px; }
     .nav-toggle:not([hidden]) { display: inline-flex; }
 
     .nav > nav.is-open {
