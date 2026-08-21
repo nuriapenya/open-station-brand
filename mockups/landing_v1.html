@@ -369,7 +369,7 @@
     margin-right: auto;
   }
   .lockup svg { width: 26px; height: 26px; }
-  /* The two text links are a real nav landmark rather than bare links in the
+  /* The text links are a real nav landmark rather than bare links in the
      banner, so keyboard and screen reader users get something to jump to. */
   .nav > nav { display: flex; align-items: center; gap: 28px; }
   .nav > nav a {
@@ -1217,8 +1217,13 @@
     .space { max-width: 118px; }
     .spaces-row { gap: 10px; padding-inline: 10px; }
   }
-  @media (max-width: 560px) {
+  /* Four links plus the lockup and the Install button need 596px of frame
+     before the button starts pushing past the padding. Drop the nav here
+     rather than at 560px, where the row still fit when it held two links. */
+  @media (max-width: 640px) {
     .nav > nav { display: none; }
+  }
+  @media (max-width: 560px) {
     .fcard { padding: 20px; }
     .fcard-head { gap: 14px; }
     .fcard-head > svg { width: 34px; height: 34px; }
@@ -1334,7 +1339,9 @@
   </a>
   <nav aria-label="Site">
     <a href="https://openstation.blog">Blog</a>
+    <a href="/contribute/">Contribute</a>
     <a href="https://github.com/WordPress/openstation">GitHub</a>
+    <a href="/press/">Press</a>
   </nav>
   <a class="btn sm solid" href="https://get.openstation.me/">Install</a>
 </header>

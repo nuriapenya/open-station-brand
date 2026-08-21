@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contribute · OpenStation</title>
+<meta name="description" content="The people who build OpenStation: the team, everyone with a merged pull request, the field testers who find the bugs, and the community add-ons.">
+<link rel="canonical" href="https://openstation.me/contribute/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpenStation">
+<meta property="og:url" content="https://openstation.me/contribute/">
+<meta property="og:title" content="Built by and for the community.">
+<meta property="og:description" content="The people who build OpenStation: the team, everyone with a merged pull request, the field testers who find the bugs, and the community add-ons.">
+<meta property="og:image" content="https://openstation.me/assets/imagery/og.png">
+<meta property="og:image:width" content="2400">
+<meta property="og:image:height" content="1260">
+<meta property="og:image:alt" content="The OpenStation logomark, a holographic crescent on a dark round tile, glowing against a starfield.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Built by and for the community.">
+<meta name="twitter:description" content="The people who build OpenStation: the team, everyone with a merged pull request, the field testers who find the bugs, and the community add-ons.">
+<meta name="twitter:image" content="https://openstation.me/assets/imagery/og.png">
+<meta name="twitter:image:alt" content="The OpenStation logomark, a holographic crescent on a dark round tile, glowing against a starfield.">
+<link rel="icon" type="image/svg+xml" href="../assets/logomark-app-circle.svg">
+<link rel="icon" type="image/png" sizes="180x180" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/favicon.png">
+
+<link rel="preload" href="../fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<!--
+  Contribute v1, at openstation.me/contribute.
+
+  The chrome below is transcribed from landing_v1.html by way of press_v1.html;
+  if a rule here disagrees with the landing page, the landing page is the
+  original.
+
+  openstation.blog/contribute renders the same lists from a WordPress plugin on
+  a twice-daily cron. A flat file has no cron, so this page asks GitHub itself,
+  once per visitor per hour, and caches the answer in localStorage. See the
+  script at the end of the body for what that costs and how it fails.
+
+  Everything that does not change on its own (names, roles, the tester's note,
+  which add-ons are listed) is written here by hand, the same way it is curated
+  in the plugin's settings. Only counts and the contributor wall are fetched.
+-->
+<style>
+  /* font-display: optional for the same reason as the landing page: Geist is
+     wider than the fallbacks, and swap reflows the masthead on every visit. */
+  @font-face {
+    font-family: 'Geist';
+    src: url('../fonts/Geist-Variable.woff2') format('woff2');
+    font-weight: 100 900;
+    font-display: optional;
+  }
+  @font-face {
+    font-family: 'Geist Mono';
+    src: url('../fonts/GeistMono-Variable.woff2') format('woff2');
+    font-weight: 100 900;
+    font-display: optional;
+  }
+
+  /* ============ Tokens (brand.json v0.7.1, via landing_v1.html) ============ */
+  :root {
+    color-scheme: dark;
+
+    --pulse: #e94ff3;
+    --nebula: #ec9bff;
+    --starlight: #fffbff;
+    --sirius: #9af2ff;
+    --lagoon: #9f98ff;
+    --obsidian: #1a1721;
+    --void: #0c0b0f;
+
+    --astro: #33303a;
+    --silver: #4d4a52;
+    --osmium: #99969c;
+    --ash: #b3afb5;
+
+    --holomesh-1: #afa2e8;
+    --holomesh-2: #b7abea;
+    --holomesh-3: #c3b8ef;
+    --holomesh-glow: #f59fe8;
+
+    --ink: var(--starlight);
+    --ink-2: var(--ash);
+    --ink-3: var(--osmium);
+    --line: rgb(from var(--starlight) r g b / 0.11);
+    --line-dash: rgb(from var(--starlight) r g b / 0.2);
+    --line-soft: rgb(from var(--starlight) r g b / 0.06);
+
+    --r-card: 10px;
+    --r-chip: 4px;
+    --r-pill: 100px;
+
+    --font-sans: 'Geist', system-ui, sans-serif;
+    --font-mono: 'Geist Mono', ui-monospace, monospace;
+
+    --fs-h3: 30px;
+    --fs-h4: 24px;
+    --fs-h5: 20px;
+    --fs-body-lg: 18px;
+    --fs-body: 16px;
+    --fs-body-sm: 14px;
+    --fs-caption: 13px;
+    --fs-micro: 11px;
+    --fs-nano: 10px;
+    --fs-section: clamp(28px, 4vw, 40px);
+
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+    --lh-body: 1.5;
+    --lh-display: 1.12;
+
+    /* LOCAL to this page. The landing page's 120px rhythm is built around
+       full-bleed illustrated sections; a list of links needs less air between
+       its headings or the page becomes mostly gaps. */
+    --section-pad: 76px;
+    /* LOCAL. The masthead is a title and one paragraph, not a hero, so it
+       does not carry the landing page's Display size. */
+    --fs-masthead: clamp(34px, 5.2vw, 56px);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { overflow-x: clip; }
+
+  body {
+    background: var(--void);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: var(--pulse); color: var(--void); }
+
+  /* ============ Accessibility ============ */
+  .skip {
+    position: absolute;
+    left: 16px; top: -60px;
+    background: var(--starlight); color: var(--void);
+    padding: 10px 16px; border-radius: var(--r-chip);
+    font-size: var(--fs-body-sm); z-index: 100;
+  }
+  .skip:focus { top: 16px; }
+
+  :focus-visible {
+    outline: 2px solid var(--sirius);
+    outline-offset: 3px;
+    border-radius: var(--r-chip);
+  }
+
+  /* ============ Cosmos backdrop ============ */
+  .cosmos { position: fixed; inset: 0; z-index: -2; pointer-events: none; }
+  .cosmos svg { width: 100%; height: 100%; display: block; }
+
+  .masthead, footer .frame {
+    background: rgb(from var(--obsidian) r g b / 0.55);
+    backdrop-filter: blur(18px) saturate(1.2);
+    -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  }
+
+  /* ============ The rails ============ */
+  .frame {
+    max-width: 1440px;
+    margin-inline: auto;
+    border-inline: 1px solid var(--line);
+    padding-inline: clamp(20px, 5vw, 64px);
+    position: relative;
+  }
+  section.frame, footer .frame { border-top: 1px dashed var(--line-dash); }
+
+  .frame::before, .frame::after {
+    content: '';
+    position: absolute;
+    top: -1px; bottom: 0;
+    width: 72px;
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--line-soft) 0, var(--line-soft) 1px,
+      transparent 1px, transparent 9px
+    );
+    pointer-events: none;
+    display: none;
+  }
+  .frame::before { left: -73px; border-left: 1px solid var(--line); }
+  .frame::after { right: -73px; border-right: 1px solid var(--line); }
+  section.frame::before, section.frame::after,
+  footer .frame::before, footer .frame::after {
+    border-top: 1px dashed var(--line-dash);
+  }
+  @media (min-width: 1600px) {
+    .frame::before, .frame::after { display: block; }
+  }
+
+  .x { position: absolute; width: 17px; height: 17px; pointer-events: none; }
+  .x::before, .x::after { content: ''; position: absolute; background: var(--pulse); }
+  .x::before { left: 8px; top: 0; width: 1px; height: 17px; }
+  .x::after  { left: 0; top: 8px; width: 17px; height: 1px; }
+  .x.tl { left: -9px; top: -9px; }
+  .x.tr { right: -9px; top: -9px; }
+
+  .f-star { fill: var(--starlight); }
+  .f-nebula { fill: var(--nebula); }
+  .f-sirius { fill: var(--sirius); }
+  .f-lagoon { fill: var(--lagoon); }
+  .sc-pulse  { stop-color: var(--pulse); }
+  .sc-lagoon { stop-color: var(--lagoon); }
+
+  .mono { font-family: var(--font-mono); }
+  a { color: inherit; }
+
+  /* ============ Buttons ============ */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    height: 40px; padding-inline: 20px;
+    border-radius: var(--r-chip);
+    font: var(--fw-medium) var(--fs-body) var(--font-sans);
+    text-decoration: none;
+    border: 1px solid transparent;
+  }
+  .btn.sm { height: 32px; padding-inline: 12px; font-size: var(--fs-caption); }
+  .btn.solid { background: var(--starlight); color: var(--void); }
+  .btn.solid:hover { background: var(--nebula); }
+
+  /* ============ Nav ============ */
+  .nav { display: flex; align-items: center; gap: 28px; padding-block: 20px; }
+  .lockup {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+    font: var(--fw-semibold) var(--fs-h5) var(--font-sans);
+    margin-right: auto;
+  }
+  .lockup svg { width: 26px; height: 26px; }
+  .nav > nav { display: flex; align-items: center; gap: 28px; }
+  .nav > nav a {
+    font-size: var(--fs-body-sm); text-decoration: none; color: var(--ink-2);
+  }
+  .nav > nav a:hover { color: var(--ink); }
+  /* The page you are on, marked in the nav rather than only in the title. */
+  .nav > nav a[aria-current] { color: var(--ink); }
+
+  /* ============ Masthead ============ */
+  .masthead { padding-block: 68px var(--section-pad); }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--fs-micro);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 18px;
+  }
+  .masthead h1 {
+    font-size: var(--fs-masthead);
+    font-weight: var(--fw-bold);
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    max-width: 900px;
+    text-wrap: balance;
+  }
+  .masthead .sub {
+    margin-top: 22px;
+    max-width: 620px;
+    font-size: var(--fs-body-lg);
+    color: var(--ink-2);
+  }
+
+  /* The Holomesh fill, transcribed from landing_v1.html. Two moving bands of
+     light over the eight fixed mesh glows; only the bands travel. */
+  .hl {
+    position: relative;
+    display: inline-block;
+    background:
+      repeating-linear-gradient(96deg,
+        rgba(255,253,255,0)    0px,
+        rgba(255,253,255,.26) 12px,
+        rgba(255,253,255,0)   30px,
+        rgba(255,253,255,0)   96px),
+      repeating-linear-gradient(102deg,
+        rgba(125,239,245,0)     0px,
+        rgba(125,239,245,.34)  26px,
+        rgba(147,240,198,.28)  56px,
+        rgba(248,242,182,.26)  84px,
+        rgba(245,159,232,.34) 116px,
+        rgba(159,214,255,.30) 146px,
+        rgba(125,239,245,0)   176px),
+      radial-gradient(ellipse 21.7% 39.6% at 96.5% 13.5%, rgba(159,214,255,.6), transparent),
+      radial-gradient(ellipse 26.3% 57.2% at 83.3% 56.2%, rgba(243,181,236,.75), transparent),
+      radial-gradient(ellipse 18.2% 47.3% at 73.6% 64.5%, rgba(255,253,255,.7), transparent),
+      radial-gradient(ellipse 18.4% 34.1% at 29.8% 83.4%, rgba(147,240,198,.8), transparent),
+      radial-gradient(ellipse 17.4% 35.7% at 23% 67.7%, rgba(248,242,182,.85), transparent),
+      radial-gradient(ellipse 23.3% 45.9% at 45.2% 45.8%, var(--holomesh-glow), rgba(245,168,234,.55) 55%, transparent),
+      radial-gradient(ellipse 29.9% 53.6% at 53.5% 7.3%, rgba(125,239,245,.9), rgba(142,233,247,.45) 60%, transparent),
+      radial-gradient(ellipse 26.9% 70.7% at 29.8% 44.8%, rgba(255,253,255,.95), rgba(255,253,255,.5) 55%, transparent),
+      linear-gradient(123.69deg, var(--holomesh-1) 0%, var(--holomesh-2) 55%, var(--holomesh-3) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: holo-travel 4.2s linear infinite;
+  }
+  @keyframes holo-travel {
+    to {
+      background-position:
+        -289.6px 0, -179.9px 0,
+        0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
+    }
+  }
+  /* The fill is the only thing painting these words, so a failure would
+     delete them rather than leave them unstyled. Both guards put colour back. */
+  @supports not ((background-clip: text) or (-webkit-background-clip: text)) {
+    .hl { background: none; color: var(--nebula); }
+  }
+  @media (forced-colors: active) {
+    .hl { background: none; color: CanvasText; forced-color-adjust: none; }
+  }
+
+
+  /* ============ Stats band (from landing_v1.html) ============ */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border-block: 1px solid var(--line);
+  }
+  .stat { background: var(--void); padding: 26px 8px; text-align: center; }
+  .stat b {
+    display: block;
+    font: var(--fw-semibold) var(--fs-h3) var(--font-sans);
+    letter-spacing: -0.02em;
+    color: var(--sirius);
+  }
+  .stat > span {
+    font-family: var(--font-mono);
+    font-size: var(--fs-micro);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .flush { padding-inline: 0; border-top: none; }
+  .flush::before, .flush::after {
+    border-top-style: solid;
+    border-top-color: var(--line);
+  }
+
+  /* ============ People ============ */
+  .people { padding-block: var(--section-pad); }
+  .people:nth-of-type(odd) { background: rgb(from var(--obsidian) r g b / 0.35); }
+  .sec-head {
+    display: flex; align-items: baseline; gap: 14px;
+    margin-bottom: 10px;
+  }
+  .sec-head h2 {
+    font-size: var(--fs-section);
+    font-weight: var(--fw-semibold);
+    letter-spacing: -0.02em;
+    line-height: var(--lh-display);
+  }
+  .count {
+    font-family: var(--font-mono);
+    font-size: var(--fs-micro);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sirius);
+  }
+  .people > p {
+    max-width: 620px;
+    color: var(--ink-2);
+    font-size: var(--fs-body-lg);
+  }
+
+  .grid {
+    list-style: none;
+    display: grid;
+    gap: 16px;
+    margin-top: 36px;
+  }
+  /* auto-fill, not auto-fit: auto-fit collapses the empty tracks and stretches
+     the last row's cards to fill the width, so a section with one tester in it
+     drew a single card the width of the page. */
+  .grid--team    { grid-template-columns: repeat(auto-fill, minmax(214px, 1fr)); }
+  .grid--wall    { grid-template-columns: repeat(auto-fill, minmax(196px, 1fr)); }
+  .grid--testers { grid-template-columns: repeat(auto-fill, minmax(196px, 1fr)); }
+  .grid--addons  { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    padding: 26px 20px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--void);
+  }
+  .card--addon { align-items: flex-start; text-align: left; }
+
+  .avatar {
+    width: 88px; height: 88px;
+    border-radius: var(--r-pill);
+    background: var(--obsidian);
+    display: block;
+  }
+  .card--wall .avatar, .card--tester .avatar { width: 64px; height: 64px; }
+
+  .who {
+    font-size: var(--fs-body-lg);
+    font-weight: var(--fw-semibold);
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+  }
+  .who a { text-decoration: none; }
+  .who a:hover { color: var(--nebula); }
+  .login {
+    font-family: var(--font-mono);
+    font-size: var(--fs-caption);
+    color: var(--ink-3);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .login:hover { color: var(--nebula); }
+  /* nowrap so every card's role is one line and every avatar starts at the
+     same height. "Engineering Lead" is the longest of them and sits well
+     inside the narrowest card; a longer one would need the card to grow. */
+  .role {
+    font-family: var(--font-mono);
+    font-size: var(--fs-nano);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    white-space: nowrap;
+  }
+  .note {
+    font-size: var(--fs-body-sm);
+    color: var(--ink-3);
+    text-align: left;
+  }
+
+  .pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  /* One pill per line, centred: the tester card is a contributor card that
+     happens to carry two numbers instead of one. */
+  .card--tester .pills { flex-direction: column; align-items: center; }
+  .pill {
+    font-family: var(--font-mono);
+    font-size: var(--fs-nano);
+    letter-spacing: 0.06em;
+    padding: 3px 9px;
+    border-radius: var(--r-pill);
+    border: 1px solid rgb(from var(--lagoon) r g b / 0.45);
+    color: var(--lagoon);
+    white-space: nowrap;
+  }
+  .pill--green {
+    border-color: rgb(from var(--sirius) r g b / 0.4);
+    color: var(--sirius);
+  }
+
+  /* Icon left, name and author stacked beside it; description and install
+     count then run full width underneath. */
+  .addon-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+  }
+  .addon-id { min-width: 0; }
+  .addon-icon {
+    width: 64px; height: 64px;
+    flex: none;
+    border-radius: var(--r-card);
+    background: var(--obsidian);
+    display: block;
+    object-fit: cover;
+  }
+  .addon-icon--none {
+    display: grid; place-items: center;
+    font-size: 30px;
+  }
+  /* [hidden] is display:none from the UA sheet, which any of the display
+     values above would otherwise win against. Every slot the script fills
+     starts hidden, so this is what keeps them out of the layout. */
+  [hidden] { display: none !important; }
+
+  /* ============ Loading skeletons ============
+     Every dynamic slot starts empty and is filled a round trip later, which
+     without this moves everything under it: the stats band alone is a 110px
+     row appearing out of nowhere, and the wall goes from nothing to seventeen
+     cards.
+
+     The placeholder is the real element with a shimmer inside it, rather than
+     a box of guessed pixels. `.pill` keeps its padding and border, `.avatar`
+     keeps its 64px circle, and the text inside each one is a string about as
+     long as the value that will replace it, so font size, line height and
+     wrapping are already correct and the swap costs no reflow.
+
+     Injected by script and never served, so a visitor with JavaScript off gets
+     the plain page rather than a wall of shimmer that never resolves. */
+  .skel {
+    display: inline-block;
+    color: transparent;
+    border-radius: var(--r-pill);
+    background-color: var(--astro);
+    background-image: linear-gradient(
+      90deg, var(--astro) 0%, var(--silver) 50%, var(--astro) 100%
+    );
+    background-size: 200% 100%;
+    animation: skel-sweep 1.6s linear infinite;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  @keyframes skel-sweep { to { background-position: -200% 0; } }
+  /* The border is the pill's own; a skeleton inside it does not need a second
+     outline, and the fill alone reads as "not ready yet". */
+  .pill:has(> .skel) { border-color: var(--line); }
+  .note .skel { display: block; }
+  .note .skel + .skel { margin-top: 5px; }
+  /* Three lines held open whatever is in there. Add-on blurbs come back from
+     wordpress.org at two or three lines and the skeleton is two, which was the
+     last ten pixels of movement left on the page. */
+  .card--addon .note { min-height: 4.5em; }
+  /* The install pill keeps its space even with nothing in it. Two of the three
+     add-ons report no installs, and letting their cards drop that row changed
+     which card was tallest once the data landed, moving the whole row. The
+     cards stretch to a common height regardless, so this space is free. */
+  .card--addon .pill[hidden] {
+    display: inline-block !important;
+    visibility: hidden;
+  }
+  /* An empty pill is 8px of padding, not the 23px a filled one occupies,
+     because it has no line box. The non-breaking space gives it one. */
+  .card--addon .pill[hidden]::before { content: '\00a0'; }
+  .fallback {
+    margin-top: 28px;
+    font-size: var(--fs-body-sm);
+  }
+  .fallback a { color: var(--ink-2); }
+  .fallback a:hover { color: var(--ink); }
+
+  .addon-by {
+    font-family: var(--font-mono);
+    font-size: var(--fs-micro);
+    color: var(--ink-3);
+  }
+
+  /* ============ Ways in ============ */
+  .ways { padding-block: var(--section-pad); text-align: center; }
+  .ways h2 {
+    font-size: var(--fs-section);
+    font-weight: var(--fw-semibold);
+    letter-spacing: -0.02em;
+    line-height: var(--lh-display);
+    max-width: 560px;
+    margin-inline: auto;
+  }
+  .ways p { margin: 16px auto 32px; max-width: 520px; color: var(--ink-2); }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+  .btn.outline { border-color: rgb(from var(--starlight) r g b / 0.36); color: var(--ink); }
+  .btn.outline:hover { border-color: var(--starlight); }
+
+  /* ============ Footer ============ */
+  footer .frame {
+    display: flex; flex-wrap: wrap; gap: 10px 28px;
+    padding-block: 28px 40px;
+    font-size: var(--fs-caption); color: var(--ink-3);
+  }
+  footer a { text-decoration: none; color: var(--ink-2); }
+  footer a:hover { color: var(--ink); text-decoration: underline; }
+  footer .credit { margin-left: auto; }
+
+  /* ============ Responsive + motion ============ */
+  @media (max-width: 860px) {
+    :root { --section-pad: 56px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .grid { gap: 12px; margin-top: 28px; }
+    .grid--team, .grid--wall, .grid--testers { grid-template-columns: repeat(auto-fill, minmax(146px, 1fr)); }
+    .role { font-size: 9px; letter-spacing: 0.06em; }
+    .grid--addons { grid-template-columns: 1fr; }
+    .card { padding: 20px 16px; }
+    .avatar { width: 72px; height: 72px; }
+  }
+  /* Matches landing_v1.html: the nav row cannot hold four links, the lockup
+     and the button below this width. */
+  @media (max-width: 640px) {
+    .nav > nav { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    .hl { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="cosmos" aria-hidden="true">
+  <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <radialGradient id="glowA"><stop offset="0%" class="sc-lagoon" stop-opacity="0.10"/><stop offset="100%" class="sc-lagoon" stop-opacity="0"/></radialGradient>
+      <radialGradient id="glowB"><stop offset="0%" class="sc-pulse" stop-opacity="0.07"/><stop offset="100%" class="sc-pulse" stop-opacity="0"/></radialGradient>
+    </defs>
+    <ellipse cx="1250" cy="140" rx="500" ry="320" fill="url(#glowA)"/>
+    <ellipse cx="260" cy="760" rx="520" ry="340" fill="url(#glowB)"/>
+    <g class="f-star">
+      <circle cx="83" cy="67" r="1.1" opacity="0.55"/><circle cx="210" cy="142" r="0.7" opacity="0.35"/>
+      <circle cx="341" cy="58" r="1.4" opacity="0.7"/><circle cx="447" cy="201" r="0.8" opacity="0.3"/>
+      <circle cx="562" cy="94" r="1" opacity="0.5"/><circle cx="668" cy="33" r="0.7" opacity="0.4"/>
+      <circle cx="790" cy="171" r="1.3" opacity="0.6"/><circle cx="905" cy="79" r="0.8" opacity="0.35"/>
+      <circle cx="1042" cy="127" r="1.1" opacity="0.55"/><circle cx="1149" cy="48" r="0.7" opacity="0.4"/>
+      <circle cx="1263" cy="182" r="1.5" opacity="0.75"/><circle cx="1388" cy="96" r="0.9" opacity="0.45"/>
+      <circle cx="1501" cy="211" r="1.1" opacity="0.5"/><circle cx="1557" cy="61" r="0.7" opacity="0.35"/>
+      <circle cx="57" cy="311" r="0.9" opacity="0.4"/><circle cx="187" cy="422" r="1.3" opacity="0.6"/>
+      <circle cx="309" cy="356" r="0.7" opacity="0.3"/><circle cx="438" cy="489" r="1" opacity="0.5"/>
+      <circle cx="590" cy="371" r="0.8" opacity="0.35"/><circle cx="713" cy="452" r="1.4" opacity="0.65"/>
+      <circle cx="861" cy="329" r="0.7" opacity="0.3"/><circle cx="988" cy="411" r="1" opacity="0.5"/>
+      <circle cx="1108" cy="352" r="0.8" opacity="0.4"/><circle cx="1247" cy="496" r="1.2" opacity="0.55"/>
+      <circle cx="1372" cy="388" r="0.7" opacity="0.35"/><circle cx="1493" cy="443" r="1" opacity="0.5"/>
+      <circle cx="94" cy="587" r="1.2" opacity="0.55"/><circle cx="228" cy="683" r="0.8" opacity="0.35"/>
+      <circle cx="366" cy="611" r="1" opacity="0.5"/><circle cx="482" cy="742" r="0.7" opacity="0.3"/>
+      <circle cx="617" cy="653" r="1.3" opacity="0.6"/><circle cx="758" cy="581" r="0.8" opacity="0.4"/>
+      <circle cx="884" cy="709" r="1" opacity="0.45"/><circle cx="1019" cy="626" r="0.7" opacity="0.3"/>
+      <circle cx="1141" cy="757" r="1.4" opacity="0.65"/><circle cx="1279" cy="668" r="0.8" opacity="0.4"/>
+      <circle cx="1408" cy="723" r="1" opacity="0.5"/><circle cx="1530" cy="641" r="0.7" opacity="0.35"/>
+      <circle cx="141" cy="838" r="1" opacity="0.45"/><circle cx="393" cy="866" r="0.7" opacity="0.3"/>
+      <circle cx="672" cy="827" r="1.1" opacity="0.5"/><circle cx="953" cy="861" r="0.8" opacity="0.35"/>
+      <circle cx="1198" cy="843" r="1.2" opacity="0.55"/><circle cx="1462" cy="872" r="0.7" opacity="0.3"/>
+    </g>
+    <g>
+      <circle cx="524" cy="264" r="1.4" class="f-sirius" opacity="0.6"/>
+      <circle cx="1330" cy="304" r="1.3" class="f-nebula" opacity="0.6"/>
+      <circle cx="246" cy="536" r="1.4" class="f-sirius" opacity="0.5"/>
+      <circle cx="1074" cy="522" r="1.3" class="f-nebula" opacity="0.5"/>
+      <circle cx="815" cy="256" r="1.5" class="f-lagoon" opacity="0.6"/>
+    </g>
+  </svg>
+</div>
+<header class="frame nav">
+  <a class="lockup" href="/">
+    <svg viewBox="0 0 80 80" aria-hidden="true"><path d="M38.792 0.0186131C60.8846 -0.649069 79.3313 16.7291 79.9824 38.8223C80.6326 60.8921 63.2773 79.3149 41.208 79.9815C19.1385 80.6488 0.702853 63.3074 0.0195305 41.2383C-0.66441 19.1462 16.6995 0.686396 38.792 0.0186131ZM38.71 9.36236C35.8339 7.89166 32.7628 8.23954 29.8555 9.28033C12.6582 14.7114 3.37017 33.8997 9.45508 50.8067C11.0384 55.2047 13.565 59.4989 16.9609 62.7842C21.6294 67.5336 27.6536 70.7223 34.2061 71.9112C37.0214 72.4165 41.0083 73.0707 43.2295 70.7891C46.4143 67.5174 44.115 64.4383 43.1133 60.8419C42.137 57.2757 41.6165 53.6009 41.5635 49.9044C41.5398 46.776 42.201 42.473 42.8252 39.3565C44.2979 32.0039 46.892 24.7246 44.5537 17.2452C43.5137 14.0551 41.8086 10.9469 38.71 9.36236Z" class="f-star"/></svg>
+    OpenStation
+  </a>
+  <nav aria-label="Site">
+    <a href="https://openstation.blog">Blog</a>
+    <a href="/contribute/" aria-current="page">Contribute</a>
+    <a href="https://github.com/WordPress/openstation">GitHub</a>
+    <a href="/press/">Press</a>
+  </nav>
+  <a class="btn sm solid" href="https://get.openstation.me/">Install</a>
+</header>
+
+<main id="main" tabindex="-1">
+
+  <!-- ============ Masthead ============ -->
+  <section class="frame masthead">
+    <i class="x tl" aria-hidden="true"></i>
+    <i class="x tr" aria-hidden="true"></i>
+    <p class="eyebrow">Contribute</p>
+    <h1>Built by and for <span class="hl">the community.</span></h1>
+    <p class="sub">OpenStation is built in the open. Every window, every dock
+    icon and every odd little bug fix exists because someone decided to spend
+    time on it. This page is here to say thanks.</p>
+  </section>
+
+  <!-- Hidden until the numbers arrive. Four empty boxes say less than no boxes,
+       and this band is the one part of the page with nothing to show without
+       them. -->
+  <section class="frame flush" id="stats-band" hidden>
+    <i class="x tl" aria-hidden="true"></i>
+    <i class="x tr" aria-hidden="true"></i>
+    <div class="stats">
+      <div class="stat"><b data-stat="prs">&mdash;</b><span>merged pull requests</span></div>
+      <div class="stat"><b data-stat="contributors">&mdash;</b><span>contributors</span></div>
+      <div class="stat"><b data-stat="stars">&mdash;</b><span>stars on GitHub</span></div>
+      <div class="stat"><b data-stat="addons">&mdash;</b><span>community add-ons</span></div>
+    </div>
+  </section>
+
+  <!-- ============ The team ============ -->
+  <section class="frame people">
+    <i class="x tl" aria-hidden="true"></i>
+    <i class="x tr" aria-hidden="true"></i>
+    <div class="sec-head">
+      <h2>The team</h2>
+      <span class="count">5</span>
+    </div>
+    <p>The people working on the plugin day to day. We review each other's changes,
+    argue about window borders, and ship it together.</p>
+    <ul class="grid grid--team">
+        <li class="card card--team">
+          <span class="role">Engineering Lead</span>
+          <img class="avatar" src="https://github.com/AllTerrainDeveloper.png?size=176" alt="" width="176" height="176" loading="lazy" decoding="async">
+          <h3 class="who">Daniel López</h3>
+          <a class="login" href="https://github.com/AllTerrainDeveloper">@AllTerrainDeveloper</a>
+          <span class="pill" data-count-for="AllTerrainDeveloper" hidden></span>
+        </li>
+        <li class="card card--team">
+          <span class="role">Engineering</span>
+          <img class="avatar" src="https://github.com/epeicher.png?size=176" alt="" width="176" height="176" loading="lazy" decoding="async">
+          <h3 class="who">Roberto Aranda</h3>
+          <a class="login" href="https://github.com/epeicher">@epeicher</a>
+          <span class="pill" data-count-for="epeicher" hidden></span>
+        </li>
+        <li class="card card--team">
+          <span class="role">Engineering</span>
+          <img class="avatar" src="https://github.com/mmtr.png?size=176" alt="" width="176" height="176" loading="lazy" decoding="async">
+          <h3 class="who">Miguel Torres</h3>
+          <a class="login" href="https://github.com/mmtr">@mmtr</a>
+          <span class="pill" data-count-for="mmtr" hidden></span>
+        </li>
+        <li class="card card--team">
+          <span class="role">Consultant</span>
+          <img class="avatar" src="https://github.com/nickhamze.png?size=176" alt="" width="176" height="176" loading="lazy" decoding="async">
+          <h3 class="who">Nick Hamze</h3>
+          <a class="login" href="https://github.com/nickhamze">@nickhamze</a>
+          <span class="pill" data-count-for="nickhamze" hidden></span>
+        </li>
+        <li class="card card--team">
+          <span class="role">Designer</span>
+          <img class="avatar" src="https://github.com/nuriapenya.png?size=176" alt="" width="176" height="176" loading="lazy" decoding="async">
+          <h3 class="who">Núria Peña</h3>
+          <a class="login" href="https://github.com/nuriapenya">@nuriapenya</a>
+          <span class="pill" data-count-for="nuriapenya" hidden></span>
+        </li>
+    </ul>
+  </section>
+
+  <!-- ============ The community ============ -->
+  <section class="frame people">
+    <i class="x tl" aria-hidden="true"></i>
+    <i class="x tr" aria-hidden="true"></i>
+    <div class="sec-head">
+      <h2>Contributors</h2>
+      <span class="count" data-count="wall" hidden></span>
+    </div>
+    <p>Open source only works if people turn up. Some sent a single fix.
+    Some have never stopped. Everyone made OpenStation better.</p>
+    <ul class="grid grid--wall" id="wall"></ul>
+    <!-- Stands in for the wall until it renders, and stays put if it never
+         does. A dead section would be a worse thank-you than a link. -->
+    <p class="fallback" id="wall-fallback">
+      <a href="https://github.com/WordPress/openstation/graphs/contributors">See everyone who has contributed on GitHub &#8599;</a>
+    </p>
+  </section>
+
+  <!-- ============ Field testers ============ -->
+  <section class="frame people">
+    <i class="x tl" aria-hidden="true"></i>
+    <i class="x tr" aria-hidden="true"></i>
+    <div class="sec-head">
+      <h2>The people who break it first</h2>
+      <span class="count">1</span>
+    </div>
+    <p>Not every contribution arrives as a pull request. Some people install it
+    on a real site, use it until something breaks, and then do the unglamorous
+    part: write down exactly what happened, on which screen, in which browser,
+    with the steps to see it again. A good bug report is a fix nobody has typed
+    yet.</p>
+    <ul class="grid grid--testers">
+      <li class="card card--tester" data-tester="AnInfiniteNumberofMonkeys">
+        <img class="avatar" src="https://github.com/AnInfiniteNumberofMonkeys.png?size=176" alt="" width="176" height="176" loading="lazy" decoding="async">
+        <a class="login" href="https://github.com/AnInfiniteNumberofMonkeys">@AnInfiniteNumberofMonkeys</a>
+        <span class="pills">
+          <span class="pill" data-tester-stat="issues" hidden></span>
+          <span class="pill pill--green" data-tester-stat="closed" hidden></span>
+        </span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ============ Add-ons ============
+       Name and link are curated here, the same way the slugs are curated in the
+       plugin's settings, so the shelf is never empty. The icon, the blurb and
+       the install count come from wordpress.org, which is the same API the
+       landing page reads its stats row from: no key, no rate limit. -->
+  <section class="frame people">
+    <i class="x tl" aria-hidden="true"></i>
+    <i class="x tr" aria-hidden="true"></i>
+    <div class="sec-head">
+      <h2>Add-ons built for OpenStation</h2>
+      <span class="count">3</span>
+    </div>
+    <p>OpenStation is not only a productivity tool, it's an ecosystem. These
+    WordPress plugins are designed to work with it.</p>
+    <ul class="grid grid--addons">
+      <li class="card card--addon" data-addon="allterrain-photo-editor">
+        <div class="addon-head">
+          <span class="addon-icon addon-icon--none" aria-hidden="true">&#129513;</span>
+          <div class="addon-id">
+            <h3 class="who"><a href="https://wordpress.org/plugins/allterrain-photo-editor/">AllTerrain Photo Editor for OpenStation</a></h3>
+            <span class="addon-by" hidden></span>
+          </div>
+        </div>
+        <p class="note" hidden></p>
+        <span class="pill pill--green" hidden></span>
+      </li>
+      <li class="card card--addon" data-addon="odd-outlandish-desktop-decorator">
+        <div class="addon-head">
+          <span class="addon-icon addon-icon--none" aria-hidden="true">&#129513;</span>
+          <div class="addon-id">
+            <h3 class="who"><a href="https://wordpress.org/plugins/odd-outlandish-desktop-decorator/">ODD &mdash; Apps for OpenStation</a></h3>
+            <span class="addon-by" hidden></span>
+          </div>
+        </div>
+        <p class="note" hidden></p>
+        <span class="pill pill--green" hidden></span>
+      </li>
+      <li class="card card--addon" data-addon="deskbeat-for-desktop-mode">
+        <div class="addon-head">
+          <span class="addon-icon addon-icon--none" aria-hidden="true">&#129513;</span>
+          <div class="addon-id">
+            <h3 class="who"><a href="https://wordpress.org/plugins/deskbeat-for-desktop-mode/">Deskbeat for OpenStation</a></h3>
+            <span class="addon-by" hidden></span>
+          </div>
+        </div>
+        <p class="note" hidden></p>
+        <span class="pill pill--green" hidden></span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ============ Ways in ============ -->
+  <section class="frame ways">
+    <i class="x tl" aria-hidden="true"></i>
+    <i class="x tr" aria-hidden="true"></i>
+    <h2>Do you want to contribute?</h2>
+    <p>Pick a bug and send a pull request, or just tell us what broke.</p>
+    <div class="cta-row">
+      <a class="btn solid" href="https://github.com/WordPress/openstation/issues">Send a pull request</a>
+      <a class="btn outline" href="https://github.com/WordPress/openstation/issues/new">Report a bug</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="frame">
+    <a href="https://wordpress.org/plugins/desktop-mode/">wordpress.org</a>
+    <a href="https://github.com/WordPress/openstation">GitHub</a>
+    <a href="https://openstation.blog">Blog</a>
+    <span class="credit mono">Built by Automattic &middot; <a href="https://spacefast.com">Hosted on Spacefast</a></span>
+  </div>
+</footer>
+
+<!-- ============ The wall, from GitHub ============
+     openstation.blog builds these lists on a twice-daily cron and serves them
+     rendered. This page has no cron, so it asks GitHub itself and caches the
+     answer in localStorage for an hour.
+
+     It runs the plugin's own query: `type:pr is:merged`, tallied per author, so
+     the counts here are merged pull requests and match the blog rather than
+     approximating it. That accuracy is the expensive choice. The search API
+     returns 100 results a page, so a repository with 400-odd merged pull
+     requests costs five calls, plus one for the field tester's issues. Six
+     against a limit of ten per minute per IP when unauthenticated, and that IP
+     is shared by everyone behind an office or mobile-carrier NAT.
+
+     Two things keep that affordable. The hour of cache means a returning
+     reader spends nothing. And pages two onward are fired together once page
+     one reports the total, so the wall waits two round trips rather than five.
+
+     Everything degrades to the served markup. The team cards, the tester and
+     the add-on names are all in the HTML above; this only adds counts, the
+     contributor wall, and the add-on artwork. A visitor whose IP is out of
+     budget gets a 403, lands in the catch, and keeps the page they were
+     served, with the fallback link standing in for the wall. -->
+<script>
+( function () {
+	'use strict';
+
+	// Bump this whenever the cached object's shape changes, not just when the
+	// source of the data does. v2 to v3 was adding `contributors`: readers with
+	// a v2 entry kept the pre-change number for up to an hour, and the fallback
+	// in renderStats made that look like a correct answer rather than a stale one.
+	var CACHE_KEY = 'openstation.contribute.v3';
+	var TTL = 60 * 60 * 1000;
+	var REPO = 'WordPress/openstation';
+	var TEAM = [ 'AllTerrainDeveloper', 'epeicher', 'mmtr', 'nickhamze', 'nuriapenya' ];
+	// GitHub's search API stops at 1000 results however you page it, which is
+	// the same ceiling the blog's plugin works under.
+	var MAX_PAGES = 10;
+	// How many cards the wall had last time. Kept apart from the data cache and
+	// never expired: it is only used to size the skeleton, so a stale count is
+	// worth far more than no count.
+	var SHAPE_KEY = 'openstation.contribute.shape';
+	var DEFAULT_WALL = 15;
+
+	var wall = document.getElementById( 'wall' );
+
+	if ( ! wall || ! window.fetch ) {
+		return;
+	}
+
+	/**
+	 * Read the cache, treating anything stale, absent or unreadable as a miss.
+	 *
+	 * localStorage throws rather than returning null in Safari's private mode
+	 * and wherever a user has blocked site data, so every access is guarded. A
+	 * browser that cannot cache still gets the page, it just pays the requests.
+	 */
+	function cached() {
+		try {
+			var raw = window.localStorage.getItem( CACHE_KEY );
+			var hit = raw && JSON.parse( raw );
+
+			return hit && ( Date.now() - hit.at ) < TTL ? hit.data : null;
+		} catch ( e ) {
+			return null;
+		}
+	}
+
+	function remember( data ) {
+		try {
+			window.localStorage.setItem( CACHE_KEY, JSON.stringify( {
+				at: Date.now(),
+				data: data
+			} ) );
+		} catch ( e ) {
+			// A full or disabled store is not worth reporting: the page is
+			// already rendered by the time this runs.
+		}
+	}
+
+	function json( url ) {
+		return fetch( url ).then( function ( response ) {
+			return response.ok ? response.json() : Promise.reject();
+		} );
+	}
+
+	/**
+	 * "1 merged PR", "14 merged PRs", "28 issues reported".
+	 *
+	 * `many` exists because the plural s does not always land at the end of the
+	 * phrase: "issue reported" pluralises in the middle, and appending to the
+	 * whole string produced "28 issue reporteds".
+	 */
+	function plural( n, one, many ) {
+		return n.toLocaleString() + ' ' + ( 1 === n ? one : many || one + 's' );
+	}
+
+	function each( selector, fn ) {
+		Array.prototype.forEach.call( document.querySelectorAll( selector ), fn );
+	}
+
+	function wallSize() {
+		try {
+			return parseInt( window.localStorage.getItem( SHAPE_KEY ), 10 ) ||
+				DEFAULT_WALL;
+		} catch ( e ) {
+			return DEFAULT_WALL;
+		}
+	}
+
+	function rememberSize( n ) {
+		try {
+			window.localStorage.setItem( SHAPE_KEY, String( n ) );
+		} catch ( e ) {}
+	}
+
+	/**
+	 * A shimmer the size of the text that will replace it.
+	 *
+	 * The string matters: it is what gives the placeholder its width and its
+	 * line count, so it is written to be about as long as the real value.
+	 */
+	function skel( text, className ) {
+		var span = document.createElement( 'span' );
+		span.className = ( className ? className + ' ' : '' ) + 'skel';
+		span.textContent = text;
+		return span;
+	}
+
+	/**
+	 * Put a skeleton in a slot, revealing the slot if it starts hidden.
+	 *
+	 * data-skel records that this element was only shown for the skeleton, so
+	 * clearSkeleton knows to put it back rather than leaving an empty box.
+	 */
+	function stub( node, children ) {
+		if ( ! node ) {
+			return;
+		}
+
+		node.textContent = '';
+		children.forEach( function ( child ) {
+			node.appendChild( child );
+		} );
+
+		if ( node.hidden ) {
+			node.hidden = false;
+			node.setAttribute( 'data-skel', '' );
+		}
+	}
+
+	function skeletonCard() {
+		var li = document.createElement( 'li' );
+		li.className = 'card card--wall card--skel';
+		// Nothing here is content; a screen reader should hear the real wall or
+		// the fallback link, never a row of placeholders.
+		li.setAttribute( 'aria-hidden', 'true' );
+
+		var login = document.createElement( 'span' );
+		login.className = 'login';
+		login.appendChild( skel( '@placeholder' ) );
+
+		var pill = document.createElement( 'span' );
+		pill.className = 'pill';
+		pill.appendChild( skel( '00 merged PRs' ) );
+
+		li.appendChild( skel( '', 'avatar' ) );
+		li.appendChild( login );
+		li.appendChild( pill );
+
+		return li;
+	}
+
+	function showSkeleton() {
+		each( '[data-stat]', function ( node ) {
+			stub( node, [ skel( '000' ) ] );
+		} );
+
+		var band = document.getElementById( 'stats-band' );
+
+		if ( band && band.hidden ) {
+			band.hidden = false;
+			band.setAttribute( 'data-skel', '' );
+		}
+
+		each( '[data-count-for]', function ( node ) {
+			stub( node, [ skel( '00 merged PRs' ) ] );
+		} );
+
+		each( '[data-tester-stat]', function ( node ) {
+			stub( node, [ skel(
+				'issues' === node.getAttribute( 'data-tester-stat' ) ?
+					'00 issues reported' : '00 fixed'
+			) ] );
+		} );
+
+		each( '[data-addon]', function ( card ) {
+			stub( card.querySelector( '.addon-by' ), [ skel( 'by Somebody' ) ] );
+			stub( card.querySelector( '.note' ), [
+				skel( 'A sentence about what this plugin does inside' ),
+				skel( 'OpenStation.' )
+			] );
+			stub( card.querySelector( '.pill' ), [ skel( '00+ active installs' ) ] );
+		} );
+
+		var frag = document.createDocumentFragment();
+		var i;
+
+		for ( i = 0; i < wallSize(); i++ ) {
+			frag.appendChild( skeletonCard() );
+		}
+
+		wall.appendChild( frag );
+
+		var fallback = document.getElementById( 'wall-fallback' );
+
+		if ( fallback ) {
+			fallback.hidden = true;
+		}
+	}
+
+	/**
+	 * Undo showSkeleton, back to exactly the state the page was served in.
+	 *
+	 * Runs before every render, so the success path replaces placeholders in the
+	 * same task the real cards are appended in and the browser paints once.
+	 */
+	function clearSkeleton() {
+		each( '.card--skel', function ( node ) {
+			node.parentNode.removeChild( node );
+		} );
+		each( '.skel', function ( node ) {
+			node.parentNode.removeChild( node );
+		} );
+		each( '[data-skel]', function ( node ) {
+			node.hidden = true;
+			node.removeAttribute( 'data-skel' );
+		} );
+
+		var fallback = document.getElementById( 'wall-fallback' );
+
+		if ( fallback ) {
+			fallback.hidden = false;
+		}
+	}
+
+	/**
+	 * Every result for a search query, bots dropped.
+	 *
+	 * Page one is fetched alone because its total_count is what says how many
+	 * more there are; the rest go out together, so the cost in latency is two
+	 * round trips no matter how many pages deep the repository is.
+	 */
+	function searchAll( query ) {
+		var base = 'https://api.github.com/search/issues?per_page=100&q=' +
+			encodeURIComponent( query );
+
+		return json( base + '&page=1' ).then( function ( first ) {
+			var pages = Math.min(
+				Math.ceil( first.total_count / 100 ),
+				MAX_PAGES
+			);
+			var rest = [];
+			var page;
+
+			for ( page = 2; page <= pages; page++ ) {
+				rest.push( json( base + '&page=' + page ) );
+			}
+
+			return Promise.all( rest ).then( function ( results ) {
+				var items = first.items;
+
+				results.forEach( function ( result ) {
+					items = items.concat( result.items );
+				} );
+
+				return items.filter( function ( item ) {
+					var user = item.user || {};
+
+					return user.login &&
+						'Bot' !== user.type &&
+						-1 === user.login.indexOf( '[bot]' );
+				} );
+			} );
+		} );
+	}
+
+	/**
+	 * Merged pull requests per author, ranked by count then login.
+	 *
+	 * The same tally the blog's plugin does, so the two pages agree.
+	 */
+	function tally( items ) {
+		var byLogin = {};
+		var people = [];
+
+		items.forEach( function ( item ) {
+			var user = item.user;
+
+			if ( ! byLogin[ user.login ] ) {
+				byLogin[ user.login ] = {
+					login: user.login,
+					avatar: user.avatar_url,
+					url: user.html_url || 'https://github.com/' + user.login,
+					prs: 0
+				};
+				people.push( byLogin[ user.login ] );
+			}
+
+			byLogin[ user.login ].prs++;
+		} );
+
+		return people.sort( function ( a, b ) {
+			if ( a.prs === b.prs ) {
+				return a.login.toLowerCase() < b.login.toLowerCase() ? -1 : 1;
+			}
+
+			return b.prs - a.prs;
+		} );
+	}
+
+	function load() {
+		var addons = [];
+		var testers = [];
+		var tester = document.querySelector( '[data-tester]' );
+
+		each( '[data-tester]', function ( node ) {
+			testers.push( node.getAttribute( 'data-tester' ) );
+		} );
+
+		Array.prototype.forEach.call(
+			document.querySelectorAll( '[data-addon]' ),
+			function ( node ) {
+				addons.push( node.getAttribute( 'data-addon' ) );
+			}
+		);
+
+		return Promise.all( [
+			searchAll( 'repo:' + REPO + ' type:pr is:merged' ),
+			// Everything below resolves to null rather than rejecting: a wall is
+			// still worth drawing when only the star count was refused.
+			tester ? searchAll(
+				'repo:' + REPO + ' type:issue author:' +
+				tester.getAttribute( 'data-tester' )
+			).catch( function () {
+				return null;
+			} ) : null,
+			json( 'https://api.github.com/repos/' + REPO ).catch( function () {
+				return null;
+			} ),
+			Promise.all( addons.map( function ( slug ) {
+				return json(
+					'https://api.wordpress.org/plugins/info/1.2/' +
+					'?action=plugin_information' +
+					'&request[slug]=' + encodeURIComponent( slug ) +
+					'&request[fields][sections]=0' +
+					'&request[fields][icons]=1' +
+					'&request[fields][short_description]=1' +
+					'&request[fields][active_installs]=1'
+				).catch( function () {
+					return null;
+				} );
+			} ) )
+		] ).then( function ( results ) {
+			var issues = results[ 1 ];
+
+			// Only what the page draws is kept, so a cache entry stays small and
+			// its shape is this file's to change.
+			var people = tally( results[ 0 ] );
+			var authors = people.map( function ( person ) {
+				return person.login.toLowerCase();
+			} );
+
+			// A curated tester who has never sent a pull request is still a
+			// contributor, so the headline count is the union rather than just
+			// the length of the wall. GitHub logins are case-insensitive.
+			var alsoContributed = testers.filter( function ( login ) {
+				return -1 === authors.indexOf( login.toLowerCase() );
+			} ).length;
+
+			return {
+				people: people,
+				contributors: people.length + alsoContributed,
+				totalPrs: results[ 0 ].length,
+				tester: issues ? {
+					issues: issues.length,
+					closed: issues.filter( function ( issue ) {
+						return 'closed' === issue.state;
+					} ).length
+				} : null,
+				stars: results[ 2 ] ? results[ 2 ].stargazers_count : null,
+				addons: results[ 3 ].map( function ( info, i ) {
+					if ( ! info ) {
+						return null;
+					}
+
+					var icons = info.icons || {};
+
+					return {
+						slug: addons[ i ],
+						author: ( info.author || '' ).replace( /<[^>]+>/g, '' ),
+						blurb: info.short_description || '',
+						installs: info.active_installs || 0,
+						icon: icons.svg || icons[ '2x' ] || icons[ '1x' ] || ''
+					};
+				} )
+			};
+		} );
+	}
+
+	function renderWall( people ) {
+		var community = people.filter( function ( person ) {
+			return -1 === TEAM.indexOf( person.login );
+		} );
+
+		if ( ! community.length ) {
+			return;
+		}
+
+		// Built as nodes rather than markup: every value below is a login or a
+		// URL from a third party, and this way none of it can be parsed as HTML.
+		var frag = document.createDocumentFragment();
+
+		community.forEach( function ( person ) {
+			var li = document.createElement( 'li' );
+			li.className = 'card card--wall';
+
+			var img = document.createElement( 'img' );
+			img.className = 'avatar';
+			img.src = person.avatar +
+				( person.avatar.indexOf( '?' ) > -1 ? '&' : '?' ) + 's=176';
+			img.alt = '';
+			img.width = 176;
+			img.height = 176;
+			img.loading = 'lazy';
+			img.decoding = 'async';
+
+			var link = document.createElement( 'a' );
+			link.className = 'login';
+			link.href = person.url;
+			link.textContent = '@' + person.login;
+
+			var pill = document.createElement( 'span' );
+			pill.className = 'pill';
+			pill.textContent = plural( person.prs, 'merged PR' );
+
+			li.appendChild( img );
+			li.appendChild( link );
+			li.appendChild( pill );
+			frag.appendChild( li );
+		} );
+
+		wall.appendChild( frag );
+		rememberSize( community.length );
+
+		var fallback = document.getElementById( 'wall-fallback' );
+
+		if ( fallback ) {
+			fallback.hidden = true;
+		}
+
+		var count = document.querySelector( '[data-count="wall"]' );
+
+		if ( count ) {
+			count.textContent = community.length;
+			count.hidden = false;
+		}
+	}
+
+	function renderTeam( people ) {
+		people.forEach( function ( person ) {
+			var pill = document.querySelector(
+				'[data-count-for="' + person.login + '"]'
+			);
+
+			if ( pill ) {
+				pill.textContent = plural( person.prs, 'merged PR' );
+				pill.hidden = false;
+			}
+		} );
+	}
+
+	function renderTester( tester ) {
+		if ( ! tester ) {
+			return;
+		}
+
+		var values = {
+			issues: tester.issues ?
+				plural( tester.issues, 'issue reported', 'issues reported' ) : null,
+			closed: tester.closed ? tester.closed.toLocaleString() + ' fixed' : null
+		};
+
+		Array.prototype.forEach.call(
+			document.querySelectorAll( '[data-tester-stat]' ),
+			function ( node ) {
+				var value = values[ node.getAttribute( 'data-tester-stat' ) ];
+
+				if ( value ) {
+					node.textContent = value;
+					node.hidden = false;
+				}
+			}
+		);
+	}
+
+	function renderStats( data ) {
+		var values = {
+			prs: data.totalPrs.toLocaleString(),
+			contributors: String( data.contributors || data.people.length ),
+			stars: null === data.stars ? null : data.stars.toLocaleString(),
+			addons: String( data.addons.length )
+		};
+
+		var shown = 0;
+
+		Array.prototype.forEach.call(
+			document.querySelectorAll( '[data-stat]' ),
+			function ( node ) {
+				var value = values[ node.getAttribute( 'data-stat' ) ];
+
+				if ( value ) {
+					node.textContent = value;
+					shown++;
+				} else {
+					// One box holding an em dash next to three real numbers
+					// reads as broken; an empty cell reads as a gap.
+					node.parentNode.remove();
+				}
+			}
+		);
+
+		var band = document.getElementById( 'stats-band' );
+
+		if ( band && shown ) {
+			band.hidden = false;
+		}
+	}
+
+	function renderAddons( addons ) {
+		addons.forEach( function ( addon ) {
+			if ( ! addon ) {
+				return;
+			}
+
+			var card = document.querySelector(
+				'[data-addon="' + addon.slug + '"]'
+			);
+
+			if ( ! card ) {
+				return;
+			}
+
+			if ( addon.icon ) {
+				var img = document.createElement( 'img' );
+				img.className = 'addon-icon';
+				img.src = addon.icon;
+				img.alt = '';
+				img.width = 64;
+				img.height = 64;
+				img.loading = 'lazy';
+				img.decoding = 'async';
+				// The icon sits inside .addon-head, so the swap has to go through
+				// its actual parent; replaceChild on the card would throw.
+				var slot = card.querySelector( '.addon-icon' );
+				slot.parentNode.replaceChild( img, slot );
+			}
+
+			var by = card.querySelector( '.addon-by' );
+
+			if ( by && addon.author ) {
+				by.textContent = 'by ' + addon.author;
+				by.hidden = false;
+			}
+
+			var note = card.querySelector( '.note' );
+
+			if ( note && addon.blurb ) {
+				note.textContent = addon.blurb;
+				note.hidden = false;
+			}
+
+			var pill = card.querySelector( '.pill' );
+
+			if ( pill && addon.installs ) {
+				pill.textContent = addon.installs.toLocaleString() +
+					'+ active installs';
+				pill.hidden = false;
+			}
+		} );
+	}
+
+	function render( data ) {
+		clearSkeleton();
+		renderStats( data );
+		renderTeam( data.people );
+		renderWall( data.people );
+		renderTester( data.tester );
+		renderAddons( data.addons );
+	}
+
+	var hit = cached();
+
+	if ( hit ) {
+		// Nothing to reserve space for: this renders in the same task the page
+		// is parsed in, so the wall is there at first paint.
+		render( hit );
+		return;
+	}
+
+	showSkeleton();
+
+	load().then( function ( data ) {
+		remember( data );
+		render( data );
+	} ).catch( function () {
+		clearSkeleton();
+		// Rate-limited, offline, or GitHub is having a day. The served page
+		// stands: team, tester, add-on names and the fallback link are all in
+		// the markup. Nothing to undo, nothing to report.
+	} );
+}() );
+</script>
+
+</body>
+</html>
