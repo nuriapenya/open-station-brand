@@ -1,0 +1,41 @@
+{
+  "name": "openstation-docs",
+  "private": true,
+  "version": "1.1.0",
+  "description": "Documentation for people who use and build for OpenStation, served at openstation.me/docs.",
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://openstation.me/docs/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nuriapenya/open-station-brand.git",
+    "directory": "docs-app"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "verify": "node scripts/verify-content.mjs",
+    "check": "npm run build && npm run verify"
+  },
+  "dependencies": {
+    "github-slugger": "^2.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-markdown": "^10.0.0",
+    "rehype-autolink-headings": "^7.1.0",
+    "rehype-slug": "^6.0.0",
+    "remark-gfm": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/react": "^19.0.3",
+    "@types/react-dom": "^19.0.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5"
+  }
+}

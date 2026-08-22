@@ -32,6 +32,14 @@
 /vendor/*
   Cache-Control: public, max-age=31536000, immutable
 
+# The docs site. Vite names every chunk after its content, so those are
+# immutable too; /docs/index.html keeps the host default like every other page.
+/docs/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/docs/screenshots/*
+  Cache-Control: public, max-age=31536000, immutable
+
 # The page itself keeps the host default: revalidate every time, so a publish
 # is live immediately. Only the security headers are added here.
 #

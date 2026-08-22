@@ -10,6 +10,7 @@
 #   index.html             the page, with ../fonts, ../vendor and ../assets rewritten
 #   press/index.html       the press page, copied as-is (see below)
 #   contribute/index.html  the contribute page, same
+#   docs/                  the documentation site, built from docs-app/ (Node 22+)
 #   assets/press/          the press page's coverage thumbnails
 #   _headers          cache and security headers, read by the host at the root
 #   assets/           favicons
@@ -50,6 +51,17 @@ sed -e 's|\.\./fonts/|fonts/|g' \
 # them verbatim is what makes them work.
 cp "$press_page"   "$out/press/index.html"
 cp "$contrib_page" "$out/contribute/index.html"
+
+# The docs are a Vite app in docs-app/, built here and placed at docs/, so a
+# page reads openstation.me/docs/#/guides/welcome. Its asset paths are relative
+# and it reaches for /fonts and /assets at the bundle root rather than carrying
+# copies, which is why it is only ever built into this bundle, never on its own.
+docs_app="$repo_root/docs-app"
+command -v npm >/dev/null || { echo "error: npm not found; building the docs needs Node 22 or later" >&2; exit 1; }
+[ -d "$docs_app/node_modules" ] || npm ci --prefix "$docs_app" --no-audit --no-fund
+npm run --prefix "$docs_app" --silent build
+mkdir -p "$out/docs"
+cp -R "$docs_app/dist/." "$out/docs/"
 
 # The host only reads _headers from the root of the published folder, so it has
 # to be copied in rather than left in mockups/. Without it the fonts come back
@@ -99,7 +111,9 @@ for page in press contribute; do
 done
 
 echo "Bundle ready: $out"
-find "$out" -type f | sed "s|^$out/|  |" | sort
+# The docs are a hundred-odd hashed chunks; one line for them is enough.
+find "$out" -type f -not -path "$out/docs/*" | sed "s|^$out/|  |" | sort
+echo "  docs/ ($(find "$out/docs" -type f | wc -l | tr -d ' ') files)"
 cat <<EOF
 
 Preview:  (cd "$out" && python3 -m http.server 8000)
