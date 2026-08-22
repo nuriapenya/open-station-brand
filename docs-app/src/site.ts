@@ -16,11 +16,13 @@ export const site = {
 	install: 'https://get.openstation.me/',
 	source: 'https://github.com/nuriapenya/open-station-brand/tree/main/docs-app',
 	sourceBlob: 'https://github.com/nuriapenya/open-station-brand/blob/main/docs-app',
+	// The landing page's nav, minus Docs (the lockup already says where we are).
+	// `external` marks the one link that leaves the site, which gets an arrow.
 	nav: [
 		{ label: 'Blog', href: 'https://openstation.blog' },
 		{ label: 'Contribute', href: '/contribute/' },
-		{ label: 'GitHub', href: 'https://github.com/WordPress/openstation' },
 		{ label: 'Press', href: '/press/' },
+		{ label: 'GitHub', href: 'https://github.com/WordPress/openstation', external: true },
 	],
 	audit: [
 		'346 Vitest files, 4,319 tests passed',

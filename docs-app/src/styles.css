@@ -192,6 +192,7 @@ kbd {
 .site-nav { display: flex; align-items: center; gap: 24px; margin-left: auto; }
 .site-nav a { color: var(--ink-2); font-size: var(--fs-body-sm); white-space: nowrap; }
 .site-nav a:hover { color: var(--ink); }
+.site-nav a .ext, .sidebar-site a .ext { margin-left: 3px; vertical-align: -1px; }
 .nav-toggle {
 	display: none;
 	align-items: center; justify-content: center;

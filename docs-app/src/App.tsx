@@ -51,7 +51,7 @@ function SiteHeader( { onSearch, navOpen, onToggleNav }: { onSearch: () => void;
 				<kbd aria-hidden="true">⌘K</kbd>
 			</button>
 			<nav className="site-nav" aria-label="Site">
-				{ site.nav.map( ( item ) => <a key={ item.href } href={ item.href }>{ item.label }</a> ) }
+				{ site.nav.map( ( item ) => <a key={ item.href } href={ item.href }>{ item.label }{ item.external && <ArrowUpRightIcon className="ext" size={ 12 }/> }</a> ) }
 			</nav>
 			<a className="btn sm solid install" href={ site.install }>Install</a>
 			<button type="button" className="nav-toggle" aria-expanded={ navOpen } aria-controls="docs-sidebar" onClick={ onToggleNav }>
@@ -95,7 +95,7 @@ function Sidebar( { current, open, onClose }: { current?: string; open: boolean;
 			</nav>
 			<nav className="sidebar-site" aria-label="Site">
 				<span>OpenStation</span>
-				{ site.nav.map( ( item ) => <a key={ item.href } href={ item.href }>{ item.label }</a> ) }
+				{ site.nav.map( ( item ) => <a key={ item.href } href={ item.href }>{ item.label }{ item.external && <ArrowUpRightIcon className="ext" size={ 12 }/> }</a> ) }
 				<a href={ site.install }>Install</a>
 			</nav>
 		</aside>
