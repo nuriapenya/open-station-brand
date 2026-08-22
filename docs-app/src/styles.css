@@ -275,26 +275,36 @@ kbd {
 .section-intro h2 { margin: 12px 0; font-size: var(--fs-section-lg); font-weight: var(--fw-bold); letter-spacing: -0.03em; line-height: 1.05; }
 .section-intro p { margin: 0; color: var(--ink-2); font-size: var(--fs-body-lg); line-height: 1.55; }
 
-.path-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
-.path-card { display: flex; position: relative; min-height: 420px; flex-direction: column; padding: 32px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--r-card); background: var(--obsidian); }
-.path-card::before { content: ''; position: absolute; inset: auto 0 0; height: 80%; opacity: 0.22; background: radial-gradient(circle at 20% 100%, var(--pulse), transparent 55%); }
-.path-card.builder::before { background: radial-gradient(circle at 20% 100%, var(--sirius), transparent 55%); }
-.path-card.user { border-top-color: rgb(from var(--nebula) r g b / 0.42); }
-.path-card.builder { border-top-color: rgb(from var(--sirius) r g b / 0.42); }
-.path-card > * { position: relative; z-index: 1; }
-.path-card-title { display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: flex-start; }
-.path-card-title > svg { margin-top: 2px; color: var(--nebula); }
-.path-card.builder .path-card-title > svg { color: var(--sirius); }
-.path-card-title > div { min-width: 0; }
-.path-card span { color: var(--ink-3); font-family: var(--font-mono); font-size: var(--fs-nano); letter-spacing: 0.07em; text-transform: uppercase; }
-.path-card h3 { margin: 10px 0 12px; font-size: var(--fs-h3); font-weight: var(--fw-semibold); letter-spacing: -0.02em; }
-.path-card p { margin: 0; color: var(--ink-2); line-height: 1.55; }
-.path-links { display: flex; flex-direction: column; margin-top: 28px; border-top: 1px solid var(--line); }
-.path-links a { display: flex; gap: 10px; align-items: center; justify-content: space-between; min-height: 44px; padding: 9px 2px; border-bottom: 1px solid var(--line); color: var(--ink-2); font-size: var(--fs-body-sm); transition: color 0.18s ease, padding 0.18s ease; }
-.path-links a:first-child { color: var(--ink); font-weight: var(--fw-medium); }
-.path-links a:hover { padding-left: 6px; color: var(--ink); }
-.path-card.user .path-links a:hover { color: var(--nebula); }
-.path-card.builder .path-links a:hover { color: var(--sirius); }
+/* The two paths: one flat card in the landing's feature-card idiom (18px
+   radius, hairline border, space icon top right, numbered list on dashed
+   rules), split by a rail with the page chrome's crosshairs on it. Each column
+   carries its own soft wash, Lagoon into Nebula for the guides and Sirius for
+   the builder docs, at single-digit opacity so the card stays Void. The
+   rounding is on the columns rather than an overflow clip on the card, so the
+   crosshairs can hang over the edge the way they do on the landing page. */
+.paths { position: relative; display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line); border-radius: 18px; background: var(--void); }
+.path { position: relative; padding: 32px; }
+.path.user { border-radius: 18px 0 0 18px; background: radial-gradient(ellipse 70% 80% at 0% 0%, rgb(from var(--lagoon) r g b / 0.13), transparent 60%), radial-gradient(ellipse 60% 60% at 90% 100%, rgb(from var(--nebula) r g b / 0.07), transparent 60%); }
+.path.builder { border-left: 1px solid var(--line); border-radius: 0 18px 18px 0; background: radial-gradient(ellipse 70% 80% at 100% 0%, rgb(from var(--sirius) r g b / 0.10), transparent 60%), radial-gradient(ellipse 60% 60% at 10% 100%, rgb(from var(--lagoon) r g b / 0.07), transparent 60%); }
+.x { position: absolute; left: -9px; width: 17px; height: 17px; pointer-events: none; }
+.x::before, .x::after { content: ''; position: absolute; background: var(--pulse); }
+.x::before { left: 8px; top: 0; width: 1px; height: 17px; }
+.x::after { left: 0; top: 8px; width: 17px; height: 1px; }
+.x.top { top: -9px; }
+.x.bottom { bottom: -9px; }
+.path-head { display: flex; gap: 18px; align-items: flex-start; }
+.path-head > div { flex: 1; min-width: 0; }
+.path-art { order: 2; flex: none; width: 42px; height: 42px; }
+.path-head h3 { margin: 0; font-size: var(--fs-h5); font-weight: var(--fw-semibold); letter-spacing: -0.01em; }
+.path-head p { margin: 6px 0 0; color: var(--ink-2); font-size: var(--fs-body-sm); line-height: 1.55; max-width: 44ch; }
+.path-links { list-style: none; margin: 24px 0 0; padding: 0; border-top: 1px dashed var(--line-dash); }
+.path-links a { display: grid; grid-template-columns: 34px 1fr auto; gap: 10px; align-items: center; padding: 12px 2px; border-bottom: 1px dashed var(--line-dash); color: var(--ink-2); font-size: var(--fs-body-sm); transition: color 0.15s ease, padding 0.15s ease; }
+.path-links a:hover { color: var(--ink); padding-left: 6px; }
+.path-links .n { font-family: var(--font-mono); font-size: var(--fs-label); color: var(--pewter); }
+.path-links a svg { color: var(--ink-3); }
+.path-links li:first-child a { color: var(--ink); font-weight: var(--fw-medium); }
+.path-links li:first-child .n { color: var(--nebula); }
+.path.builder .path-links li:first-child .n { color: var(--sirius); }
 
 .tour-strip { max-width: none; padding-inline: max(var(--gutter), calc((100% - 1200px) / 2 + var(--gutter))); border-block: 1px dashed var(--line-dash); background: rgb(from var(--starlight) r g b / 0.01); }
 .screenshot-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
@@ -486,7 +496,10 @@ kbd {
 	.sidebar-backdrop { display: block; position: fixed; inset: var(--header-h) 0 0; z-index: 29; background: rgb(from var(--void) r g b / 0.5); }
 	.hero { min-height: 0; padding-block: 72px 64px; }
 	.home-section { padding-block: 72px; }
-	.path-grid, .screenshot-grid, .status-panel { grid-template-columns: 1fr; }
+	.paths, .screenshot-grid, .status-panel { grid-template-columns: 1fr; }
+	.path.user { border-radius: 18px 18px 0 0; }
+	.path.builder { border-left: 0; border-top: 1px solid var(--line); border-radius: 0 0 18px 18px; }
+	.x { display: none; }
 	.shot-wide { grid-column: auto; }
 	.status-panel { gap: 28px; padding: 28px; }
 	.doc-shell { padding-block: 36px 72px; }
@@ -496,8 +509,7 @@ kbd {
 @media (max-width: 560px) {
 	.hero-actions, .final-cta > div { width: 100%; flex-direction: column; }
 	.feature-cards { grid-template-columns: 1fr; }
-	.path-card { min-height: 0; padding: 24px; }
-	.path-card h3 { font-size: var(--fs-h4); }
+	.path { padding: 24px 20px; }
 	.pagination { grid-template-columns: 1fr; }
 	.pagination a.next { text-align: left; }
 	.doc-article p, .doc-article li { font-size: 15px; }

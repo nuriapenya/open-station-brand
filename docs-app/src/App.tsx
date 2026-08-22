@@ -6,7 +6,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import { docBySlug, docs, hrefFor, loadDoc, loadSearchIndex, navGroups, neighborsOf, resolveMarkdownHref, type DocMeta } from './content';
 import type { DocHeading } from './content-metadata';
 import { site } from './site';
-import { ArrowUpRightIcon, CheckIcon, ChevronRightIcon, CloseIcon, CommandIcon, Logo, MenuIcon, SearchIcon, WindowIcon } from './icons';
+import { ArrowUpRightIcon, CheckIcon, ChevronRightIcon, CloseIcon, Logo, MenuIcon, SearchIcon } from './icons';
 
 type Route = { page: 'home' } | { page: 'doc'; slug: string; anchor?: string };
 
@@ -136,27 +136,34 @@ function Home() {
 
 			<section className="home-section audience-paths">
 				<div className="section-intro"><span>Choose a path</span><h2>What are you here to do?</h2><p>Start with the product guides if you run OpenStation. Choose the builder docs if you make plugins, themes, integrations or contributions.</p></div>
-				<div className="path-grid">
-					<article className="path-card user">
-						<div className="path-card-title"><WindowIcon size={ 24 }/><div><span>Product guides</span><h3>Use OpenStation</h3><p>Install it, learn the desktop, arrange your work, personalise it, and find help when something feels off.</p></div></div>
-						<nav className="path-links" aria-label="Use OpenStation shortcuts">
-							<a href={ guide( 'welcome' ) }>Start here <ChevronRightIcon size={ 14 }/></a>
-							<a href={ guide( 'install-and-first-run' ) }>Install and first run</a>
-							<a href={ guide( 'product-tour' ) }>Take the product tour</a>
-							<a href={ guide( 'windows-and-spaces' ) }>Work with windows and Spaces</a>
-							<a href={ guide( 'troubleshooting' ) }>Troubleshoot a problem</a>
-						</nav>
-					</article>
-					<article className="path-card builder">
-						<div className="path-card-title"><CommandIcon size={ 24 }/><div><span>Builder docs</span><h3>Build for OpenStation</h3><p>Set up the repository, understand the architecture, register extensions, and work from tested examples.</p></div></div>
-						<nav className="path-links" aria-label="Build for OpenStation shortcuts">
-							<a href={ guide( 'system-overview' ) }>Builder overview <ChevronRightIcon size={ 14 }/></a>
-							<a href={ hrefFor( 'repo/getting-started' ) }>Set up a development copy</a>
-							<a href={ hrefFor( 'repo/api-index' ) }>Browse the API index</a>
-							<a href={ hrefFor( 'repo/examples/README' ) }>Use an example</a>
-							<a href={ guide( 'contributing' ) }>Contribute to the project</a>
-						</nav>
-					</article>
+				{ /* One card split by a rail, in the landing page's feature-card idiom. */ }
+				<div className="paths">
+					<PathColumn
+						audience="user"
+						art="./art/icon-rocket.svg"
+						title="Use OpenStation"
+						copy="Install it, learn the desktop, arrange your work, personalise it, and find help when something feels off."
+						links={ [
+							[ 'Start here', guide( 'welcome' ) ],
+							[ 'Install and first run', guide( 'install-and-first-run' ) ],
+							[ 'Take the product tour', guide( 'product-tour' ) ],
+							[ 'Work with windows and Spaces', guide( 'windows-and-spaces' ) ],
+							[ 'Troubleshoot a problem', guide( 'troubleshooting' ) ],
+						] }
+					/>
+					<PathColumn
+						audience="builder"
+						art="./art/icon-orbit.svg"
+						title="Build for OpenStation"
+						copy="Set up the repository, understand the architecture, register extensions, and work from tested examples."
+						links={ [
+							[ 'Builder overview', guide( 'system-overview' ) ],
+							[ 'Set up a development copy', hrefFor( 'repo/getting-started' ) ],
+							[ 'Browse the API index', hrefFor( 'repo/api-index' ) ],
+							[ 'Use an example', hrefFor( 'repo/examples/README' ) ],
+							[ 'Contribute to the project', guide( 'contributing' ) ],
+						] }
+					/>
 				</div>
 			</section>
 
@@ -203,6 +210,23 @@ function Home() {
 				</div>
 			</section>
 		</main>
+	);
+}
+
+function PathColumn( { audience, art, title, copy, links }: { audience: DocMeta[ 'audience' ]; art: string; title: string; copy: string; links: Array< [ string, string ] > } ) {
+	return (
+		<article className={ `path ${ audience }` }>
+			{ audience === 'builder' && <><span className="x top" aria-hidden="true"/><span className="x bottom" aria-hidden="true"/></> }
+			<div className="path-head">
+				<img className="path-art" src={ art } alt="" width="42" height="42"/>
+				<div><h3>{ title }</h3><p>{ copy }</p></div>
+			</div>
+			<ol className="path-links" aria-label={ `${ title } shortcuts` }>
+				{ links.map( ( [ label, href ], index ) => (
+					<li key={ href }><a href={ href }><span className="n">{ String( index + 1 ).padStart( 2, '0' ) }</span>{ label }<ChevronRightIcon size={ 14 }/></a></li>
+				) ) }
+			</ol>
+		</article>
 	);
 }
 
