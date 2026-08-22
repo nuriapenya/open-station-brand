@@ -2,6 +2,11 @@
 # GitHub Pages serves this repo from the root, so anything committed here ships.
 build/
 
+# The docs site's dependencies and its own build output, which
+# build-landing-bundle.sh copies into build/landing-bundle/docs/.
+node_modules/
+docs-app/dist/
+
 .DS_Store
 .spacefast/state.json
 /.spacefast-*

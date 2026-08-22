@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.spacefast/
+coverage/
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+.spacefast/state.json
+/.spacefast-*
+.spacefast/.spacefast-*
+.spacefast/.space-link-*.tmp

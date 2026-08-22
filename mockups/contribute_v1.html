@@ -248,6 +248,15 @@
     font-size: var(--fs-body-sm); text-decoration: none; color: var(--ink-2);
   }
   .nav > nav a:hover { color: var(--ink); }
+  /* The outbound arrow on GitHub, the one link that leaves the site. Sized in
+     em so it keeps its proportion in the larger mobile menu. */
+  .nav > nav a .ext {
+    width: 0.75em; height: 0.75em;
+    margin-left: 0.2em;
+    vertical-align: -0.02em;
+    fill: none; stroke: currentColor; stroke-width: 1.5;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
   /* The page you are on, marked in the nav rather than only in the title. */
   .nav > nav a[aria-current] { color: var(--ink); }
 
@@ -580,7 +589,7 @@
   footer .credit { margin-left: auto; }
 
   /* ============ Mobile menu ============
-     Below 640px the four links do not fit beside the lockup and the Install
+     Below 720px the five links do not fit beside the lockup and the Install
      button, so they move behind a toggle. The panel is the same <nav>, laid out
      as a centred column over a Void sheet.
 
@@ -614,7 +623,7 @@
   /* Locked while the panel is open, so the page behind it does not scroll. */
   html.nav-locked, html.nav-locked body { overflow: hidden; }
 
-  @media (max-width: 640px) {
+  @media (max-width: 720px) {
     /* Tighter than the 28px the row uses, so the toggle sits close to Install
        rather than marooned between it and the lockup. */
     .nav { gap: 16px; }
@@ -655,9 +664,9 @@
     .card { padding: 20px 16px; }
     .avatar { width: 72px; height: 72px; }
   }
-  /* Matches landing_v1.html: the nav row cannot hold four links, the lockup
+  /* Matches landing_v1.html: the nav row cannot hold five links, the lockup
      and the button below this width. */
-  @media (max-width: 640px) {
+  @media (max-width: 720px) {
     .nav > nav { display: none; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -722,9 +731,10 @@
   </a>
   <nav id="site-nav" aria-label="Site">
     <a href="https://openstation.blog">Blog</a>
+    <a href="/docs/">Docs</a>
     <a href="/contribute/" aria-current="page">Contribute</a>
-    <a href="https://github.com/WordPress/openstation">GitHub</a>
     <a href="/press/">Press</a>
+    <a href="https://github.com/WordPress/openstation">GitHub<svg class="ext" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8.75 7H17v8.25"/></svg></a>
   </nav>
   <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" hidden>
     <span class="sr-only">Menu</span>
@@ -1594,7 +1604,7 @@
 
 	// Widening past the breakpoint puts the links back in the row; the panel
 	// state has to come off with them or the scroll lock stays behind.
-	window.matchMedia( '(min-width: 641px)' ).addEventListener( 'change', function ( event ) {
+	window.matchMedia( '(min-width: 721px)' ).addEventListener( 'change', function ( event ) {
 		if ( event.matches ) {
 			setOpen( false );
 		}
