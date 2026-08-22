@@ -6,7 +6,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import { docBySlug, docs, hrefFor, loadDoc, loadSearchIndex, navGroups, neighborsOf, resolveMarkdownHref, type DocMeta } from './content';
 import type { DocHeading } from './content-metadata';
 import { site } from './site';
-import { ArrowUpRightIcon, CheckIcon, ChevronDownIcon, ChevronRightIcon, CloseIcon, CommandIcon, Logo, MenuIcon, SearchIcon, WindowIcon } from './icons';
+import { ArrowUpRightIcon, CheckIcon, ChevronRightIcon, CloseIcon, CommandIcon, Logo, MenuIcon, SearchIcon, WindowIcon } from './icons';
 
 type Route = { page: 'home' } | { page: 'doc'; slug: string; anchor?: string };
 
@@ -40,8 +40,11 @@ function ExternalLink( { href, className, children }: { href: string; className?
 function SiteHeader( { onSearch, navOpen, onToggleNav }: { onSearch: () => void; navOpen: boolean; onToggleNav: () => void } ) {
 	return (
 		<header className="site-header">
-			<a className="lockup" href="/"><Logo/>OpenStation</a>
-			<a className="docs-chip" href="#/">Docs</a>
+			<div className="lockup">
+				<a className="lockup-home" href="/" aria-label="OpenStation home"><Logo/></a>
+				<svg className="lockup-slash" viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 3.5 8.5 20.5"/></svg>
+				<a className="lockup-docs" href="#/">Docs</a>
+			</div>
 			<button type="button" className="search-trigger" onClick={ onSearch }>
 				<SearchIcon/>
 				<span>Search docs</span>
@@ -68,39 +71,33 @@ function Sidebar( { current, open, onClose }: { current?: string; open: boolean;
 	return (
 		<aside id="docs-sidebar" className={ `sidebar${ open ? ' is-open' : '' }` }>
 			<div className="sidebar-head">
-				<span>Browse the docs</span>
+				<span>Docs</span>
 				<button ref={ closeRef } type="button" onClick={ onClose } aria-label="Close navigation"><CloseIcon size={ 18 }/></button>
 			</div>
 			<nav aria-label="Documentation">
 				<a className={ `nav-home${ ! current ? ' active' : '' }` } aria-current={ ! current ? 'page' : undefined } href="#/" onClick={ onClose }>Documentation home</a>
-				{ navGroups.map( ( group ) => {
-					const groupIsActive = group.sections.some( ( section ) => section.docs.some( ( doc ) => doc.slug === current ) );
-					return (
-						<section className={ `audience-nav ${ group.audience }${ groupIsActive ? ' active' : '' }` } key={ group.audience }>
-							<div className="audience-nav-head">
-								{ group.audience === 'user' ? <WindowIcon size={ 18 }/> : <CommandIcon size={ 18 }/> }
-								<div><strong>{ group.name }</strong><span>{ group.description }</span></div>
-							</div>
-							{ group.sections.map( ( section, index ) => (
-								<details key={ section.name } open={ section.docs.some( ( doc ) => doc.slug === current ) || index === 0 }>
-									<summary>{ section.name }<span>{ section.docs.length }</span><ChevronDownIcon size={ 14 }/></summary>
-									<div className="nav-list">
-										{ section.docs.map( ( doc ) => (
-											<a key={ doc.slug } className={ doc.slug === current ? 'active' : '' } aria-current={ doc.slug === current ? 'page' : undefined } href={ hrefFor( doc.slug ) } onClick={ onClose }>{ doc.title }</a>
-										) ) }
-									</div>
-								</details>
-							) ) }
-						</section>
-					);
-				} ) }
+				{ /* The two audiences are separated by a rule, not a heading: the
+				     section names say enough on their own. */ }
+				{ navGroups.map( ( group ) => (
+					<div className="nav-group" key={ group.audience }>
+						{ group.sections.map( ( section, index ) => (
+							<details key={ section.name } open={ section.docs.some( ( doc ) => doc.slug === current ) || index === 0 }>
+								<summary><ChevronRightIcon size={ 14 }/>{ section.name }</summary>
+								<div className="nav-list">
+									{ section.docs.map( ( doc ) => (
+										<a key={ doc.slug } className={ doc.slug === current ? 'active' : '' } aria-current={ doc.slug === current ? 'page' : undefined } href={ hrefFor( doc.slug ) } onClick={ onClose }>{ doc.title }</a>
+									) ) }
+								</div>
+							</details>
+						) ) }
+					</div>
+				) ) }
 			</nav>
 			<nav className="sidebar-site" aria-label="Site">
 				<span>OpenStation</span>
 				{ site.nav.map( ( item ) => <a key={ item.href } href={ item.href }>{ item.label }</a> ) }
 				<a href={ site.install }>Install</a>
 			</nav>
-			<div className="sidebar-foot"><span className="signal-dot"/>Checked against <code>{ site.checked.commit }</code></div>
 		</aside>
 	);
 }
@@ -121,7 +118,6 @@ function SiteFooter() {
 
 function Home() {
 	const guide = ( slug: string ) => hrefFor( `guides/${ slug }` );
-	const userPages = docs.filter( ( doc ) => doc.audience === 'user' ).length;
 	useEffect( () => {
 		document.title = site.name;
 		window.scrollTo( 0, 0 );
@@ -130,19 +126,12 @@ function Home() {
 	return (
 		<main id="main" className="home" tabIndex={ -1 }>
 			<section className="hero grid-section">
-				<div className="eyebrow"><span className="signal-dot"/>OpenStation documentation · version { site.version }</div>
 				<h1>Docs for the people who use OpenStation <span>and the people who build for it.</span></h1>
 				<p>If you use OpenStation day to day, start with the product guides. If you are making something for it, the builder docs lead to setup, APIs, examples and project internals.</p>
 				<div className="hero-actions">
 					<a className="btn solid" href={ guide( 'welcome' ) }>Use OpenStation</a>
 					<a className="btn outline" href={ guide( 'system-overview' ) }>Build for OpenStation</a>
 				</div>
-				<dl className="hero-proof" aria-label="What these docs cover">
-					<div><dt>Pages</dt><dd>{ docs.length }</dd></div>
-					<div><dt>Product guides</dt><dd>{ userPages }</dd></div>
-					<div><dt>Builder docs</dt><dd>{ docs.length - userPages }</dd></div>
-					<div><dt>Plugin version</dt><dd>{ site.version }</dd></div>
-				</dl>
 			</section>
 
 			<section className="home-section audience-paths">
@@ -286,11 +275,11 @@ function DocPage( { doc, anchor }: { doc: DocMeta; anchor?: string } ) {
 	return (
 		<main id="main" className="doc-shell" tabIndex={ -1 }>
 			<article className="doc-article">
-				<div className={ `doc-meta ${ doc.audience }` }>
-					<span>{ audienceLabel( doc.audience ) }</span>
+				<nav className="breadcrumb" aria-label="Breadcrumb">
+					<a href="#/">Docs</a>
+					<ChevronRightIcon size={ 12 }/>
 					<span>{ doc.section }</span>
-					<span>v{ site.version }</span>
-				</div>
+				</nav>
 				<h1>{ doc.title }</h1>
 				{ failed && <p className="doc-notice">This page could not be loaded. <ExternalLink href={ sourceUrlFor( doc ) }>Read it on GitHub</ExternalLink>.</p> }
 				{ content === null && ! failed && <div className="doc-skeleton" aria-busy="true" aria-label="Loading the page"><span/><span/><span/><span/><span/></div> }
