@@ -1,0 +1,50 @@
+{
+  "name": "open-station-brand",
+  "version": "1.0.0",
+  "description": "The living visual identity reference for [OpenStation](https://wordpress.org/plugins/desktop-mode/), the open-source WordPress plugin that turns wp-admin into a desktop OS.",
+  "scripts": {
+    "predev": "node scripts/prepare-public.mjs",
+    "dev": "astro dev",
+    "prebuild": "node scripts/prepare-public.mjs",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "test": "node --test tests/*.test.ts",
+    "test:e2e": "playwright test",
+    "tokens:snapshot": "node scripts/snapshot-tokens.mjs",
+    "build:bundle": "bash mockups/build-landing-bundle.sh",
+    "tokens:help": "node scripts/build-token-help.mjs",
+    "themes:snapshot": "node scripts/snapshot-contract.mjs",
+    "components:snapshot": "node scripts/vendor-ui.mjs",
+    "components:build": "node scripts/build-ui.mjs",
+    "test:bundle": "node scripts/verify-bundle.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nuriapenya/open-station-brand.git"
+  },
+  "license": "GPL-2.0-or-later",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/nuriapenya/open-station-brand/issues"
+  },
+  "homepage": "https://github.com/nuriapenya/open-station-brand#readme",
+  "dependencies": {
+    "astro": "^7.3.2",
+    "fflate": "^0.8.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.5.0",
+    "pixelmatch": "^7.2.0",
+    "pngjs": "^7.0.0",
+    "typescript": "^6.0.3",
+    "esbuild": "^0.28.2",
+    "postcss": "^8.5.28"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

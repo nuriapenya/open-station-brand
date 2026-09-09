@@ -2,10 +2,8 @@
 #
 # Build a standalone bundle of the landing page for a flat static host.
 #
-# mockups/landing_v1.html reaches one directory up for its fonts, its Mio widget
-# and its favicons. That resolves on GitHub Pages, where the whole brand guide is
-# deployed, but not on a host that takes a single folder. This flattens the page
-# into a self-contained directory:
+# src/pages/index.astro preserves the landing_v1.html design. Astro emits a
+# static index.html; this keeps the existing flat-host deployment contract:
 #
 #   index.html             the page, with ../fonts, ../vendor and ../assets rewritten
 #   press/index.html       the press page, copied as-is (see below)
@@ -23,10 +21,16 @@
 set -euo pipefail
 
 repo_root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
-source_page="$repo_root/mockups/landing_v1.html"
+source_page="$repo_root/dist/index.html"
 press_page="$repo_root/mockups/press_v1.html"
 contrib_page="$repo_root/mockups/contribute_v1.html"
 out=${1:-"$repo_root/build/landing-bundle"}
+
+# Astro owns the landing source. Keep the same command, output folder and
+# flat index.html contract used by the existing deployment pipelines.
+command -v npm >/dev/null || { echo "error: npm not found; building the landing needs Node 22.12 or later" >&2; exit 1; }
+[ -d "$repo_root/node_modules" ] || npm ci --prefix "$repo_root" --no-audit --no-fund
+npm run --prefix "$repo_root" --silent build
 
 [ -f "$source_page" ] || { echo "error: $source_page not found" >&2; exit 1; }
 [ -f "$press_page" ]  || { echo "error: $press_page not found" >&2; exit 1; }
@@ -42,6 +46,12 @@ sed -e 's|\.\./fonts/|fonts/|g' \
     -e 's|\.\./vendor/|vendor/|g' \
     -e 's|\.\./assets/|assets/|g' \
     "$source_page" > "$out/index.html"
+
+# The independent theme studio is another static directory page. Its compiled
+# assets live beside the index, so every existing flat host can serve it.
+cp -R "$repo_root/dist/theme-creator" "$out/theme-creator"
+cp -R "$repo_root/dist/_astro" "$out/_astro"
+cp -R "$repo_root/dist/assets/studio" "$out/assets/studio"
 
 # The press and contribute pages are the exceptions to the rewrite above. Each is published at
 # <name>/index.html, which Spacefast resolves as a directory index (sf.jsonc

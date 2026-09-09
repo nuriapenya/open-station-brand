@@ -1,0 +1,22 @@
+{
+  "captured": "2026-09-09",
+  "source": "alcazaba-plugin",
+  "files": [
+    {
+      "path": "src/dock-shell-tiles.ts",
+      "sha256": "fe3c2d1f50ce633bc1de2b5d6b548ef7408b9138c9d3ef3aaedbe53ed536674b"
+    },
+    {
+      "path": "src/mio/controller.ts",
+      "sha256": "4cdb1f16830ef72d6c3d152594c24f6db6b72fc06e42d564b398089c9b766a94"
+    },
+    {
+      "path": "includes/recycle-bin/window.php",
+      "sha256": "f80a2addfc797e11f2e43e1d5b6091de5e36a8d7e240d3682b8d367784eaf79f"
+    },
+    {
+      "path": "src/exit-openstation.ts",
+      "sha256": "9a714088ec3d40dcd5a9c223ca3d7e19466e28bb7e9e8c6c24b94f251f5e40ec"
+    }
+  ]
+}
