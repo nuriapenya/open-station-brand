@@ -1,0 +1,301 @@
+{
+  "source": "alcazaba-plugin/includes/desktop-themes",
+  "commit": "bd30d985c1fac926a97d26adcbcd8cc161e03cf6",
+  "textures": [
+    {
+      "id": "TITLEBAR",
+      "type": "image",
+      "property": "--os-titlebar-image",
+      "sharedSize": false,
+      "base": null
+    },
+    {
+      "id": "TITLEBAR_FOCUSED",
+      "type": "image",
+      "property": "--os-titlebar-image-focused",
+      "sharedSize": false,
+      "base": "TITLEBAR"
+    },
+    {
+      "id": "WINDOW_FRAME",
+      "type": "border-image",
+      "property": "--os-window-border-image",
+      "sharedSize": false,
+      "base": null
+    },
+    {
+      "id": "WINDOW_FRAME_FOCUSED",
+      "type": "border-image",
+      "property": "--os-window-border-image-focused",
+      "sharedSize": false,
+      "base": "WINDOW_FRAME"
+    },
+    {
+      "id": "WINDOW_CORNER_NE",
+      "type": "image",
+      "property": "--os-window-corner-ne-image",
+      "sharedSize": true,
+      "base": null
+    },
+    {
+      "id": "WINDOW_CORNER_NW",
+      "type": "image",
+      "property": "--os-window-corner-nw-image",
+      "sharedSize": true,
+      "base": null
+    },
+    {
+      "id": "WINDOW_CORNER_SE",
+      "type": "image",
+      "property": "--os-window-corner-se-image",
+      "sharedSize": true,
+      "base": null
+    },
+    {
+      "id": "WINDOW_CORNER_SW",
+      "type": "image",
+      "property": "--os-window-corner-sw-image",
+      "sharedSize": true,
+      "base": null
+    },
+    {
+      "id": "TITLEBAR_CONTROLS",
+      "type": "image",
+      "property": "--os-titlebar-controls-image",
+      "sharedSize": false,
+      "base": null
+    },
+    {
+      "id": "TITLEBAR_BUTTON",
+      "type": "image",
+      "property": "--os-ui-btn-bg-image",
+      "sharedSize": false,
+      "base": null
+    },
+    {
+      "id": "WINDOW_BODY",
+      "type": "image",
+      "property": "--os-window-body-image",
+      "sharedSize": false,
+      "base": null
+    },
+    {
+      "id": "TABBAR",
+      "type": "image",
+      "property": "--os-tabs-image",
+      "sharedSize": false,
+      "base": null
+    },
+    {
+      "id": "DOCK",
+      "type": "image",
+      "property": "--os-dock-bg-image",
+      "sharedSize": false,
+      "base": null
+    },
+    {
+      "id": "DOCK_ITEM",
+      "type": "image",
+      "property": "--os-dock-item-image",
+      "sharedSize": false,
+      "base": null
+    },
+    {
+      "id": "DESKTOP",
+      "type": "image",
+      "property": "--os-desktop-image",
+      "sharedSize": false,
+      "base": null
+    },
+    {
+      "id": "ICON_TILE",
+      "type": "image",
+      "property": "--os-tile-image",
+      "sharedSize": false,
+      "base": null
+    },
+    {
+      "id": "WIDGET",
+      "type": "image",
+      "property": "--os-widget-image",
+      "sharedSize": false,
+      "base": null
+    },
+    {
+      "id": "MENU",
+      "type": "image",
+      "property": "--os-ui-menu-bg-image",
+      "sharedSize": false,
+      "base": null
+    },
+    {
+      "id": "DIALOG",
+      "type": "image",
+      "property": "--os-ui-dialog-bg-image",
+      "sharedSize": false,
+      "base": null
+    },
+    {
+      "id": "SCRIM",
+      "type": "image",
+      "property": "--os-ui-scrim-image",
+      "sharedSize": false,
+      "base": null
+    },
+    {
+      "id": "PANEL",
+      "type": "image",
+      "property": "--os-ui-panel-bg-image",
+      "sharedSize": false,
+      "base": null
+    },
+    {
+      "id": "TOAST",
+      "type": "image",
+      "property": "--os-ui-toast-bg-image",
+      "sharedSize": false,
+      "base": null
+    },
+    {
+      "id": "TABLE_HEADER",
+      "type": "image",
+      "property": "--os-ui-table-header-bg-image",
+      "sharedSize": false,
+      "base": null
+    },
+    {
+      "id": "BUTTON",
+      "type": "image",
+      "property": "--os-ui-button-bg-image",
+      "sharedSize": false,
+      "base": null
+    }
+  ],
+  "icons": [
+    "WINDOW_CONTROL_MINIMIZE",
+    "WINDOW_CONTROL_MAXIMIZE",
+    "WINDOW_CONTROL_FULLSCREEN",
+    "WINDOW_CONTROL_FULLSCREEN_EXIT",
+    "WINDOW_CONTROL_CLOSE",
+    "WINDOW_CONTROL_MENU",
+    "WINDOW_CONTROL_RELOAD",
+    "WINDOW_CONTROL_DETACH",
+    "OS_SETTINGS",
+    "RECYCLE_BIN",
+    "BUG_REPORT",
+    "EXIT_OPENSTATION",
+    "PWA_INSTALL",
+    "DEFAULT_APP_ICON",
+    "FOLDER",
+    "FILE_SHORTCUT",
+    "FILE_POST",
+    "FILE_ATTACHMENT",
+    "FILE_UPLOAD",
+    "FILE_USER",
+    "FILE_TERM",
+    "FILE_COMMENT",
+    "FILE_BOOKMARK",
+    "FILE_LINK",
+    "FILE_EMBED",
+    "RECYCLE_RESTORE",
+    "RECYCLE_DELETE"
+  ],
+  "settings": {
+    "dockSize": {
+      "label": "Dock size",
+      "values": [
+        "compact",
+        "default",
+        "large"
+      ]
+    },
+    "desktopLayout": {
+      "label": "Desktop layout",
+      "values": [
+        "classic",
+        "unified"
+      ]
+    },
+    "dockPlacement": {
+      "label": "Dock position",
+      "values": [
+        "bottom",
+        "left",
+        "right"
+      ]
+    },
+    "windowRadius": {
+      "label": "Window corners",
+      "values": [
+        "sharp",
+        "default",
+        "round"
+      ]
+    },
+    "adminBarMode": {
+      "label": "Admin bar",
+      "values": [
+        "static",
+        "dynamic",
+        "hidden"
+      ]
+    },
+    "dockRailRenderer": {
+      "label": "Dock renderer",
+      "values": [
+        "default"
+      ],
+      "custom": true
+    },
+    "windowReveal": {
+      "label": "Window reveal",
+      "values": [
+        "none",
+        "sweep",
+        "rise",
+        "diagonal",
+        "iris",
+        "diamond",
+        "curtain",
+        "shutter",
+        "blinds",
+        "slats",
+        "mosaic",
+        "radar",
+        "obturator"
+      ],
+      "custom": true
+    },
+    "windowRevealDuration": {
+      "label": "Reveal duration",
+      "min": 80,
+      "max": 4000
+    },
+    "accent": {
+      "label": "Accent swatch",
+      "values": [
+        "pulse",
+        "nebula",
+        "sirius",
+        "lagoon",
+        "wp-blue",
+        "indigo",
+        "teal",
+        "emerald",
+        "amber",
+        "rose"
+      ],
+      "custom": true
+    }
+  },
+  "limits": {
+    "tokens": 512,
+    "icons": 256,
+    "fonts": 16,
+    "fontSources": 4,
+    "wallpapers": 12,
+    "files": 256,
+    "fileBytes": 8388608,
+    "totalBytes": 33554432
+  }
+}

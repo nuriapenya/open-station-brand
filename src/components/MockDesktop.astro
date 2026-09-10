@@ -1,0 +1,35 @@
+---
+const iconPaths = {
+ grid: 'M3 3h6v6H3zM15 3h6v6h-6zM3 15h6v6H3zM15 15h6v6h-6z',
+ page: 'M6 3h9l4 4v14H6zM14 3v5h5M9 12h7M9 16h7',
+ image: 'M3 4h18v16H3zM3 16l5-5 4 4 3-3 6 6M15 8h.01',
+ settings: 'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2',
+ folder: 'M3 6h7l2 3h9v11H3z',
+};
+---
+<div class="mock-desktop" id="mock-desktop">
+	<div class="mock-menubar"><button data-pick="--os-bg" aria-label="Edit desktop background">◉ <strong>My workspace</strong></button><span>Wednesday, 9 September <b>10:24</b></span></div>
+	<div class="desktop-shortcuts"><button data-pick="--os-tile-fg"><svg viewBox="0 0 24 24"><path d={iconPaths.folder}/></svg><span>My WordPress</span></button><button data-pick="--os-tile-fg"><svg viewBox="0 0 24 24"><path d={iconPaths.image}/></svg><span>Media library</span></button></div>
+	<article class="mock-window" aria-label="Theme preview window">
+		<header class="mock-titlebar"><button data-pick="--os-titlebar-bg-focused" class="window-name"><svg viewBox="0 0 24 24"><path d={iconPaths.settings}/></svg>Appearance</button><div class="window-controls"><button data-pick="--os-titlebar-btn-color" aria-label="Edit window controls"><span class="themed-icon" data-icon-slot="WINDOW_CONTROL_MINIMIZE"></span></button><button data-pick="--os-titlebar-btn-color" aria-label="Edit maximize control"><span class="themed-icon" data-icon-slot="WINDOW_CONTROL_MAXIMIZE"></span></button><button data-pick="--os-titlebar-btn-color" aria-label="Edit close control"><span class="themed-icon" data-icon-slot="WINDOW_CONTROL_CLOSE"></span></button></div></header>
+		<div class="mock-tabs" data-texture-slot="TABBAR"><button data-pick="--os-tabs-bg">Appearance</button><span>Workspace</span></div><div class="mock-window-body desktop-component">
+			<nav class="mock-sidebar" aria-label="Mock appearance navigation"><span>WORKSPACE</span><os-button variant="ghost" class="active" data-pick="--os-ui-accent">Appearance</os-button><os-button variant="ghost" data-pick="--os-ui-fg-muted">Applications</os-button><os-button variant="ghost" data-pick="--os-ui-fg-muted">My files</os-button><os-button variant="ghost" data-pick="--os-ui-fg-muted">Preferences</os-button><div class="mock-account"><os-avatar name="Jamie Davis" size="sm" data-pick="--os-ui-avatar-size"></os-avatar><div>Jamie Davis<small>Personal workspace</small></div></div></nav>
+			<div class="mock-content">
+				<div class="mock-eyebrow">YOUR SPACE, YOUR WAY</div><h2>Feels like home.</h2><p>A little more you. In every detail.</p>
+				<os-card interactive class="mock-feature-card" data-pick="--os-ui-card-bg"><div class="card-art"><span>✳</span><i></i></div><div><strong>A fresh perspective</strong><span>Your next great idea starts here.</span></div><b>↗</b></os-card>
+				<div class="mock-field-row"><os-text-field label="Workspace name" value="My creative space" data-pick="--os-ui-field-radius"></os-text-field><os-button class="mock-primary" variant="primary" data-pick="--os-ui-button-bg">Save changes</os-button></div>
+				<div class="mock-setting" data-pick="--os-ui-switch-knob"><os-switch block checked label="Make room for focus" description="A quieter space for your best work."></os-switch></div>
+				<div class="mock-bottom"><os-badge tone="success" data-pick="--os-ui-badge-success-bg">All changes saved</os-badge><os-button variant="link" data-pick="--os-ui-button-fg">Explore your workspace →</os-button></div>
+			</div>
+		</div>
+	{["NE","NW","SE","SW"].map(side => <div class={`material-corner corner-${side.toLowerCase()}`} data-texture-slot={`WINDOW_CORNER_${side}`}/>)}
+	</article>
+	<div class="mock-notification"><span class="notification-mark">✓</span><button data-pick="--os-ui-toast-bg"><strong>Looking good, Jamie</strong><span>Your workspace is ready for you.</span></button><span>now</span></div>
+	<nav class="mock-dock" aria-label="Mock dock">
+		<button data-pick="--os-dock-icon-color" aria-label="Edit dock: Mio"><span class="dock-glyph" style="--dock-glyph: url('../assets/studio/dock/mio.svg')" aria-hidden="true"></span></button>
+		<button data-pick="--os-dock-icon-color" aria-label="Edit dock: Overview"><span class="dock-glyph" style="--dock-glyph: url('../assets/studio/dock/overview.svg')" aria-hidden="true"></span></button>
+		<button data-pick="--os-dock-icon-color" aria-label="Edit dock: Trash"><span class="themed-icon" data-icon-slot="RECYCLE_BIN" data-dock-default="trash"></span></button>
+		<button data-pick="--os-dock-icon-color" aria-label="Edit dock: System"><span class="dock-glyph" style="--dock-glyph: url('../assets/studio/dock/system.svg')" aria-hidden="true"></span></button>
+		<button class="mock-dock-exit" data-pick="--os-dock-exit-icon" aria-label="Edit dock: Exit OpenStation"><span class="themed-icon" data-icon-slot="EXIT_OPENSTATION"></span></button>
+	</nav>
+</div>
