@@ -20,6 +20,20 @@ import { surfaces, surfaceForToken } from './surfaces';
 import { emptyTheme, History, parseTheme, slugify, valueError } from './theme';
 import type { Theme, Token } from './theme';
 
+/**
+ * The first sentence of a token explanation.
+ *
+ * Card descriptions carry the one line that says what the property does;
+ * the rest of the copy (states, ranges, inherited behaviour) stays in the
+ * ? help dialog, which still shows the full text. Splitting on a full stop
+ * that is followed by a capital keeps decimals like `1.5rem` intact.
+ */
+function firstSentence(text: string): string {
+	const trimmed = text.trim();
+	const match = /^[\s\S]*?[.!?](?=\s+[A-Z"'(\u2018\u201c]|$)/.exec(trimmed);
+	return match ? match[0] : trimmed;
+}
+
 async function startStudio(): Promise<void> {
 	const assets = new AssetLibrary();
 	const $ = <T extends HTMLElement>(selector: string): T => {
@@ -128,7 +142,8 @@ async function startStudio(): Promise<void> {
 		(!comparing ? liveTheme().tokens[name] : undefined) ??
 		tokenMap.get(name)?.default ??
 		'';
-	const atlas = new SurfaceAtlas($('#surface-atlas'), selectSurface, (name) => {
+	// Constructed for its side effect: it builds the all-surfaces gallery.
+	new SurfaceAtlas($('#surface-atlas'), selectSurface, (name) => {
 		customization.open('tokens');
 		selectToken(name, true);
 	});
@@ -161,12 +176,6 @@ async function startStudio(): Promise<void> {
 			$('#' + id).hidden = scene !== name;
 		document.body.dataset.scene = scene;
 	}
-	$('#inspect-surface').addEventListener('click', () => {
-		showScene('atlas');
-		if (group.value.startsWith('surface:'))
-			atlas.showSurface(group.value.slice(8));
-		else atlas.showAll();
-	});
 	function paint(): void {
 		stationOverrides(comparing ? {} : liveTheme().tokens);
 		for (const token of tokenMap.values()) {
@@ -455,9 +464,10 @@ async function startStudio(): Promise<void> {
 			code.title = `${t.name}\nReference: ${t.default}`;
 			const description = document.createElement('p');
 			description.className = 'token-description';
-			description.textContent =
+			description.textContent = firstSentence(
 				helpFor(t.name)?.description ??
-				'Imported custom token. Its consuming component defines the effect.';
+					'Imported custom token; its consuming component defines the effect.',
+			);
 			row.prepend(label, description, edit, code, error);
 			const visual = visualControls(
 				t,
