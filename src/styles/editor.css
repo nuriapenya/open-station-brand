@@ -13,11 +13,26 @@
 :root {
 	font-family: Geist, system-ui, sans-serif;
 	color: #ededed;
-	background: #0c0b0f;
+	background: var(--studio-canvas, #0c0b0f);
 	font-synthesis: none;
 	--studio-line: #ffffff12;
-	--studio-muted: #a09ba8;
-	--studio-pulse: #ec9bff;
+	--studio-muted: #99969c;
+	/* Pulse is the brand accent and is reserved for primary actions,
+	   focus and the current selection. Everything else stays neutral so
+	   the theme being edited is the only colour in the room. */
+	--studio-pulse: #e94ff3;
+	--studio-sel-bg: #ffffff0f;
+	--studio-sel-border: #ffffff33;
+	--studio-hover-bg: #ffffff0d;
+	/* Four planes, back to front: the canvas the preview floats on, the
+	   chrome that frames it, the cards inside that chrome, and the wells
+	   that inputs sink into. Canvas is Void and chrome is Obsidian, so the
+	   tool advances and the workspace recedes. */
+	--studio-canvas: #0c0b0f;
+	--studio-chrome: #1a1721;
+	--studio-card: #221f29;
+	--studio-card-active: #2a2633;
+	--studio-field: #17151c;
 	color-scheme: dark;
 }
 * {
@@ -25,7 +40,7 @@
 }
 body {
 	margin: 0;
-	font-size: 14px;
+	font-size: 15px;
 }
 button,
 input,
@@ -68,23 +83,23 @@ a:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-	outline: 2px solid #ec9bff;
+	outline: 2px solid var(--studio-pulse);
 }
 input,
 select,
 textarea {
 	min-width: 0;
 	color: inherit;
-	background: #17151c;
+	background: var(--studio-field);
 	border: 1px solid #ffffff1c;
 	border-radius: 7px;
 	padding: 10px 12px;
 }
 input[type='checkbox'] {
-	accent-color: #ec9bff;
+	accent-color: var(--studio-pulse);
 }
 input[type='range'] {
-	accent-color: #ec9bff;
+	accent-color: var(--studio-pulse);
 	padding: 0;
 	border: 0;
 }
@@ -114,7 +129,7 @@ button:hover {
 }
 input::placeholder,
 textarea::placeholder {
-	color: #938c9e;
+	color: #66636b;
 }
 .skip-link {
 	position: fixed;
@@ -135,20 +150,20 @@ textarea::placeholder {
 	justify-content: space-between;
 	padding-inline: 24px;
 	gap: 20px;
-	background: #100f14;
+	background: var(--studio-chrome);
 }
 .studio-brand {
 	display: flex;
 	align-items: center;
 	gap: 10px;
-	font-size: 14px;
+	font-size: 15px;
 	white-space: nowrap;
 }
 .studio-brand strong {
 	font-weight: 600;
 }
 .studio-brand > span {
-	color: #6b6572;
+	color: #66636b;
 	margin-inline: 6px;
 }
 .document-name {
@@ -166,12 +181,11 @@ textarea::placeholder {
 	text-overflow: ellipsis;
 }
 .document-name > span:last-child {
-	font-size: 12px;
+	font-size: 13px;
 	color: var(--studio-muted);
 	white-space: nowrap;
 }
-.save-dot,
-.local-dot {
+.save-dot {
 	display: inline-block;
 	width: 5px;
 	height: 5px;
@@ -205,8 +219,8 @@ textarea::placeholder {
 	border-radius: 7px;
 }
 .export-button {
-	background: #ec9bff;
-	color: #211427;
+	background: var(--studio-pulse);
+	color: #fffbff;
 	border: 1px solid #ffffff20;
 	padding: 10px 16px;
 	border-radius: 7px;
@@ -214,8 +228,8 @@ textarea::placeholder {
 	white-space: nowrap;
 }
 .export-button:hover {
-	background: #f2b7ff;
-	color: #211427;
+	background: #f06ff7;
+	color: #fffbff;
 }
 .export-button span {
 	margin-inline-start: 12px;
@@ -231,34 +245,27 @@ textarea::placeholder {
 	display: flex;
 	flex-direction: column;
 	min-height: 0;
-	background: #100f14;
-}
-.panel-intro {
-	padding: 27px 22px 22px;
+	background: var(--studio-chrome);
 }
 .eyebrow,
 .section-label {
-	font-family: 'Geist Mono', monospace;
-	font-size: 10px;
-	letter-spacing: 1.2px;
-	color: var(--studio-muted);
-}
-h1 {
-	font-size: 27px;
-	letter-spacing: -1px;
-	font-weight: 500;
-	margin: 9px 0 8px;
-}
-h1 span {
-	color: #ec9bff;
-}
-.panel-intro p {
 	font-size: 12px;
+	font-weight: 500;
+	letter-spacing: 0.2px;
 	color: var(--studio-muted);
+}
+.panel-heading {
+	padding: 20px 16px 4px;
+}
+.panel-heading h1 {
 	margin: 0;
+	font-size: 20px;
+	font-weight: 600;
+	letter-spacing: -0.2px;
+	color: #fffbff;
 }
 .preset-section {
-	padding: 0 22px 22px;
+	padding: 14px 16px;
 }
 .preset-grid {
 	display: grid;
@@ -269,8 +276,8 @@ h1 span {
 .preset {
 	padding: 0;
 	text-align: start;
-	font-size: 12px;
-	color: #aca5b5;
+	font-size: 14px;
+	color: #b3afb5;
 }
 .preset-art {
 	display: block;
@@ -282,7 +289,7 @@ h1 span {
 	margin-block-end: 8px;
 }
 .preset.active .preset-art {
-	outline: 2px solid #ec9bff;
+	outline: 2px solid #fffbff;
 	outline-offset: 3px;
 }
 .preset.active {
@@ -327,18 +334,18 @@ h1 span {
 }
 .search-field > span {
 	font-size: 22px;
-	color: #9c95a6;
+	color: #99969c;
 }
 .search-field input {
 	padding: 11px 0;
 	background: none;
 	border: 0;
 	width: 100%;
-	font-size: 12px;
+	font-size: 15px;
 }
 .search-field kbd {
-	font-size: 10px;
-	color: #938c9e;
+	font-size: 12px;
+	color: #66636b;
 	border: 1px solid #ffffff26;
 	border-radius: 3px;
 	padding: 1px 4px;
@@ -353,55 +360,52 @@ h1 span {
 .filter-row select {
 	padding: 7px 24px 7px 8px;
 	width: 175px;
-	font-size: 12px;
+	font-size: 14px;
 }
 .modified-filter {
-	font-size: 12px;
+	font-size: 14px;
 	display: flex;
 	gap: 4px;
 	align-items: center;
-	color: #c1bacb;
+	color: #b3afb5;
 }
 .results-line {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	font-size: 11px;
-	color: #918b99;
+	font-size: 13px;
+	color: #99969c;
 	padding-inline: 5px;
 }
 .text-button {
-	color: #b5acbe;
-	font-size: 12px;
+	color: #b3afb5;
+	font-size: 14px;
 	padding: 2px;
 }
 .text-button:hover {
-	color: #ec9bff;
+	color: #fffbff;
 }
 .token-list {
 	overflow: auto;
 	flex: 1;
 	padding: 7px 14px 18px;
 	scrollbar-width: thin;
-	scrollbar-color: #3a3343 transparent;
+	scrollbar-color: #33303a transparent;
 }
 .token-row {
-	padding: 14px 8px;
-	border-block-end: 1px solid #ffffff09;
+	padding: 14px;
 	position: relative;
-	border-radius: 7px;
+	border: 1px solid var(--studio-line);
+	border-radius: 10px;
+	background: var(--studio-card);
+	margin-block-end: 8px;
+}
+.token-row:last-child {
+	margin-block-end: 0;
 }
 .token-row.selected {
-	background: #ec9bff08;
-}
-.token-row.selected:before {
-	content: '';
-	position: absolute;
-	inset-inline-start: -7px;
-	inset-block: 18px;
-	width: 2px;
-	background: #ec9bff;
-	border-radius: 2px;
+	background: var(--studio-card-active);
+	border-color: #ffffff2e;
 }
 .token-label {
 	display: flex;
@@ -412,13 +416,13 @@ h1 span {
 }
 .token-label > button:first-child {
 	font-weight: 500;
-	font-size: 13px;
+	font-size: 15px;
 	text-align: start;
 	padding: 0;
 	overflow-wrap: anywhere;
 }
 .token-reset {
-	color: #a69cac;
+	color: #99969c;
 	font-size: 17px;
 	padding: 0 3px;
 }
@@ -430,7 +434,7 @@ h1 span {
 .token-edit > input[type='text'] {
 	width: 100%;
 	font:
-		11px 'Geist Mono',
+		14px 'Geist Mono',
 		monospace;
 	padding: 9px 8px;
 	height: 34px;
@@ -447,7 +451,7 @@ h1 span {
 	border: 1px solid #ffffff18;
 	border-radius: 7px;
 	font-size: 16px;
-	color: #b7a8c3;
+	color: #b3afb5;
 	background: #201b28;
 }
 .token-name {
@@ -456,9 +460,9 @@ h1 span {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	font:
-		9px 'Geist Mono',
+		12px 'Geist Mono',
 		monospace;
-	color: #817888;
+	color: #66636b;
 	margin-block-start: 7px;
 }
 .token-range {
@@ -467,7 +471,7 @@ h1 span {
 	margin-block-start: 10px;
 }
 .field-error {
-	font-size: 12px;
+	font-size: 13px;
 	color: #ffa5b0;
 	line-height: 1.5;
 	margin-block: 8px 0;
@@ -475,23 +479,14 @@ h1 span {
 .field-error:empty {
 	display: none;
 }
-.panel-footer {
-	padding: 15px 16px;
-	border-block-start: 1px solid var(--studio-line);
-	font-size: 10px;
-	color: #9d93a7;
-	display: flex;
-	align-items: center;
-	gap: 7px;
-}
 .empty-results {
 	text-align: center;
 	padding: 28px 10px;
-	color: #b9adbf;
+	color: #b3afb5;
 	line-height: 1.7;
 }
 .empty-results button {
-	color: #ec9bff;
+	color: #fffbff;
 	text-decoration: underline;
 }
 .load-more {
@@ -525,10 +520,10 @@ h1 span {
 	background: #100e14;
 }
 .preview-tabs button {
-	font-size: 12px;
+	font-size: 14px;
 	padding: 8px 12px;
 	border-radius: 5px;
-	color: #a59bab;
+	color: #99969c;
 }
 .preview-tabs button[aria-pressed='true'] {
 	background: #25202d;
@@ -543,35 +538,25 @@ h1 span {
 	display: flex;
 	gap: 6px;
 	align-items: center;
-	color: #a59bab;
-	font-size: 12px;
+	color: #99969c;
+	font-size: 14px;
 	padding: 5px;
 }
 .preview-options button[aria-pressed='true']#compare {
-	color: #ec9bff;
+	color: #fffbff;
 }
 .canvas-label {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding: 8px 0 12px;
-	font-size: 10px;
-	color: #928698;
+	font-size: 13px;
+	color: #99969c;
 }
 .canvas-label span:first-child {
-	font:
-		9px 'Geist Mono',
-		monospace;
-	letter-spacing: 1.1px;
 	display: flex;
 	align-items: center;
 	gap: 7px;
-}
-.canvas-label i {
-	height: 4px;
-	width: 4px;
-	border-radius: 50%;
-	background: #b4d0b9;
 }
 .preview {
 	min-height: 360px;
@@ -591,11 +576,11 @@ h1 span {
 	align-items: center;
 	gap: 10px;
 	min-height: 46px;
-	font-size: 10px;
-	color: #7e7386;
+	font-size: 13px;
+	color: #99969c;
 }
 .workspace-footer button {
-	font-size: 10px;
+	font-size: 13px;
 }
 /* All mock elements are authored here. No plugin CSS or component imports. */
 .mock-desktop,
@@ -1069,7 +1054,7 @@ button.mock-primary:hover {
 	min-width: 0;
 }
 .component-tile h3 {
-	font-size: 12px;
+	font-size: 14px;
 	font-weight: 500;
 	margin: 0 0 17px;
 }
@@ -1082,7 +1067,7 @@ button.mock-primary:hover {
 }
 .component-row label,
 .component-tile small {
-	font-size: 10px;
+	font-size: 12px;
 }
 .mock-secondary {
 	padding: 9px 10px;
@@ -1147,12 +1132,12 @@ button.mock-primary:hover {
 	max-width: min(600px, 90vw);
 	padding: 14px 20px;
 	background: #33243e;
-	border: 1px solid #ec9bff44;
+	border: 1px solid #ffffff26;
 	box-shadow: 0 10px 35px #0006;
 	border-radius: 9px;
 	color: #f7e6ff;
 	z-index: 20;
-	font-size: 13px;
+	font-size: 14px;
 	line-height: 1.5;
 }
 dialog {
@@ -1182,15 +1167,15 @@ dialog h2 {
 	margin: 9px 0;
 }
 dialog p {
-	color: #afa3ba;
-	font-size: 13px;
+	color: #b3afb5;
+	font-size: 15px;
 	line-height: 1.7;
 }
 dialog label {
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
-	font-size: 12px;
+	font-size: 14px;
 	margin-block: 17px;
 }
 dialog input,
@@ -1213,10 +1198,10 @@ dialog textarea {
 }
 .export-summary {
 	padding: 12px;
-	background: #ec9bff0b;
+	background: #ffffff08;
 	border-radius: 7px;
-	color: #bba2c9;
-	font-size: 12px;
+	color: #b3afb5;
+	font-size: 14px;
 	line-height: 1.6;
 }
 .reset-dialog {
@@ -1256,21 +1241,21 @@ dialog textarea {
 }
 .reset-destination strong {
 	display: block;
-	font-size: 13px;
+	font-size: 15px;
 	margin-block-end: 6px;
 }
 .reset-destination div > span {
-	color: #afa3ba;
-	font-size: 12px;
+	color: #b3afb5;
+	font-size: 13px;
 	line-height: 1.5;
 }
 .reset-dialog .reset-recovery {
-	font-size: 12px;
+	font-size: 13px;
 }
 .reset-confirm {
 	background: #f5b4ac;
 	color: #291211;
-	font-size: 13px;
+	font-size: 14px;
 	font-weight: 600;
 	border: 1px solid transparent;
 	border-radius: 7px;
@@ -1282,7 +1267,7 @@ dialog textarea {
 .source-reference {
 	overflow-wrap: anywhere;
 	font:
-		11px 'Geist Mono',
+		12px 'Geist Mono',
 		monospace;
 }
 @container (max-width:730px) {
@@ -1405,7 +1390,7 @@ dialog textarea {
 		gap: 4px;
 	}
 	.preview-options button {
-		font-size: 11px;
+		font-size: 14px;
 	}
 	.studio-layout {
 		grid-template-columns: 290px minmax(0, 1fr);
@@ -1424,11 +1409,11 @@ dialog textarea {
 		gap: 10px;
 	}
 	.studio-brand {
-		font-size: 12px;
+		font-size: 15px;
 	}
 	.document-name input {
 		width: 120px;
-		font-size: 12px;
+		font-size: 15px;
 	}
 	.action-divider {
 		display: none;
@@ -1470,7 +1455,7 @@ dialog textarea {
 	}
 	.studio-brand {
 		flex: 1;
-		font-size: 12px;
+		font-size: 15px;
 	}
 	.studio-brand strong {
 		display: block;
@@ -1505,7 +1490,7 @@ dialog textarea {
 		height: 48px;
 	}
 	.preview-tabs button {
-		font-size: 11px;
+		font-size: 14px;
 		padding: 6px 10px;
 	}
 	.canvas-label {
@@ -1561,9 +1546,6 @@ dialog textarea {
 	.editor-panel {
 		border-inline-end: 0;
 	}
-	.panel-intro {
-		padding: 22px 22px 16px;
-	}
 	.preset-section {
 		padding: 0 22px 20px;
 	}
@@ -1579,22 +1561,19 @@ dialog textarea {
 		padding: 16px 10px;
 	}
 	.token-name {
-		font-size: 10px;
-	}
-	.token-edit > input[type='text'] {
 		font-size: 12px;
 	}
-	.token-label > button:first-child {
+	.token-edit > input[type='text'] {
 		font-size: 14px;
+	}
+	.token-label > button:first-child {
+		font-size: 15px;
 	}
 	.token-navigation {
 		padding-inline: 22px;
 	}
 	.token-navigation .filter-row select {
 		width: 70%;
-	}
-	.panel-footer {
-		padding: 20px 22px;
 	}
 	.component-board {
 		display: block;
@@ -1623,8 +1602,8 @@ dialog textarea {
 }
 .visual-details {
 	margin-block-start: 10px;
-	font-size: 11px;
-	color: #bba6c5;
+	font-size: 13px;
+	color: #b3afb5;
 }
 .visual-details summary {
 	cursor: pointer;
@@ -1642,18 +1621,18 @@ dialog textarea {
 	justify-content: space-between;
 	gap: 10px;
 	align-items: center;
-	font-size: 11px;
-	color: #b5a5bf;
+	font-size: 13px;
+	color: #b3afb5;
 }
 .visual-controls select {
-	font-size: 11px;
+	font-size: 14px;
 	padding: 7px;
 	width: 155px;
 }
 .visual-controls small {
-	font-size: 10px;
+	font-size: 12px;
 	line-height: 1.5;
-	color: #8e8098;
+	color: #99969c;
 }
 .gradient-stops,
 .quick-colors {
@@ -1683,7 +1662,7 @@ dialog textarea {
 }
 .visual-range output {
 	font:
-		10px 'Geist Mono',
+		12px 'Geist Mono',
 		monospace;
 	min-width: 22px;
 	text-align: end;
@@ -1706,39 +1685,32 @@ dialog textarea {
 }
 /* Studio navigation stays outside every user-controlled token scope. */
 .editor-modes {
-	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 5px;
-	padding: 14px 18px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	padding: 14px 16px;
 	border-block: 1px solid var(--studio-line);
 }
 .editor-modes button {
-	padding: 9px 4px;
-	font-size: 11px;
-	border: 1px solid #ffffff18;
-	border-radius: 6px;
-	min-height: 36px;
+	padding: 6px 12px;
+	font-size: 14px;
+	border: 1px solid #ffffff1a;
+	border-radius: 999px;
+	color: var(--studio-muted);
+	white-space: nowrap;
+}
+.editor-modes button:hover {
+	background: var(--studio-hover-bg);
+	color: #ededed;
 }
 .editor-modes button[aria-pressed='true'] {
-	background: #ec9bff20;
-	border-color: #ec9bff80;
-	color: #f4c9ff;
-}
-.editor-modes button:last-child {
-	grid-column: span 3;
-}
-.panel-intro {
-	padding-block-end: 12px;
+	background: var(--studio-sel-bg);
+	border-color: var(--studio-sel-border);
+	color: #fffbff;
+	font-weight: 500;
 }
 .preset-section {
 	padding-block-end: 12px;
-}
-.inspect-surface {
-	width: 100%;
-	text-align: start;
-	padding: 10px 0;
-	color: #e9b5ff;
-	font-size: 12px;
 }
 #custom-controls {
 	padding: 18px;
@@ -1756,8 +1728,8 @@ dialog textarea {
 }
 .custom-heading p,
 .control-note {
-	font-size: 12px;
-	color: #aaa1b5;
+	font-size: 14px;
+	color: #b3afb5;
 	line-height: 1.65;
 	margin: 0 0 18px;
 }
@@ -1766,15 +1738,15 @@ dialog textarea {
 	flex-direction: column;
 	gap: 7px;
 	margin-block: 14px;
-	font-size: 12px;
+	font-size: 14px;
 }
 .custom-field input,
 .custom-field select {
 	width: 100%;
-	font-size: 12px;
+	font-size: 14px;
 }
 .custom-field output {
-	font: 11px 'Geist Mono';
+	font: 12px 'Geist Mono';
 	color: #edb8ff;
 	text-align: end;
 }
@@ -1782,7 +1754,7 @@ dialog textarea {
 	display: flex;
 	align-items: center;
 	gap: 8px;
-	font-size: 12px;
+	font-size: 14px;
 }
 .custom-inline {
 	display: flex;
@@ -1790,7 +1762,7 @@ dialog textarea {
 }
 .custom-inline input {
 	width: 100%;
-	font-size: 12px;
+	font-size: 14px;
 }
 .custom-inline button {
 	flex-shrink: 0;
@@ -1801,7 +1773,7 @@ dialog textarea {
 #custom-controls > .quiet-button,
 #custom-controls > .export-button {
 	margin: 7px 4px 12px 0;
-	font-size: 12px;
+	font-size: 14px;
 }
 .upload-area {
 	border: 1px dashed #ad78b77a;
@@ -1815,7 +1787,7 @@ dialog textarea {
 }
 .upload-area.drag-over {
 	background: #ec9bff30;
-	outline: 2px solid #ec9bff;
+	outline: 2px solid var(--studio-pulse);
 }
 .upload-area img {
 	max-width: 100%;
@@ -1829,11 +1801,11 @@ dialog textarea {
 	color: #221728;
 	padding: 10px 15px;
 	border-radius: 6px;
-	font-size: 12px;
+	font-size: 14px;
 }
 .upload-area small {
-	font: 10px 'Geist Mono';
-	color: #b1a1b8;
+	font: 12px 'Geist Mono';
+	color: #b3afb5;
 	overflow-wrap: anywhere;
 	text-align: center;
 }
@@ -1844,7 +1816,7 @@ dialog textarea {
 .placement-modes button {
 	flex: 1;
 	padding: 8px 0;
-	font-size: 11px;
+	font-size: 13px;
 }
 .position-grid {
 	display: grid;
@@ -1871,7 +1843,7 @@ dialog textarea {
 	border-radius: 5px;
 }
 .glyph-choice:hover {
-	background: #ec9bff30;
+	background: var(--studio-hover-bg);
 }
 .asset-row {
 	display: flex;
@@ -1880,7 +1852,7 @@ dialog textarea {
 	align-items: center;
 	border-block-end: 1px solid #ffffff16;
 	padding-block: 12px;
-	font-size: 11px;
+	font-size: 13px;
 	overflow-wrap: anywhere;
 }
 .asset-row > span {
@@ -1888,11 +1860,11 @@ dialog textarea {
 	min-width: 100px;
 }
 .asset-row small {
-	color: #ba9bc8;
+	color: #b3afb5;
 }
 .asset-row input {
 	width: 100%;
-	font-size: 10px;
+	font-size: 13px;
 }
 .surface-atlas,
 .asset-scene {
@@ -1907,12 +1879,12 @@ dialog textarea {
 	margin-block-end: 22px;
 }
 .atlas-heading h2 {
-	font: 500 24px Geist;
+	font: 500px 24px Geist;
 	margin: 8px 0;
 }
 .atlas-heading p {
-	font: 12px/1.7 Geist;
-	color: #a89bad;
+	font: 14px/1.6 Geist;
+	color: #99969c;
 	max-width: 540px;
 }
 .surface-grid,
@@ -1933,21 +1905,21 @@ dialog textarea {
 }
 .surface-card:hover,
 .property-card:hover {
-	border-color: #ec9bff;
-	box-shadow: 0 0 0 1px #ec9bff50;
+	border-color: var(--studio-sel-border);
+	box-shadow: 0 0 0 1px #ffffff26;
 }
 .surface-card > strong,
 .property-card > strong {
 	display: block;
-	font: 500 12px/1.5 Geist;
+	font: 500px 12px/1.5 Geist;
 	padding: 10px 4px 2px;
 	overflow-wrap: anywhere;
 }
 .surface-card > span,
 .property-card > span {
 	display: block;
-	font: 10px/1.6 Geist;
-	color: #ac9bb7;
+	font: 12px/1.6 Geist;
+	color: #99969c;
 	padding: 0 4px 4px;
 }
 .token-demo {
@@ -2064,11 +2036,11 @@ dialog textarea {
 	flex-direction: column;
 	align-items: center;
 	gap: 9px;
-	font: 11px/1.4 Geist;
+	font: 12px/1.4 Geist;
 	min-width: 0;
 }
 .material-card:hover {
-	border-color: #ec9bff;
+	border-color: var(--studio-sel-border);
 }
 .material-swatch {
 	width: 100%;
@@ -2275,7 +2247,7 @@ dialog textarea {
 	text-shadow: 0 2px 8px #000;
 }
 .wallpaper-clock {
-	font: 500 64px Geist;
+	font: 500px 64px Geist;
 	margin-block: 35px 10px;
 }
 .wallpaper-thumbnail {
@@ -2296,7 +2268,7 @@ dialog textarea {
 }
 .theme-package-card p {
 	line-height: 1.7;
-	color: #b8a9c3;
+	color: #b3afb5;
 }
 .desktop-art {
 	position: absolute;
@@ -2477,7 +2449,7 @@ dialog textarea {
 		font-size: 18px;
 	}
 	.atlas-heading p {
-		font-size: 10px;
+		font-size: 13px;
 	}
 	.surface-grid,
 	.property-grid {
@@ -2504,7 +2476,7 @@ dialog textarea {
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 	}
 	.material-card {
-		font-size: 9px;
+		font-size: 12px;
 	}
 	.material-swatch {
 		height: 45px;
@@ -2544,7 +2516,7 @@ dialog textarea {
 		inset: 45px 40px 65px;
 	}
 	.preview-tabs button {
-		font-size: 10px;
+		font-size: 14px;
 		padding: 8px;
 	}
 	.canvas-label > span:nth-child(2) {
@@ -2693,13 +2665,13 @@ dialog textarea {
 	color: #211526;
 }
 .glyph-browser {
-	font-size: 12px;
+	font-size: 13px;
 	margin-block: 16px;
 }
 .glyph-browser summary {
 	cursor: pointer;
 	padding: 10px 0;
-	color: #e9b5ff;
+	color: #ededed;
 }
 .glyph-browser input {
 	width: 100%;
@@ -2813,7 +2785,7 @@ dialog textarea {
 	font-size: 20px;
 }
 .sample-dialog p {
-	font-size: 13px;
+	font-size: 15px;
 	line-height: 1.6;
 }
 .sample-dialog button {
@@ -3000,25 +2972,25 @@ dialog textarea {
 	height: 21px;
 	border: 1px solid #ac91b650;
 	border-radius: 50%;
-	color: #bdaec3;
-	font-size: 11px;
+	color: #b3afb5;
+	font-size: 13px;
 	margin-inline-start: auto;
 }
 .token-label > button:first-child {
 	margin-inline-end: auto;
 }
 .token-help-button:hover {
-	background: #ec9bff20;
+	background: var(--studio-hover-bg);
 	color: #edc6f8;
-	border-color: #ec9bff;
+	border-color: var(--studio-sel-border);
 }
 .token-description {
 	margin: 5px 0 11px;
-	font: 11px/1.65 Geist;
-	color: #afa0b9;
+	font: 14px/1.6 Geist;
+	color: #b3afb5;
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 2;
+	-webkit-line-clamp: 3;
 	overflow: hidden;
 }
 .property-card > .property-description {
@@ -3029,19 +3001,19 @@ dialog textarea {
 	margin-block: 3px;
 }
 .property-card > .property-state {
-	font-size: 9px;
+	font-size: 12px;
 	color: #d0a6df;
 	margin-block-start: 7px;
 }
 .help-tip {
 	padding: 15px 18px;
 	border-radius: 8px;
-	background: #ec9bff10;
+	background: #ffffff08;
 	margin-block: 20px;
-	border: 1px solid #ec9bff25;
+	border: 1px solid var(--studio-line);
 }
 .help-tip strong {
-	font-size: 12px;
+	font-size: 14px;
 	color: #e8c5f4;
 }
 .help-tip p {
@@ -3049,11 +3021,11 @@ dialog textarea {
 }
 .help-reference {
 	margin-block-start: 20px;
-	font-size: 12px;
+	font-size: 14px;
 }
 .help-reference summary {
 	cursor: pointer;
-	color: #bca4c7;
+	color: #b3afb5;
 	padding: 10px 0;
 }
 .help-reference code {
@@ -3061,19 +3033,19 @@ dialog textarea {
 	padding: 12px;
 	background: #100d15;
 	overflow-wrap: anywhere;
-	font: 11px/1.7 'Geist Mono';
+	font: 13px/1.7 'Geist Mono';
 }
 .help-reference pre {
-	font: 10px/1.8 'Geist Mono';
+	font: 12px/1.8 'Geist Mono';
 	white-space: pre-wrap;
 	overflow-wrap: anywhere;
-	color: #c9b5d5;
+	color: #b3afb5;
 }
 .help-reference p {
-	font-size: 11px !important;
+	font-size: 13px !important;
 }
 #help-token {
-	font: 11px 'Geist Mono';
+	font: 13px 'Geist Mono';
 	color: #d8ade8;
 	overflow-wrap: anywhere;
 }
@@ -3091,7 +3063,7 @@ dialog textarea {
 	position: relative;
 	isolation: isolate;
 	overflow: hidden;
-	background: repeating-conic-gradient(#b1a5bb 0 25%, #66596e 0 50%) 0/10px 10px;
+	background: repeating-conic-gradient(#b3afb5 0 25%, #66636b 0 50%) 0/10px 10px;
 	border: 1px solid #ffffff30;
 	border-radius: 7px;
 	flex-shrink: 0;
@@ -3107,7 +3079,7 @@ dialog textarea {
 }
 .color-swatch:hover {
 	border-color: #f3ceff;
-	box-shadow: 0 0 0 2px #ec9bff30;
+	box-shadow: 0 0 0 2px #ffffff33;
 }
 .color-picker-dialog {
 	width: min(360px, calc(100vw - 28px));
@@ -3131,12 +3103,12 @@ dialog textarea {
 	margin-block-end: 17px;
 }
 .color-picker-heading h2 {
-	font: 500 17px/1.4 Geist;
+	font: 500px 17px/1.4 Geist;
 	margin: 6px 0 0;
 	overflow-wrap: anywhere;
 }
 .color-picker-heading .eyebrow {
-	font-size: 9px;
+	font-size: 12px;
 }
 .color-sv {
 	position: relative;
@@ -3161,8 +3133,8 @@ dialog textarea {
 	pointer-events: none;
 }
 .color-sv-help {
-	font: 10px/1.5 Geist !important;
-	color: #a69aad !important;
+	font: 12px/1.5 Geist !important;
+	color: #99969c !important;
 	margin: 7px 0 15px !important;
 }
 .color-track-row {
@@ -3175,11 +3147,11 @@ dialog textarea {
 	flex-wrap: wrap;
 	gap: 9px;
 	justify-content: space-between;
-	font: 11px Geist;
-	color: #c5b6ce;
+	font: 12px Geist;
+	color: #b3afb5;
 }
 .color-track-row output {
-	font: 11px 'Geist Mono';
+	font: 12px 'Geist Mono';
 	color: #e6c6ef;
 }
 .color-track-row input[type='range'] {
@@ -3222,7 +3194,7 @@ dialog textarea {
 .color-alpha {
 	background:
 		linear-gradient(to right, transparent, var(--alpha-solid)),
-		repeating-conic-gradient(#b1a5bb 0 25%, #66596e 0 50%) 0/10px 10px;
+		repeating-conic-gradient(#b3afb5 0 25%, #66636b 0 50%) 0/10px 10px;
 }
 .color-value-row,
 .color-rgb-row {
@@ -3241,8 +3213,8 @@ dialog textarea {
 	display: flex;
 	flex-direction: column;
 	gap: 6px;
-	font-size: 10px;
-	color: #bfaec9;
+	font-size: 12px;
+	color: #b3afb5;
 }
 .color-value-row input,
 .color-rgb-row input {
@@ -3251,8 +3223,8 @@ dialog textarea {
 	font: 12px 'Geist Mono';
 }
 .color-fine {
-	font-size: 11px;
-	color: #bda9c6;
+	font-size: 13px;
+	color: #b3afb5;
 }
 .color-fine summary {
 	padding: 3px 0;
@@ -3284,13 +3256,13 @@ dialog textarea {
 	border-radius: 0 6px 6px 0;
 }
 .color-picker-footer small {
-	color: #a99ab2;
-	font: 9px/1.7 Geist;
+	color: #99969c;
+	font: 12px/1.7 Geist;
 	flex: 1;
 }
 .color-picker-footer .export-button {
 	padding: 9px 13px;
-	font-size: 11px;
+	font-size: 13px;
 }
 .custom-color-field {
 	display: flex;
@@ -3360,7 +3332,7 @@ dialog textarea {
 	background: #17111e;
 	color: #d5c0df;
 	padding: 6px 9px;
-	font: 10px/14px Geist;
+	font: 13px/14px Geist;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -3996,35 +3968,35 @@ dialog textarea {
 	padding: 10px 0;
 }
 .group-property {
-	border: 1px solid #49404f;
+	border: 1px solid #4d4a52;
 	border-radius: 6px;
 	padding: 6px 9px;
 	background: #211b29;
 	color: #ddd2e5;
 	font:
-		11px/1.35 Geist,
+		13px/1.35 Geist,
 		sans-serif;
 	cursor: pointer;
 	text-align: start;
 }
 .group-property:hover {
-	border-color: #ad87bf;
+	border-color: #99969c;
 }
 .group-property[aria-pressed='true'] {
-	background: #483053;
+	background: #33303a;
 	color: #fff;
 	border-color: #dca3f4;
 }
 .group-property:focus-visible,
 .group-demo-button:focus-visible {
-	outline: 2px solid #ec9bff;
+	outline: 2px solid var(--studio-pulse);
 	outline-offset: 3px;
 }
 .group-description {
 	font:
-		11px/1.55 Geist,
+		13px/1.55 Geist,
 		sans-serif;
-	color: #baadbf;
+	color: #b3afb5;
 	margin: 0 0 6px;
 }
 .overview-demo
@@ -4076,11 +4048,11 @@ dialog textarea {
 	display: block;
 	width: 100%;
 	padding: 12px;
-	border: 1px solid #a97bbe;
+	border: 1px solid #99969c;
 	border-radius: 8px;
 	background: #392444;
 	color: #f7deff;
-	font: 500 12px Geist;
+	font: 500px 12px Geist;
 	text-align: center;
 	margin-block: 12px 6px;
 	cursor: pointer;
@@ -4093,7 +4065,7 @@ dialog textarea {
 	max-width: none;
 	max-height: calc(100dvh - 40px);
 	padding: 24px;
-	border: 1px solid #6d526f;
+	border: 1px solid #66636b;
 	border-radius: 18px;
 	background: #17131d;
 	color: #f8f0fc;
@@ -4115,8 +4087,8 @@ dialog textarea {
 }
 .texture-library-intro {
 	max-width: 700px;
-	color: #bdb0c5;
-	font-size: 13px;
+	color: #b3afb5;
+	font-size: 15px;
 	line-height: 1.6;
 }
 .texture-library-layout {
@@ -4155,22 +4127,22 @@ dialog textarea {
 	margin: 8px 3px 4px;
 }
 .texture-template > strong {
-	font: 600 12px Geist;
+	font: 600px 12px Geist;
 }
 .texture-template > span {
-	font: 11px/1.4 Geist;
+	font: 12px/1.4 Geist;
 	color: #c2b1cc;
 	min-height: 30px;
 }
 .texture-template:focus-visible {
-	outline: 2px solid #ec9bff;
+	outline: 2px solid var(--studio-pulse);
 	outline-offset: 3px;
 }
 .texture-library-preview {
 	position: sticky;
 	top: 0;
 	padding: 16px;
-	border: 1px solid #43334a;
+	border: 1px solid #33303a;
 	border-radius: 12px;
 	background: #1f1727;
 }
@@ -4179,13 +4151,13 @@ dialog textarea {
 	font-size: 20px;
 }
 .texture-library-preview p {
-	color: #c3b1cb;
+	color: #b3afb5;
 	font-size: 13px;
 	line-height: 1.5;
 }
 .texture-library-preview small {
-	color: #a99aaf;
-	font-size: 11px;
+	color: #99969c;
+	font-size: 12px;
 	line-height: 1.5;
 	display: block;
 }
@@ -4366,7 +4338,7 @@ dialog textarea {
 	justify-content: flex-end;
 	gap: 10px;
 	padding-top: 16px;
-	border-top: 1px solid #42334b;
+	border-top: 1px solid #33303a;
 }
 .texture-library-footer > :first-child {
 	margin-inline-end: auto;
@@ -4411,16 +4383,16 @@ dialog textarea {
 	margin-bottom: 12px;
 }
 .texture-preview-modes button {
-	border: 1px solid #5d4766;
+	border: 1px solid #4d4a52;
 	border-radius: 6px;
 	background: transparent;
-	color: #c6b4cf;
-	font: 11px Geist;
+	color: #b3afb5;
+	font: 13px Geist;
 	padding: 7px 10px;
 	cursor: pointer;
 }
 .texture-preview-modes button[aria-pressed='true'] {
-	background: #4a3155;
+	background: #33303a;
 	color: #fff3ff;
 }
 .texture-repeat-preview {

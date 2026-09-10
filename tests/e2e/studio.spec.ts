@@ -21,9 +21,10 @@ test('live edits paint independently, survive reload, and undo/redo/reset', asyn
 		'background-color',
 		'rgb(0, 170, 136)',
 	);
+	// The chrome is Obsidian and must not follow the theme being edited.
 	await expect(page.locator('.studio-header')).toHaveCSS(
 		'background-color',
-		'rgb(16, 15, 20)',
+		'rgb(26, 23, 33)',
 	);
 	await page.getByRole('button', { name: 'Undo', exact: true }).click();
 	await expect(accent(page)).toHaveValue('#f252fc');
