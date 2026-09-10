@@ -1,4 +1,4 @@
-# Landing port and Theme Studio
+# Landing port and Theme Creator
 
 ## Scope and entry points
 
@@ -12,7 +12,7 @@ The root `index.html` is still the original **brand guide**, unchanged. The orig
 | `/theme-creator/` | Independent theme editor |
 | `/press/`, `/contribute/`, `/docs/` | Existing supporting documents |
 
-The final “Dock your wp-admin.” section includes a Theme Studio button beside Install the plugin and Read the source, using the existing outline button style. This is the approved addition to the original landing design.
+The final “Dock your wp-admin.” section includes a Theme Creator button beside Install the plugin and Read the source, using the existing outline button style. This is the approved addition to the original landing design.
 
 ## Development and packaging
 
@@ -110,7 +110,7 @@ npm run test:bundle
 
 The unit tests cover the full manifest, asset-preserving ZIP round trips, archive attacks/limits, wallpaper normalization, filename collisions, token limits, immutable history, all help entries, source preservation and import isolation. Browser tests click through every one of the 712 property controls and help panels across the shared specimens, verify their CSS declaration templates, upload artwork to every texture and built-in icon slot, load a font, add a wallpaper and all settings, then check export/reimport and persistence byte-for-byte. They also cover Station defaults versus component presets, reset behavior, simultaneous border/radius edits, centered category previews, vertical admin-bar movement, focused texture inheritance, tint masks, all reveal previews, help search, mobile controls, the landing menu and supporting links.
 
-The landing visual tests render the original HTML plus the approved Theme Studio button and the Astro route with the same fonts and viewport at 1440px and 390px, then compare full-page screenshots with **zero differing pixels**. JavaScript is disabled for the visual comparison so third-party network content and animation do not alter the reference. The menu script is tested separately with JavaScript enabled.
+The landing visual tests render the original HTML plus the approved Theme Creator button and the Astro route with the same fonts and viewport at 1440px and 390px, then compare full-page screenshots with **zero differing pixels**. JavaScript is disabled for the visual comparison so third-party network content and animation do not alter the reference. The menu script is tested separately with JavaScript enabled.
 
 `test:bundle` serves the generated flat bundle on a temporary loopback port and verifies that public assets load, all 70 gallery specimens are centered, and the real spinner keeps its Station default and accepts live edits. It closes its browser and server afterward. The bundle includes `assets/studio/` as well as Astro’s compiled files.
 

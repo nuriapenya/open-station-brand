@@ -21,7 +21,7 @@ for (const width of [1440, 390])
 				contentType: 'text/html',
 				body: readFileSync('mockups/landing_v1.html', 'utf8').replace(
 					'<a class="btn outline" href="https://github.com/WordPress/openstation">Read the source</a>',
-					'<a class="btn outline" href="https://github.com/WordPress/openstation">Read the source</a>\n      <a class="btn outline" href="/theme-creator/">Theme Studio</a>'
+					'<a class="btn outline" href="https://github.com/WordPress/openstation">Read the source</a>\n      <a class="btn outline" href="/theme-creator/">Theme Creator</a>'
 				),
 			})
 		);

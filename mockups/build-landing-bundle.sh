@@ -47,7 +47,7 @@ sed -e 's|\.\./fonts/|fonts/|g' \
     -e 's|\.\./assets/|assets/|g' \
     "$source_page" > "$out/index.html"
 
-# The independent theme studio is another static directory page. Its compiled
+# The independent theme creator is another static directory page. Its compiled
 # assets live beside the index, so every existing flat host can serve it.
 cp -R "$repo_root/dist/theme-creator" "$out/theme-creator"
 cp -R "$repo_root/dist/_astro" "$out/_astro"

@@ -1,4 +1,4 @@
-# Theme Studio texture presets
+# Theme Creator texture presets
 
 Six project-owned PNG assets generated with the built-in image-generation tool on 2026-09-09. No external stock images or plugin artwork were used. Source outputs remain in the generating session's image archive; these checked-in files are the assets used by the standalone studio and exported themes.
 

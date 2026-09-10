@@ -74,7 +74,7 @@ test('landing Astro source preserves the design with the approved studio CTA', (
 		.replaceAll('../vendor/', 'vendor/')
 		.replace(
 			'<a class="btn outline" href="https://github.com/WordPress/openstation">Read the source</a>',
-			'<a class="btn outline" href="https://github.com/WordPress/openstation">Read the source</a>\n      <a class="btn outline" href="/theme-creator/">Theme Studio</a>'
+			'<a class="btn outline" href="https://github.com/WordPress/openstation">Read the source</a>\n      <a class="btn outline" href="/theme-creator/">Theme Creator</a>'
 		);
 	assert.equal(
 		readFileSync('src/pages/index.astro', 'utf8').replaceAll(' is:inline', ''),
