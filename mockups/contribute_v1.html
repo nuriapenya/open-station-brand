@@ -1045,6 +1045,21 @@
 	}
 
 	/**
+	 * Turn the entities wordpress.org returns back into the characters they stand
+	 * for: "Drag &amp; drop" is what the API sends, and textContent would print
+	 * it exactly like that.
+	 *
+	 * A detached textarea is the decoder because its content is raw text: markup
+	 * in the string becomes characters rather than nodes, so nothing from the API
+	 * can run.
+	 */
+	function decode( text ) {
+		var box = document.createElement( 'textarea' );
+		box.innerHTML = text;
+		return box.value;
+	}
+
+	/**
 	 * "1 merged PR", "14 merged PRs", "28 issues reported".
 	 *
 	 * `many` exists because the plural s does not always land at the end of the
@@ -1358,8 +1373,10 @@
 
 					return {
 						slug: addons[ i ],
-						author: ( info.author || '' ).replace( /<[^>]+>/g, '' ),
-						blurb: info.short_description || '',
+						author: decode(
+							( info.author || '' ).replace( /<[^>]+>/g, '' )
+						),
+						blurb: decode( info.short_description || '' ),
 						installs: info.active_installs || 0,
 						icon: icons.svg || icons[ '2x' ] || icons[ '1x' ] || ''
 					};
