@@ -12,3 +12,11 @@ docs-app/dist/
 /.spacefast-*
 .spacefast/.spacefast-*
 .spacefast/.space-link-*.tmp
+
+# Astro local development and static output.
+.astro/
+.astro-public/
+dist/
+test-results/
+playwright-report/
+/assets/studio/components.js

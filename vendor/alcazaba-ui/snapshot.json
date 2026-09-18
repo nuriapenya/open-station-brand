@@ -1,0 +1,443 @@
+{
+  "repository": "https://github.com/WordPress/openstation.git",
+  "commit": "bd30d985c1fac926a97d26adcbcd8cc161e03cf6",
+  "note": "Snapshot of local working tree; hashes identify exact source bytes, including uncommitted upstream edits.",
+  "files": [
+    {
+      "path": "src/ui/components/os-steps/os-steps.ts",
+      "sha256": "bbc580b1e077baef06be469156e2e837a30d7e70d31141e3e31e79e4cbbb3141"
+    },
+    {
+      "path": "src/ui/components/os-button/os-button.ts",
+      "sha256": "115c4af9dfbb75028654de158ea3c72f148ab593bee8d46a5e9715d91f9f5e0b"
+    },
+    {
+      "path": "src/ui/components/os-swatch/os-swatch.ts",
+      "sha256": "7ff397068fc9e71fc690a28b33003ca809a2679b6631113ff514ff08ebabaefb"
+    },
+    {
+      "path": "src/ui/components/os-swatch-grid/os-swatch-grid.ts",
+      "sha256": "73d5d194aab4658330690764f68309400d5377bb3ab2d381f71942f84e7f1c84"
+    },
+    {
+      "path": "src/ui/components/os-segmented/os-segmented.ts",
+      "sha256": "d35079a1ae6f3f86cc0e0d226fa06a712060a6d287416c84e9172b142afe042e"
+    },
+    {
+      "path": "src/ui/components/os-range-field/os-range-field.ts",
+      "sha256": "8194e84624bae6e77ddaa64facde37cff94d3c959de5ef7c78f8f2801482bf42"
+    },
+    {
+      "path": "src/ui/components/os-text-field/os-text-field.ts",
+      "sha256": "0bf2db8aa77c1e0039522ec833fbe4d68c17a1e5becc2771f05cb662b2ba58ee"
+    },
+    {
+      "path": "src/ui/components/os-checkbox/os-checkbox.ts",
+      "sha256": "4f09b406ad8209144f18e6bb9de6614f9317cdb4c166a10df41ba61d9e59cf0f"
+    },
+    {
+      "path": "src/ui/components/os-switch/os-switch.ts",
+      "sha256": "8ed09db51886f62210fa60d42660be9c5aea981c61eb3493309a8a1e374573cd"
+    },
+    {
+      "path": "src/ui/components/os-toast/os-toast.ts",
+      "sha256": "191105bdb1d7a59bc146a3b709b3443efd530889cadf6741fe0b85c58f6683a1"
+    },
+    {
+      "path": "src/ui/components/os-tabs/os-tabs.ts",
+      "sha256": "a227cdf39f43e420a31d3fa077fb8b1ed6f13752b326422abb1ef1ee93e4e575"
+    },
+    {
+      "path": "src/ui/components/os-window-button/os-window-button.ts",
+      "sha256": "02cbe08f6c573ff736972560ea7cf3c0f454c4855483784a194d49abde264af7"
+    },
+    {
+      "path": "src/ui/components/os-menu/os-menu.ts",
+      "sha256": "8d8a7237d9bfe9ba48f9800d407f30caf9eb353bec1cf7e32978e3f893bdd8d4"
+    },
+    {
+      "path": "src/ui/components/os-context-menu/os-context-menu.ts",
+      "sha256": "32e1edfd80e9700389d761c7228df2048369ab42a9802c0c26e1f11e3964c87e"
+    },
+    {
+      "path": "src/ui/components/os-confirm-dialog/os-confirm-dialog.ts",
+      "sha256": "0f1940f71552e176791551df45a0c54635ea79a9e2c74a546b02fcd8f8f6cb7c"
+    },
+    {
+      "path": "src/ui/components/os-modal/os-modal.ts",
+      "sha256": "bbbf37cfbeec06149190ca2fd7a7361c69ceed876d06cf2672f7ee588f1a356b"
+    },
+    {
+      "path": "src/ui/components/os-flyout/os-flyout.ts",
+      "sha256": "7de81e03bd6a7aa461e5d4d6217462fe11793f6d55386e32f06f2ca2507185fa"
+    },
+    {
+      "path": "src/ui/components/os-tab-chip/os-tab-chip.ts",
+      "sha256": "f05ef208849edb85669184b0bacf90fd5c24caf964d81256b0c7813d1108b56c"
+    },
+    {
+      "path": "src/ui/components/os-stack/os-stack.ts",
+      "sha256": "dafa343b0db08772b264530e10f80231012ac3ee6a0ff9e713c51ff4f534ff97"
+    },
+    {
+      "path": "src/ui/components/os-cluster/os-cluster.ts",
+      "sha256": "6b4a567e8a06e49391e1b149b2b2cf74bf0f061a0161a3260e20aa952c5c9878"
+    },
+    {
+      "path": "src/ui/components/os-icon/os-icon.ts",
+      "sha256": "137a301a7540ef5d21f761e18d6bbcf08ad6790807d06aa674f6882e1a16ae80"
+    },
+    {
+      "path": "src/ui/components/os-body/os-body.ts",
+      "sha256": "7579a14a6cc654f93148eed4cf0c4651fbbabe765e14f5f4ea8a39175d92d6af"
+    },
+    {
+      "path": "src/ui/components/os-panel/os-panel.ts",
+      "sha256": "5c3f600843684822609c2438e4d0e4074ae972c1ff3e51c645ee5f6af403235e"
+    },
+    {
+      "path": "src/ui/components/os-row/os-row.ts",
+      "sha256": "b0096cf9ff2749841e50e4fd55b572adf8b94edad9c78beedb033c5b8547e7db"
+    },
+    {
+      "path": "src/ui/components/os-grid/os-grid.ts",
+      "sha256": "4a611711bc04ce712c7ca04cf372060eb86fcb6f2c5b96dbf9459d694551b152"
+    },
+    {
+      "path": "src/ui/components/os-display/os-display.ts",
+      "sha256": "e06a6f2224656365ddbde9bce708c8c4cebbf25ed7dd3f1cb18134131259b500"
+    },
+    {
+      "path": "src/ui/components/os-empty-state/os-empty-state.ts",
+      "sha256": "8072549dd4f74aef8495df56063116d88ad89982edf345b4364a3dbf70ccd779"
+    },
+    {
+      "path": "src/ui/components/os-key/os-key.ts",
+      "sha256": "ecd7a1815ba6e8d41c45281d96b7d81af0b5c65ecf252426511d2640ff831940"
+    },
+    {
+      "path": "src/ui/components/os-code/os-code.ts",
+      "sha256": "bfde8b1d9b628a76a4285360638a4ba33b7f20f08c7bb1decf767c7c72fd36d8"
+    },
+    {
+      "path": "src/ui/components/os-badge/os-badge.ts",
+      "sha256": "8c2f53a6229304dfe1092c582f13ef5f0826bc9360607b6422f92d042b45d41e"
+    },
+    {
+      "path": "src/ui/components/os-ribbon/os-ribbon.ts",
+      "sha256": "80f07c158ab677a897b36eee7b6db494c6036dc97e0810071465294827265fba"
+    },
+    {
+      "path": "src/ui/components/os-log/os-log.ts",
+      "sha256": "7c1018d4464f813ec81e87d06296f3de6e754710754c1ac139bb0fc241b388a7"
+    },
+    {
+      "path": "src/ui/components/os-table/os-table.ts",
+      "sha256": "97b9885f34201dce4537bf98a590bde185430aab4b83463049c1001256f1a9f0"
+    },
+    {
+      "path": "src/ui/components/os-spinner/os-spinner.ts",
+      "sha256": "b4bf213c039a5e7d708427fbe103e42cc3f283085826b87256799a843b8f816b"
+    },
+    {
+      "path": "src/ui/components/os-stat/os-stat.ts",
+      "sha256": "9279b2a7fad7cea312a802399ac4e1503ed9b683a7fb3877bc91ddebeadac779"
+    },
+    {
+      "path": "src/ui/components/os-avatar/os-avatar.ts",
+      "sha256": "9b5a2032ba9887798cd5736770041104be77a9fb4406279af256f476a5f7374a"
+    },
+    {
+      "path": "src/ui/components/os-chip/os-chip.ts",
+      "sha256": "5efbf6dd21d87e5679259fa3df7611279db7d5d8e1facc384704a8f73ae9ce3a"
+    },
+    {
+      "path": "src/ui/components/os-tag-input/os-tag-input.ts",
+      "sha256": "7e675f3678239e658d0c9c229a42752e09b61b9cf89c6bd5cf45b8d4b4e7810c"
+    },
+    {
+      "path": "src/ui/components/os-save-status/os-save-status.ts",
+      "sha256": "b2cfe2f854eba464f77d158c26a077515b0d8545bec4ea38d7161222874116bd"
+    },
+    {
+      "path": "src/ui/components/os-category-picker/os-category-picker.ts",
+      "sha256": "c9c10679240a03e8576773ade8948ccb1647aebc5c28897f51a680299b4fc959"
+    },
+    {
+      "path": "src/ui/components/os-crumb-chain/os-crumb-chain.ts",
+      "sha256": "f9efde188ee783d9d291c5a7d86a74e82349b4a90033c0bce2dcbb0792fc6109"
+    },
+    {
+      "path": "src/ui/components/os-card/os-card.ts",
+      "sha256": "9a21f9f88ef4e3f43f7155c248f54b28b0edda1d96e12b1f3dd82fb911ab9618"
+    },
+    {
+      "path": "src/ui/components/os-rating-summary/os-rating-summary.ts",
+      "sha256": "4056b647622adb1d93c3945d8e2035d209a25a2d5ec6819851c4e7380c4df182"
+    },
+    {
+      "path": "src/ui/components/os-notice/os-notice.ts",
+      "sha256": "40bf91894239b7f2878b8e01d220463f46156cc1cb9d3892799a2979510699fa"
+    },
+    {
+      "path": "src/ui/components/os-progress-bar/os-progress-bar.ts",
+      "sha256": "456eca9956c5b12cfa6c27c7c81b538c4a5ee3fc4fcb904c7ffbd105366b2c1b"
+    },
+    {
+      "path": "src/ui/components/os-field-row/os-field-row.ts",
+      "sha256": "03b1ba2d7bce7eec16786dde712b3381f982e2884db6807e3e5249b98269aec6"
+    },
+    {
+      "path": "src/ui/components/os-repeater/os-repeater.ts",
+      "sha256": "13b26995ccb29ed9e7f1e154d669c7c18b15b43cc212eeb5f5359ddbc3188ea0"
+    },
+    {
+      "path": "src/ui/components/os-token-field/os-token-field.ts",
+      "sha256": "95ed7041c33bb1ffe3b82cb32250ccc7145157025fc37f0e752b3b44c34969f8"
+    },
+    {
+      "path": "src/ui/core/index.ts",
+      "sha256": "5ca16ec4742f058533ba863a0e06f5221398aff24ec8241aa1fa7ddb63ef9409"
+    },
+    {
+      "path": "src/ui/components/os-steps/os-steps.styles.ts",
+      "sha256": "704b81be9d454397584ebbd3157061c44369aa861294cea0d8d7a75249328cd7"
+    },
+    {
+      "path": "src/ui/components/os-button/os-button.styles.ts",
+      "sha256": "c7fc2d5c6d09adbe6174f8585f3d47857eb43d91cd9dbf148252424da240abb9"
+    },
+    {
+      "path": "src/ui/components/os-swatch/os-swatch.styles.ts",
+      "sha256": "e5460256bb39dcf6fc79b471b2ab169aab765a6c3f3b084174530dff4dcae83f"
+    },
+    {
+      "path": "src/ui/components/os-swatch-grid/os-swatch-grid.styles.ts",
+      "sha256": "57692468f523ba0929fb006a52e89c2fc2d8c6a8cca2e5cbff70fea16ab3f424"
+    },
+    {
+      "path": "src/ui/components/os-segmented/os-segmented.styles.ts",
+      "sha256": "caf423bb55bfbe5c5b9fa6761eff3217851f085c30d957b35c0109efc11722fa"
+    },
+    {
+      "path": "src/ui/components/os-range-field/os-range-field.styles.ts",
+      "sha256": "94dadc6355211f78f14c87b732bba367d8bf65e0fadbf8e7a3670a7a1e11c078"
+    },
+    {
+      "path": "src/ui/components/os-text-field/os-text-field.styles.ts",
+      "sha256": "1a6b0ee7adfb347d4cd633eebacd0ff62025d0892391833087f3fe1aa2ebaf73"
+    },
+    {
+      "path": "src/ui/components/os-checkbox/os-checkbox.styles.ts",
+      "sha256": "8fed6ea2c574f9720c3c6457f3a384bd3ff4f8e16e4f0d562671730b27458e0e"
+    },
+    {
+      "path": "src/ui/components/os-switch/os-switch.styles.ts",
+      "sha256": "50cd9191c59e52d6b7db075020fb4ffde394b41db772aeaccbaf84ff1694e143"
+    },
+    {
+      "path": "src/ui/icons/index.ts",
+      "sha256": "798228ed2666ff08ae724c48d4f8f93e886f79f016d75a10e659c3916a89948e"
+    },
+    {
+      "path": "src/i18n.ts",
+      "sha256": "fc8b18ae1604e976b89eb64cfad4b34fceb9d6f7a20ea9038365c94d5f2e2770"
+    },
+    {
+      "path": "src/ui/components/os-toast/os-toast.styles.ts",
+      "sha256": "0eb2923c2640d532c137d390a1237492168ed0dd4382ac5a6661184729292cd4"
+    },
+    {
+      "path": "src/ui/components/os-tabs/os-tabs.styles.ts",
+      "sha256": "885f5bcd9445a7542ae967358baf40c7a7aea4b8fd7965f693010f0feacf0c20"
+    },
+    {
+      "path": "src/ui/components/os-window-button/os-window-button.styles.ts",
+      "sha256": "96b90ae9f77ea097295e3f3c4eb5ea0b6f899e4f024fcdf2fc28f374ce7bd7b1"
+    },
+    {
+      "path": "src/ui/components/os-menu/os-menu.styles.ts",
+      "sha256": "da98793389fe6acd508da48134b5f447436f9a8987a3a6341bd4a4122ddcc31d"
+    },
+    {
+      "path": "src/ui/components/os-context-menu/os-context-menu.styles.ts",
+      "sha256": "61b45188a4aee7950ea0a0c139e0bc312ada1019cf9a7c841b3acae1b54b93b6"
+    },
+    {
+      "path": "src/ui/components/os-confirm-dialog/os-confirm-dialog.styles.ts",
+      "sha256": "40315013f599856ed7e2165d312d52727cb11c62fe7ce3187b5b860f59eec4af"
+    },
+    {
+      "path": "src/ui/components/os-modal/os-modal.styles.ts",
+      "sha256": "201731960cd07f995b7c19a0dc1a24c8d62f283000be0cf29137ce154446d37f"
+    },
+    {
+      "path": "src/ui/components/os-flyout/os-flyout.styles.ts",
+      "sha256": "3e5a2fa9317224fd77884f20d9c35be7245320da13ea704955517a0f963e4d8f"
+    },
+    {
+      "path": "src/ui/components/os-tab-chip/os-tab-chip.styles.ts",
+      "sha256": "7397993c7f59af82bdfde9500d5cccb9a678a45c3832c970d94d9c9affb63e56"
+    },
+    {
+      "path": "src/ui/components/os-stack/os-stack.styles.ts",
+      "sha256": "ad66a0d638165321a2b58dbe7179b57dc4dc980f433d1d9dd892843e8c325361"
+    },
+    {
+      "path": "src/ui/components/os-cluster/os-cluster.styles.ts",
+      "sha256": "5bf7db5b0d1988cbedc25e2a5d3253a21021579526fd37c1a2e959a919006037"
+    },
+    {
+      "path": "src/ui/components/os-icon/os-icon.styles.ts",
+      "sha256": "0067e17fb9018b5ab342ce47234f80038f9cdd8bce76f57abdd7a5e0cd18a592"
+    },
+    {
+      "path": "src/ui/components/os-icon/dashicons-map.ts",
+      "sha256": "6b8e57f972eab10da441df86042f5136e3a8f3cb4faee205e61c650cbc78fce1"
+    },
+    {
+      "path": "src/ui/components/os-body/os-body.styles.ts",
+      "sha256": "16c5a08004ee735d10d7fb44c383559fb7aa255a2dd219d8a235ad5b573d0f33"
+    },
+    {
+      "path": "src/ui/components/os-panel/os-panel.styles.ts",
+      "sha256": "7aba9f1085d87a0be570f03170ec36ae07fa7f01fc51b079923b119222031945"
+    },
+    {
+      "path": "src/ui/components/os-row/os-row.styles.ts",
+      "sha256": "9f049237c9a177ae10c4dd795c2aea530dfcaa6b80bb734e9fb869e7884d32f3"
+    },
+    {
+      "path": "src/ui/components/os-grid/os-grid.styles.ts",
+      "sha256": "f2b0efc353ebf277ac1c3a8145c56ceb4f873439490cbfc73b016fae70dbce98"
+    },
+    {
+      "path": "src/ui/components/os-display/os-display.styles.ts",
+      "sha256": "744fb2dc8c9e0955aa9af9f53b91df39e765f2ab4dc63f75d4bd81b2e917a488"
+    },
+    {
+      "path": "src/ui/components/os-empty-state/os-empty-state.styles.ts",
+      "sha256": "a36bd70789f65f42796c2897a20917671fe6c76a68bbb82a809aadd6033c9c36"
+    },
+    {
+      "path": "src/ui/components/os-key/os-key.styles.ts",
+      "sha256": "9fefbba2cd7e78b176592ed58dccfc4e86921f3a9055dbc93b73e6b738413004"
+    },
+    {
+      "path": "src/ui/components/os-code/os-code.styles.ts",
+      "sha256": "54350d9dd39a75798a88006a6cac284f04c3824cae22f3f392de7b4713ca096c"
+    },
+    {
+      "path": "src/ui/components/os-badge/os-badge.styles.ts",
+      "sha256": "737ddbd036b922dec73d544bc079a07aca016abd92ce8d77ca7e8633105e595b"
+    },
+    {
+      "path": "src/ui/components/os-ribbon/os-ribbon.styles.ts",
+      "sha256": "159dd7bed177fc6f0f860b4c86683ca860a1411b2a9b515632e922b51fb9bf21"
+    },
+    {
+      "path": "src/ui/components/os-log/os-log.styles.ts",
+      "sha256": "7494eced8fc22e61f9ae8ad586e54056500a8bc58b892f2f53b985e05f1af88f"
+    },
+    {
+      "path": "src/ui/components/os-table/os-table.styles.ts",
+      "sha256": "c67ddee6abec49571cc94843e5089537f792b07a36c26ab47c5f462468776430"
+    },
+    {
+      "path": "src/ui/components/os-spinner/os-spinner.styles.ts",
+      "sha256": "07c8f9837fc1b07a62186b6853820ed6a89cbcd4fd595b15f322d1c18fba551c"
+    },
+    {
+      "path": "src/ui/components/os-stat/os-stat.styles.ts",
+      "sha256": "8b48b4da604168d1e2166c6212e772b847848d0819bfa66529f6f80bd41893a5"
+    },
+    {
+      "path": "src/ui/util/hash-hue.ts",
+      "sha256": "61bb9721da033cdfbe56f43b35a7ff535db308ebba25ef9a8411e8e15fa1dbe4"
+    },
+    {
+      "path": "src/ui/components/os-avatar/os-avatar.styles.ts",
+      "sha256": "ba68d648ff8713d31d1a090927c01b5d29e73efe8d14bfa89d3a6f21f57d51f8"
+    },
+    {
+      "path": "src/ui/components/os-chip/os-chip.styles.ts",
+      "sha256": "a05ac4262949d5fe2bcf557109f60bd365e3c1b19400ba003f3e15d2f6ce977c"
+    },
+    {
+      "path": "src/ui/components/os-tag-input/os-tag-input.styles.ts",
+      "sha256": "664abd972424b95f926ba8b79e66c9ba3a5d3a2322feb881dd0a84ed36d249fb"
+    },
+    {
+      "path": "src/ui/components/os-save-status/os-save-status.styles.ts",
+      "sha256": "d075044127ec52be261b8c4389ab9857e88bc9dde1be8d4cecd7ba13e56a68ea"
+    },
+    {
+      "path": "src/ui/components/os-category-picker/os-category-picker.styles.ts",
+      "sha256": "a10ddca004fecb541d925a502dc70cdc3251c41868090ede3236640dc7d23264"
+    },
+    {
+      "path": "src/ui/components/os-crumb-chain/os-crumb-chain.styles.ts",
+      "sha256": "c521371394083a4fe591cea6140597d5b0efbe17be11885189e1b59628092fe4"
+    },
+    {
+      "path": "src/ui/components/os-card/os-card.styles.ts",
+      "sha256": "ea93088d3e77fb62bec527faf34231e6d422abda5d279f2fdac90d1583ff13e3"
+    },
+    {
+      "path": "src/ui/components/os-rating-summary/os-rating-summary.styles.ts",
+      "sha256": "c2d192bf84dfc17112a41eebbf6e9be15f383cc7d2b38d0aadfc2674b06fcb5e"
+    },
+    {
+      "path": "src/ui/components/os-notice/os-notice.styles.ts",
+      "sha256": "0d7032c6d93c41490120fa87b3c2dae17ed3f5597de59e09654fe4db809c0e51"
+    },
+    {
+      "path": "src/ui/components/os-notice/storage.ts",
+      "sha256": "dbe82a5713ff839e05193324e68427c6c2a854f65165fc25bd8d27c207066305"
+    },
+    {
+      "path": "src/ui/components/os-progress-bar/os-progress-bar.styles.ts",
+      "sha256": "f6af3226ef96c9b3553cd1333799a01aed55038d632aee13f2b3fe34f4dbd6ba"
+    },
+    {
+      "path": "src/ui/components/os-field-row/os-field-row.styles.ts",
+      "sha256": "d3547c9558ea14f5c2e9ee1202a596d5e9060c0262e89c579a586670f09483fc"
+    },
+    {
+      "path": "src/ui/components/os-repeater/os-repeater.styles.ts",
+      "sha256": "9f3d7fc48a08f10ba1830a3bae56946834f6dbddf0b39e78db613f8c5d5ca3b7"
+    },
+    {
+      "path": "src/ui/components/os-token-field/os-token-field.styles.ts",
+      "sha256": "c57669b3574e9f12dbaf2d65f977a7a8a62c6dda4c7279ad64c5d711bb83685f"
+    },
+    {
+      "path": "src/ui/core/component.ts",
+      "sha256": "2bedb1d6887238b2aeb836c14bb3cc1a4a0670261fcd57f03515156f6a349aed"
+    },
+    {
+      "path": "src/ui/core/html.ts",
+      "sha256": "e342931e9472f63b305a71716fb6262f71e68fad47c92c98c5241347aee7c291"
+    },
+    {
+      "path": "src/ui/core/css.ts",
+      "sha256": "c67ddacff3919cca897204cfa6fb551b1f2346b1e382dde59df737e5c416fc83"
+    },
+    {
+      "path": "src/ui/core/auto-id.ts",
+      "sha256": "cc138f8f7f9b2cb4c3da8950c677ecf90884f0389fdb74cb812d18a56fd0e30b"
+    },
+    {
+      "path": "src/ui/core/help.ts",
+      "sha256": "76e2437ab4a011cc59356cfa7aa778f9991e8e1fdfa14d281516bd30be02f8eb"
+    },
+    {
+      "path": "src/ui/holo.ts",
+      "sha256": "a13c524cd5784939bd943561550fd1634027ff440b1b4dff7c15d2bdc43668a3"
+    },
+    {
+      "path": "src/ui/icons/set.ts",
+      "sha256": "dc0c83528f4446b0edbf0db4497ba9ebfe145f9983e7cb2601863680fa53b4ac"
+    }
+  ]
+}
